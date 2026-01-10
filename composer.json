@@ -14,6 +14,25 @@
     ],
     "require": {
         "illuminate/routing": "^12.46",
-        "illuminate/events": "^12.46"
-    }
+        "illuminate/events": "^12.46",
+        "canvasapilibrary/orm": "1.1.*",
+        "canvasapilibrary/redis-cache-provider": "1.1.*"
+    },
+    "require-dev": {
+        "canvasapilibrary/session-cache-wrapper": "^1.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:Canvas-LMS-tooling-by-Marcel-Bostelaar/api-orm.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:Canvas-LMS-tooling-by-Marcel-Bostelaar/api-orm-cache-redis-provider.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:Canvas-LMS-tooling-by-Marcel-Bostelaar/session-cache-wrapper.git"
+        }
+    ]
 }

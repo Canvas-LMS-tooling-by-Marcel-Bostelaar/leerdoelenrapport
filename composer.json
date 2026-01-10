@@ -3,7 +3,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Canvasapilibrary\\Learningoutcomereport\\": "src/"
+            "Canvasapilibrary\\Learningoutcomereport\\": "src/backend/"
         }
     },
     "authors": [

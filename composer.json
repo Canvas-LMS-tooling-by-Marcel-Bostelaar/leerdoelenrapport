@@ -1,0 +1,19 @@
+{
+    "name": "canvasapilibrary/learningoutcomereport",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Canvasapilibrary\\Learningoutcomereport\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcel Bostelaar",
+            "email": "marcel.bostelaar@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/routing": "^12.46",
+        "illuminate/events": "^12.46"
+    }
+}

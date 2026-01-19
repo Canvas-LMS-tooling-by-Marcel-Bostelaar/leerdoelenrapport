@@ -1,3 +1,5 @@
 /vendor/
 
 /src/backend/public/static/react/*
+
+.env

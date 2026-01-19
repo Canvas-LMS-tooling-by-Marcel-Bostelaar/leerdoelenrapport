@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Http\Request;
+use CanvasApiLibrary\LearningOutcomeReport\Middleware;
 
 $container = new Container;
 $events = new Dispatcher($container);
@@ -15,10 +16,19 @@ $container->bind(
     Illuminate\Routing\CallableDispatcher::class
 );
 
-$router = new Router($events, $container);
-
-require __DIR__ . '/../middleware.php';
 require __DIR__ . '/../routes.php';
+
+$router = new Router($events, $container);
+$router->group([
+    'middleware' => [
+        Middleware\StaticApiKeyMiddleware::class,
+        Middleware\CachedCanvasCommunicatorSetup::class, 
+        Middleware\NonCachingProviderSetup::class
+    ],
+], function () use ($router) {
+    routes($router);
+});
+require __DIR__ . '/../helpers.php';
 
 $request = Request::capture();
 $response = $router->dispatch($request);

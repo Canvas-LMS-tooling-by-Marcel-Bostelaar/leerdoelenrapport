@@ -8,4 +8,5 @@ $middleware = [
     Middleware\CachedCanvasCommunicatorSetup::class, 
     Middleware\NonCachingProviderSetup::class,
     Middleware\ErrorHandledProviderSetup::class,
+    Middleware\CourseContextSetup::class,
 ];

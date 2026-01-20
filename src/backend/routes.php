@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\CourseContextController;
 use CanvasApiLibrary\Core\Models\Course;
 use CanvasApiLibrary\Core\Models\Domain;
 use Illuminate\Container\Container;
@@ -47,12 +48,12 @@ function routes(Router $router)
         if(session_status() == PHP_SESSION_NONE){
             session_start();
         }
-        if(!isset($_SESSION["urls"])){
+        if(empty($_SESSION)){
             return "no cache<br><form method='post' action='/cache/clear'><button type='submit'>Clear cache</button></form>";
         }
         return "<form method='post' action='/cache/clear'><button type='submit'>Clear cache</button></form>" .
-        "</br>" . 
-        json_encode($_SESSION["urls"]);
+        "</br><pre>" . 
+        json_encode($_SESSION, JSON_PRETTY_PRINT) . "</pre>";
     });
 
     $router->post('cache/clear', function(){
@@ -64,21 +65,34 @@ function routes(Router $router)
     });
 
     //utility function to set the current course in session, for when app is not yet integrated into Canvas
-    $router->post('setCourse', function(Request $request){
-        $domain = base64_decode($request->input('domain'));
-        $courseId = $request->input('courseId');
-        $domain = new Domain($domain);
-        $course = new Course();
-        $course->id = $courseId;
-        $course->domain = $domain;
+    $router->resource('setCourse', CourseContextController::class);
+    // $router->get('setCourse', function(){
+    //     return '<form method="post" action="/setCourse">
+    //         Domain: <input type="text" name="domain"><br>
+    //         Course ID: <input type="text" name="courseId"><br>
+    //         <input type="submit" value="Set Course">
+    //     </form>';
+    // });
 
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        $app = Container::getInstance();
-        $app->instance('api.course', $course);
+    // $router->post('setCourse', [CourseContextController::class, 'setCourse']);
     
-        return "Course set to " . $courseId . " on domain " . $domain->domain;
-    });
+    // $router->post('setCourse', function(Request $request){
+    //     $requestID = spl_object_id($request);
+
+    //     $domain = $request->input('domain');
+    //     $courseId = $request->input('courseId');
+    //     $domain = new Domain($domain);
+    //     $course = new Course();
+    //     $course->id = $courseId;
+    //     $course->domain = $domain;
+
+    //     // if(session_status() == PHP_SESSION_NONE){
+    //     //     session_start();
+    //     // }
+    //     $app = Container::getInstance();
+    //     $app->instance('api.course', $course);
+    
+    //     return "Course set to " . $courseId . " on domain " . $domain->domain;
+    // });
 
 }

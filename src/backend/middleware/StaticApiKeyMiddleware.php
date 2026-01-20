@@ -15,10 +15,10 @@ class StaticApiKeyMiddleware
      */
     public function handle($request, $next)
     {
-        $apiKey = $request->attributes->get('envfile')['apikey'];
-        if ($apiKey === false) {
+        if(!isset($request->attributes->get('envfile')['apikey'])) {
             throw new \RuntimeException('apikey environment variable is not set.');
         }
+        $apiKey = $request->attributes->get('envfile')['apikey'];
         $clientIDProvider = new StaticClientIDProvider($apiKey);
 
         $request->attributes->set('ApiKey', $apiKey);

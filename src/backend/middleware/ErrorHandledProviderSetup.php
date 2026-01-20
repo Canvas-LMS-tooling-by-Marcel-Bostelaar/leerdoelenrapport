@@ -35,6 +35,9 @@ class ErrorHandledProviderSetup
 {
     public function handle($request, $next)
     {
+        if(!isset($request->attributes->get('envfile')['debug'])) {
+            throw new \RuntimeException('debug environment variable is not set.');
+        }
         $isDebug = $request->attributes->get('envfile')['debug'] == 'true';
         // Bind to the application container for global helper access
         /** @var Container $app */$app = Container::getInstance();

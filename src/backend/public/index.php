@@ -8,6 +8,10 @@ use Illuminate\Routing\Router;
 use Illuminate\Http\Request;
 use App\Middleware;
 
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
 $container = new Container;
 $events = new Dispatcher($container);
 
@@ -28,5 +32,7 @@ $router->group([
 require __DIR__ . '/../helpers.php';
 
 $request = Request::capture();
+$container->instance('request', $request);
+$container->instance(Request::class, $request);
 $response = $router->dispatch($request);
 $response->send();

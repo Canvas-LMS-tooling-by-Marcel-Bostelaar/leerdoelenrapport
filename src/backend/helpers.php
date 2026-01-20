@@ -2,6 +2,7 @@
 
 use App\Middleware\Util\ProviderContainer;
 use CanvasApiLibrary\Core\Models\CourseStub;
+use CanvasApiLibrary\Core\Models\Domain;
 use Illuminate\Container\Container;
 use Illuminate\Routing\ResponseFactory;
 
@@ -39,13 +40,17 @@ if (!function_exists('course')) {
     /**
      * Retrieve the typed providers container.
      */
-    function course(): CourseStub
+    function course(): CourseStub | null
     {
         /** @var Container $app */
         $app = Container::getInstance();
-        if (! $app->bound('api.course')) {
-            throw new \RuntimeException('Course container is not bound. Ensure the NonCachingProviderSetup middleware runs before accessing course().');
+        if (! $app->bound('api.coursecontext')) {
+            return null;
         }
-        return $app->make('api.course');
+        $data = $app->make('api.coursecontext');
+        $course = new CourseStub();
+        $course->id = $data['id'];
+        $course->domain = new Domain($data['domain']);
+        return $course;
     }
 }

@@ -42,6 +42,18 @@ export interface Section {
     name: string;
 }
 
+export function ParseFullConfigJson(jsonString: string): FullConfig {
+    let config = JSON.parse(jsonString, (key, value) => {
+        if (key === 'startDate' || key === 'endDate') {
+            return new Date(value);
+        }
+        if (key === 'periodLevels' && typeof value === 'object' && !Array.isArray(value)) {
+            return new Map(Object.entries(value).map(([k, v]) => [Number(k), v]));
+        }
+        return value;
+    });
+    return config as FullConfig;
+}
 
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Models\Config;
 
+use App\Middleware\Util\ProviderContainer;
+
 class PlannedOutcomeGroup
 {
     /**
@@ -13,11 +15,7 @@ class PlannedOutcomeGroup
     public function toArray(): array
     {
         return [
-            'outcomesOrGroups' => array_map(function($item) {
-                $itemData = $item->toArray();
-                $itemData['__type'] = $item instanceof PlannedOutcomeGroup ? 'PlannedOutcomeGroup' : 'OutcomePlanning';
-                return $itemData;
-            }, $this->outcomesOrGroups)
+            'outcomesOrGroups' => array_map(fn($x) => $x->toArray(), $this->outcomesOrGroups)
         ];
     }
 
@@ -25,15 +23,12 @@ class PlannedOutcomeGroup
     {
         $group = new self();
         $group->outcomesOrGroups = array_map(function($item) {
-            $type = $item['__type'] ?? null;
-            unset($item['__type']);
-            
-            if ($type === 'PlannedOutcomeGroup') {
+            if(isset($item['outcomesOrGroups'])) {
                 return PlannedOutcomeGroup::fromArray($item);
             } else {
                 return OutcomePlanning::fromArray($item);
             }
-        }, $data['outcomesOrGroups'] ?? []);
+        }, $data['outcomesOrGroups']);
         return $group;
     }
 }

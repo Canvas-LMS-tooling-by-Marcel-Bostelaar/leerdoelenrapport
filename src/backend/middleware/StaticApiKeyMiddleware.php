@@ -15,8 +15,7 @@ class StaticApiKeyMiddleware
      */
     public function handle($request, $next)
     {
-        $env = parse_ini_file('../../../.env');
-        $apiKey = $env["apikey"];
+        $apiKey = $request->attributes->get('envfile')['apikey'];
         if ($apiKey === false) {
             throw new \RuntimeException('apikey environment variable is not set.');
         }

@@ -4,6 +4,8 @@ namespace App\Middleware;
 
 use CanvasApiLibrary\Core\Providers;
 use App\Middleware\Util\ProviderContainer;
+use CanvasApiLibrary\Core\Providers\OutcomeProvider;
+use CanvasApiLibrary\Core\Providers\OutcomeResultProvider;
 use CanvasApiLibrary\Providers\ApiProviders;
 use Illuminate\Container\Container;
 
@@ -22,13 +24,15 @@ class NonCachingProviderSetup
         new Providers\SectionProvider($canvasCommunicator, $clientIDProvider),
         new Providers\SubmissionProvider($canvasCommunicator, $clientIDProvider),
         new Providers\UserProvider($canvasCommunicator, $clientIDProvider),
+        new Providers\OutcomeProvider($canvasCommunicator, $clientIDProvider),
+        new Providers\OutcomeResultProvider($canvasCommunicator, $clientIDProvider),
         $configProvider
         );
 
         // Bind to the application container for global helper access
         /** @var Container $app */
         $app = Container::getInstance();
-        $app->instance('api.providers', $apiProviders);
+        $app->instance('api.providers.rawresults', $apiProviders);
         $response = $next($request);
         
         return $response;

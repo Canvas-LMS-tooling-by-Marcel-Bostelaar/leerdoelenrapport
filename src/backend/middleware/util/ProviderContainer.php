@@ -14,6 +14,8 @@ class ProviderContainer
         public readonly Interfaces\SectionProviderInterface $sectionProvider,
         public readonly Interfaces\SubmissionProviderInterface $submissionProvider,
         public readonly Interfaces\UserProviderInterface $userProvider,
+        public readonly Interfaces\OutcomeProviderInterface $outcomeProvider,
+        public readonly Interfaces\OutcomeResultProviderInterface $outcomeResultProvider,
         public readonly ConfigProviderInterface $configProvider
     ) {
     }

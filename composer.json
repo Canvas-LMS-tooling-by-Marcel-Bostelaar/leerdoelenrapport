@@ -1,9 +1,9 @@
 {
-    "name": "canvasapilibrary/learningoutcomereport",
+    "name": "app/learningoutcomereport",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "CanvasApiLibrary\\LearningOutcomeReport\\": "src/backend/"
+            "App\\": "src/backend/"
         }
     },
     "authors": [

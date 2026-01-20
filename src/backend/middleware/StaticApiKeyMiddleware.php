@@ -1,8 +1,8 @@
 <?php
 
-namespace CanvasApiLibrary\LearningOutcomeReport\Middleware;
+namespace App\Middleware;
 
-use CanvasApiLibrary\LearningOutcomeReport\Middleware\Util\StaticClientIDProvider;
+use App\Middleware\Util\StaticClientIDProvider;
 
 class StaticApiKeyMiddleware
 {

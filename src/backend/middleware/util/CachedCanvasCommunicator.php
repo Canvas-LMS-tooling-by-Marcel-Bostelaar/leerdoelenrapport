@@ -1,6 +1,6 @@
 <?php
 
-namespace CanvasApiLibrary\LearningOutcomeReport\Middleware\Util;
+namespace App\Middleware\Util;
 
 use CanvasApiLibrary\Core\Services\CanvasCommunicator;
 

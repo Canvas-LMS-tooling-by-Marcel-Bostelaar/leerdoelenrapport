@@ -1,10 +1,10 @@
 <?php
 
-namespace CanvasApiLibrary\LearningOutcomeReport\Middleware;
+namespace App\Middleware;
 
 use CanvasApiLibrary\Core\Providers;
-use CanvasApiLibrary\LearningOutcomeReport\Middleware\Util\ProviderContainer;
-use CanvasApiLibrary\LearningOutcomeReport\Providers\ApiProviders;
+use App\Middleware\Util\ProviderContainer;
+use CanvasApiLibrary\Providers\ApiProviders;
 use Illuminate\Container\Container;
 
 class NonCachingProviderSetup

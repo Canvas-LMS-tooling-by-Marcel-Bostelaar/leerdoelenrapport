@@ -6,7 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Http\Request;
-use CanvasApiLibrary\LearningOutcomeReport\Middleware;
+use CanvasApiLibrary\Middleware;
 
 $container = new Container;
 $events = new Dispatcher($container);

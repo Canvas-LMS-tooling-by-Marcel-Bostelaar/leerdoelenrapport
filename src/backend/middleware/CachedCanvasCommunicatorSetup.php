@@ -1,8 +1,8 @@
 <?php
 
-namespace CanvasApiLibrary\LearningOutcomeReport\Middleware;
+namespace App\Middleware;
 
-use CanvasApiLibrary\LearningOutcomeReport\Middleware\Util\CachedCanvasCommunicator;
+use App\Middleware\Util\CachedCanvasCommunicator;
 
 /**
  * For development, caches all api calls on the url level.

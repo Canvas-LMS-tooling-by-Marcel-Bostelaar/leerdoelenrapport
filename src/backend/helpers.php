@@ -1,6 +1,6 @@
 <?php
 
-use CanvasApiLibrary\LearningOutcomeReport\Middleware\Util\ProviderContainer;
+use App\Middleware\Util\ProviderContainer;
 use Illuminate\Container\Container;
 
 if (!function_exists('providers')) {

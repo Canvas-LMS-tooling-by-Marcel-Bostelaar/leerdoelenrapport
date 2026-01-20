@@ -29,8 +29,9 @@ class FilesystemConfigProvider implements ConfigProviderInterface
 
     private function getCourseFilePath(CourseStub $course): string
     {
-        $filename = rtrim($this->getStorageDir(), "/\\") . '/config-' . $course->getResourceKey() . '.json';
-        return FilenameSanitize::of($filename)->get();
+        $filename = FilenameSanitize::of('config-' . $course->getResourceKey() . '.json')->get();
+        $filename = rtrim($this->getStorageDir(), "/\\") . '/' . $filename;
+        return $filename;
     }
 
     /**
@@ -74,7 +75,7 @@ class FilesystemConfigProvider implements ConfigProviderInterface
             return new ErrorResult(['Unable to create config directory at ' . $directory]);
         }
 
-        $encoded = json_encode($config->toArray(), JSON_PRETTY_PRINT);
+        $encoded = json_encode($config->toArray(false), JSON_PRETTY_PRINT);
         if ($encoded === false) {
             return new ErrorResult(['Unable to encode config for course ' . $course->getId() . ': ' . json_last_error_msg()]);
         }

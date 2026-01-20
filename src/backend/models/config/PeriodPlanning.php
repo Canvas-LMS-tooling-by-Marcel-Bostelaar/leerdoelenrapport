@@ -19,11 +19,16 @@ class PeriodPlanning
      */
     public array $sections;
 
-    public function toArray(): array
+    /**
+     * Summary of toArray
+     * @param bool $fullData If true, will fetch and include full section data
+     * @return array{periods: array, sections: array}
+     */
+    public function toArray(bool $fullData = true): array
     {
         return [
             'periods' => array_map(fn($p) => $p->toArray(), $this->periods),
-            'sections' => array_map(fn($s) => self::sectionToArray($s), $this->sections)
+            'sections' => array_map(fn($s) => self::sectionToArray($s, $fullData), $this->sections)
         ];
     }
 
@@ -41,15 +46,20 @@ class PeriodPlanning
         return $planning;
     }
 
-    private static function sectionToArray(SectionStub $section): array
+    private static function sectionToArray(SectionStub $section, bool $fullData = true): array
     {
-        $fullSection = providers()->sectionProvider->populateSection($section);
-        return [
-            "id" => $fullSection->id,
-            "course_id" => $fullSection->course->id,
-            "domain" => $fullSection->domain->domain,
-            "name" => $fullSection->name
+        $stubData = [
+            "id" => $section->id,
+            "course_id" => $section->course->id,
+            "domain" => $section->domain->domain
         ];
+        if(!$fullData){
+            return $stubData;
+        }
+        $fullSection = providers()->sectionProvider->populateSection($section);
+        return array_merge($stubData, [
+            "name" => $fullSection->name
+        ]);
     }
 
     private static function sectionFromArray(array $data): SectionStub{

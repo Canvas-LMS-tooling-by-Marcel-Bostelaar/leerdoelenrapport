@@ -3,6 +3,7 @@ use App\Middleware;
 
 $middleware = [
     Middleware\ReadEnvFile::class,
+    Middleware\CatchUnhandledErrors::class,
     Middleware\StaticApiKeyMiddleware::class,
     Middleware\FilesystemConfigSetup::class,
     Middleware\CachedCanvasCommunicatorSetup::class, 

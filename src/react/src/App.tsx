@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [url, setUrl] = useState('')
+  const url = "/api/config"
   const [body, setBody] = useState('')
 
   const loadJson = async () => {
@@ -15,7 +15,7 @@ function App() {
     await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body,
+      body: body,
     })
   }
 
@@ -25,11 +25,6 @@ function App() {
       <br></br>
       <a href="/cache">Cache</a>
       <br></br>
-      <div>
-        <div>URL</div>
-        <input value={url} onChange={(event) => setUrl(event.target.value)} />
-      </div>
-
       <div>
         <button onClick={loadJson}>Load (GET)</button>
         <button onClick={sendJson}>Send (POST)</button>

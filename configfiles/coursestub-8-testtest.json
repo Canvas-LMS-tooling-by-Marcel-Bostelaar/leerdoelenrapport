@@ -1,0 +1,19 @@
+{
+    "rootPlannedOutcomeGroup": {
+        "outcomesOrGroups": [
+            {
+                "outcome": {
+                    "id": 1,
+                    "url": "outcome\/1",
+                    "domain": "mysite.com"
+                },
+                "periodLevels": {
+                    "1": 2,
+                    "2": 3,
+                    "3": 10
+                }
+            }
+        ]
+    },
+    "periodPlannings": []
+}

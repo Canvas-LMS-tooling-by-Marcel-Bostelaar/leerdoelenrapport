@@ -15,11 +15,11 @@ class FullConfig
      */
     public array $periodPlannings = [];
 
-    public function toArray(): array
+    public function toArray(bool $fullData = true): array
     {
         return [
-            'rootPlannedOutcomeGroup' => $this->rootPlannedOutcomeGroup->toArray(),
-            'periodPlannings' => array_map(fn($pp) => $pp->toArray(), $this->periodPlannings)
+            'rootPlannedOutcomeGroup' => $this->rootPlannedOutcomeGroup->toArray($fullData),
+            'periodPlannings' => array_map(fn($pp) => $pp->toArray($fullData), $this->periodPlannings)
         ];
     }
 
@@ -29,7 +29,7 @@ class FullConfig
         $config->rootPlannedOutcomeGroup = PlannedOutcomeGroup::fromArray($data['rootPlannedOutcomeGroup']);
         $config->periodPlannings = array_map(
             fn($pp) => PeriodPlanning::fromArray($pp),
-            $data['periodPlannings'] ?? []
+            $data['periodPlannings']
         );
         return $config;
     }

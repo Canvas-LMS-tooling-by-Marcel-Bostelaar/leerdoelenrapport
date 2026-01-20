@@ -12,10 +12,10 @@ class PlannedOutcomeGroup
      */
     public array $outcomesOrGroups = [];
 
-    public function toArray(): array
+    public function toArray(bool $fullData = true): array
     {
         return [
-            'outcomesOrGroups' => array_map(fn($x) => $x->toArray(), $this->outcomesOrGroups)
+            'outcomesOrGroups' => array_map(fn($x) => $x->toArray($fullData), $this->outcomesOrGroups)
         ];
     }
 

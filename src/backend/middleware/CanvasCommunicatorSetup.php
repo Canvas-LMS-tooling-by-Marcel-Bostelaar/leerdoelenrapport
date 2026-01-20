@@ -8,7 +8,7 @@ class CanvasCommunicatorSetup
 {
     public function handle($request, $next)
     {
-        $apiKey = $request->header('ApiKey');
+        $apiKey = $request->attributes->get('ApiKey');
 
         $CanvasCommunicator = new CanvasCommunicator($apiKey);
         $request->attributes->set('CanvasCommunicator', $CanvasCommunicator);

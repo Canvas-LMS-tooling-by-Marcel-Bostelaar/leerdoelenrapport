@@ -16,7 +16,8 @@
         "illuminate/routing": "^12.46",
         "illuminate/events": "^12.46",
         "canvasapilibrary/orm": "1.1.*",
-        "canvasapilibrary/redis-cache-provider": "1.1.*"
+        "canvasapilibrary/redis-cache-provider": "1.1.*",
+        "ondrej-vrto/php-filename-sanitize": "^1.6"
     },
     "require-dev": {
         "canvasapilibrary/session-cache-wrapper": "^1.0"

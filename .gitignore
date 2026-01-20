@@ -3,3 +3,4 @@
 /src/backend/public/static/react/*
 
 .env
+composer.lock

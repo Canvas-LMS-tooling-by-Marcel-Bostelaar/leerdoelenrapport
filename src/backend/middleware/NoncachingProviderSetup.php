@@ -13,6 +13,7 @@ class NonCachingProviderSetup
     {
         $canvasCommunicator = $request->attributes->get('CanvasCommunicator');
         $clientIDProvider = $request->attributes->get('ClientIDProvider');
+        $configProvider = $request->attributes->get('ConfigProvider');
         
         $apiProviders = new ProviderContainer(
         new Providers\AssignmentProvider($canvasCommunicator, $clientIDProvider),
@@ -21,6 +22,7 @@ class NonCachingProviderSetup
         new Providers\SectionProvider($canvasCommunicator, $clientIDProvider),
         new Providers\SubmissionProvider($canvasCommunicator, $clientIDProvider),
         new Providers\UserProvider($canvasCommunicator, $clientIDProvider),
+        $configProvider
         );
 
         // Bind to the application container for global helper access

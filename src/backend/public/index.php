@@ -6,7 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Http\Request;
-use CanvasApiLibrary\Middleware;
+use App\Middleware;
 
 $container = new Container;
 $events = new Dispatcher($container);
@@ -17,14 +17,11 @@ $container->bind(
 );
 
 require __DIR__ . '/../routes.php';
+require __DIR__ . '/../middleware.php';
 
 $router = new Router($events, $container);
 $router->group([
-    'middleware' => [
-        Middleware\StaticApiKeyMiddleware::class,
-        Middleware\CachedCanvasCommunicatorSetup::class, 
-        Middleware\NonCachingProviderSetup::class
-    ],
+    'middleware' => $middleware,
 ], function () use ($router) {
     routes($router);
 });

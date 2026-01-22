@@ -37,11 +37,11 @@ class PeriodPlanning
         $planning = new self();
         $planning->periods = array_map(
             fn($p) => Period::fromArray($p),
-            $data['periods']
+            $data['periods'] ?? []
         );
         $planning->sections = array_map(
             fn($s) => self::sectionFromArray($s),
-            $data['sections']
+            $data['sections'] ?? []
         );
         return $planning;
     }

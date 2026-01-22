@@ -22,9 +22,9 @@ class Period
     public static function fromArray(array $data): self
     {
         $period = new self();
-        $period->startDate = new DateTime($data['startDate']);
-        $period->endDate = new DateTime($data['endDate']);
-        $period->periodNumber = $data['periodNumber'];
+        $period->startDate = new DateTime($data['startDate'] ?? '');
+        $period->endDate = new DateTime($data['endDate'] ?? '');
+        $period->periodNumber = $data['periodNumber'] ?? 0;
         return $period;
     }
 }

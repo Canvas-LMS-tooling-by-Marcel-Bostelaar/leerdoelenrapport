@@ -10,6 +10,7 @@ use CanvasApiLibrary\Core\Models\OutcomeStub;
 class OutcomePlanning
 {
     public OutcomeStub $outcome;
+    public bool $enabled = false;
     /**
      * Period - level mapping
      * @var array<int, int>
@@ -25,6 +26,7 @@ class OutcomePlanning
     {
         return [
             'outcome' => self::outcomeToArray($this->outcome, $fullData),
+            'enabled' => $this->enabled,
             'periodLevels' => $this->periodLevels
         ];
     }
@@ -32,8 +34,9 @@ class OutcomePlanning
     public static function fromArray(array $data): self
     {
         $planning = new self();
-        $planning->outcome = self::outcomeFromArray($data['outcome']);
-        $planning->periodLevels = $data['periodLevels'];
+        $planning->outcome = self::outcomeFromArray($data['outcome']) ?? new OutcomeStub();
+        $planning->enabled = $data['enabled'] ?? false;
+        $planning->periodLevels = $data['periodLevels'] ?? [];
         return $planning;
     }
 

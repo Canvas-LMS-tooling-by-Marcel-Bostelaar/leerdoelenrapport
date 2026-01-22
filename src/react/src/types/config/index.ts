@@ -9,7 +9,8 @@ export interface PlannedOutcomeGroup {
 
 export interface OutcomePlanning {
     outcome: Outcome;
-    periodLevels: Map<number, number>; //TODO does this deserialize from a json dict?
+    enabled: boolean;
+    periodLevels: Map<number, number>; //cast via parser
 }
 
 export interface Outcome {
@@ -30,8 +31,8 @@ export interface PeriodPlanning {
 }
 
 export interface Period {
-    startDate: Date; // TODO Does this deserialize from a date string from json?
-    endDate: Date; // TODO Does this deserialize from a date string from json?
+    startDate: Date; // Cast via parser
+    endDate: Date; // Cast via parser
     periodNumber: number;
 }
 
@@ -53,6 +54,18 @@ export function ParseFullConfigJson(jsonString: string): FullConfig {
         return value;
     });
     return config as FullConfig;
+}
+
+export function FullConfigToJson(config: FullConfig): string {
+    return JSON.stringify(config, (key, value) => {
+        if (key === 'startDate' || key === 'endDate') {
+            return (value as Date).toISOString();
+        }
+        if (key === 'periodLevels' && value instanceof Map) {
+            return Object.fromEntries(value);
+        }
+        return value;
+    });
 }
 
 

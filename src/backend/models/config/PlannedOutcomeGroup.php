@@ -28,7 +28,7 @@ class PlannedOutcomeGroup
             } else {
                 return OutcomePlanning::fromArray($item);
             }
-        }, $data['outcomesOrGroups']);
+        }, $data['outcomesOrGroups'] ?? []);
         return $group;
     }
 }

@@ -1,15 +1,16 @@
-export interface FullConfig {
-    rootPlannedOutcomeGroup: PlannedOutcomeGroup;
-    periodPlannings: PeriodPlanning[];
+export interface FullConfig{
+    groupingConfigs: GroupingConfig[];
 }
 
-export interface PlannedOutcomeGroup {
-    outcomesOrGroups: (PlannedOutcomeGroup | OutcomePlanning)[];
+export interface GroupingConfig {
+    name: string;
+    outcomePlannings: OutcomePlanning[];
+    periodPlannings: PeriodPlanning[];
 }
 
 export interface OutcomePlanning {
     outcome: Outcome;
-    enabled: boolean;
+    status: "enabled" | "disabled" | "orphaned";
     periodLevels: Map<number, number>; //cast via parser
 }
 
@@ -27,13 +28,12 @@ export interface Outcome {
 
 export interface PeriodPlanning {
     periods: Period[];
-    sections: Section[];
+    sections: DecoratedSection[];
 }
 
-export interface Period {
-    startDate: Date; // Cast via parser
-    endDate: Date; // Cast via parser
-    periodNumber: number;
+export interface DecoratedSection {
+    section: Section;
+    isOrphaned: boolean;
 }
 
 export interface Section {
@@ -42,6 +42,13 @@ export interface Section {
     domain: string;
     name: string;
 }
+
+export interface Period {
+    startDate: Date; // Cast via parser
+    endDate: Date; // Cast via parser
+    periodNumber: number;
+}
+
 
 export function ParseFullConfigJson(jsonString: string): FullConfig {
     let config = JSON.parse(jsonString, (key, value) => {

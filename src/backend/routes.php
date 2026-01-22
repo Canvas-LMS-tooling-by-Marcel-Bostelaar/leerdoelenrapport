@@ -1,8 +1,12 @@
 <?php
 
+use App\Controllers\ConfigController;
 use App\Controllers\CourseContextController;
+use App\Controllers\OutcomeController;
 use App\Exceptions\ResultControlFlowEscapehatchException;
 use App\Models\Config\FullConfig;
+use CanvasApiLibrary\Core\Models\Outcomegroup;
+use CanvasApiLibrary\Core\Providers\Utility\Lookup;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Router;
@@ -20,35 +24,9 @@ function routes(Router $router)
     });
 
     $router->group(['prefix' => 'api', 'middleware' => 'ensureCourseContext'], function (Router $router) {
-        $router->get('config', function(){
-            $course = course();
-            $providers = providers();
-            $rawProviders = providersRaw();
-            return json_encode($providers->configProvider->getConfigInCourse($course)
-            ->toArray(
-                $rawProviders->outcomeProvider, 
-                $rawProviders->sectionProvider, 
-                true));
-        });
-
-        $router->post('config', function(Request $request){
-            $course = course();
-            $providers = providers();
-
-            // Prefer parsing raw JSON body sent by fetch
-            $rawBody = $request->getContent();
-            $configData = json_decode($rawBody, true);
-
-            
-            if ($configData === null) {
-                return new Response('Missing configData', 400);
-            }
-
-            $config = FullConfig::fromArray($configData); // Validate config data
-
-            $providers->configProvider->saveConfig($course, $config);
-            return json_encode(['status' => 'success']);
-        });
+        $router->get('config', [ConfigController::class, 'get']);
+        $router->post('config', [ConfigController::class, 'store']);
+        $router->get('outcomes', [OutcomeController::class, "outcomegroups"]);
     });
 
 

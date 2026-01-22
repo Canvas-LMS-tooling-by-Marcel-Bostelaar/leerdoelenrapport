@@ -4,7 +4,7 @@ use App\Middleware\Util\ProviderContainer;
 use CanvasApiLibrary\Core\Models\CourseStub;
 use CanvasApiLibrary\Core\Models\Domain;
 use Illuminate\Container\Container;
-use Illuminate\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 
 if (!function_exists('providersRaw')) {
     /**
@@ -52,5 +52,19 @@ if (!function_exists('course')) {
         $course->id = $data['id'];
         $course->domain = new Domain($data['domain']);
         return $course;
+    }
+}
+
+if (!function_exists('jsonResponse')) {
+    function jsonResponse(mixed $data, int $status = 200, array $headers = []): Response
+    {
+        return new Response(json_encode($data), $status, array_merge(['Content-Type' => 'application/json'], $headers));
+    }
+}
+
+if (!function_exists('response')) {
+    function response(mixed $data, int $status = 200, array $headers = []): Response
+    {
+        return new Response($data, $status, $headers);
     }
 }

@@ -1,0 +1,478 @@
+{
+    "groupingConfigs": [
+        {
+            "name": "Unnamed Config",
+            "outcomePlannings": [
+                {
+                    "outcome": {
+                        "id": 3609,
+                        "url": "outcomes\/3609",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3610,
+                        "url": "outcomes\/3610",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3564,
+                        "url": "outcomes\/3564",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3565,
+                        "url": "outcomes\/3565",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3560,
+                        "url": "outcomes\/3560",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3563,
+                        "url": "outcomes\/3563",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3559,
+                        "url": "outcomes\/3559",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3562,
+                        "url": "outcomes\/3562",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3561,
+                        "url": "outcomes\/3561",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3577,
+                        "url": "outcomes\/3577",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3568,
+                        "url": "outcomes\/3568",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3576,
+                        "url": "outcomes\/3576",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3574,
+                        "url": "outcomes\/3574",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3575,
+                        "url": "outcomes\/3575",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3569,
+                        "url": "outcomes\/3569",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3567,
+                        "url": "outcomes\/3567",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3572,
+                        "url": "outcomes\/3572",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3573,
+                        "url": "outcomes\/3573",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3571,
+                        "url": "outcomes\/3571",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3570,
+                        "url": "outcomes\/3570",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3566,
+                        "url": "outcomes\/3566",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3581,
+                        "url": "outcomes\/3581",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3589,
+                        "url": "outcomes\/3589",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3585,
+                        "url": "outcomes\/3585",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3580,
+                        "url": "outcomes\/3580",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3578,
+                        "url": "outcomes\/3578",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3586,
+                        "url": "outcomes\/3586",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3587,
+                        "url": "outcomes\/3587",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3588,
+                        "url": "outcomes\/3588",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3584,
+                        "url": "outcomes\/3584",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3583,
+                        "url": "outcomes\/3583",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3579,
+                        "url": "outcomes\/3579",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3582,
+                        "url": "outcomes\/3582",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3590,
+                        "url": "outcomes\/3590",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3593,
+                        "url": "outcomes\/3593",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3591,
+                        "url": "outcomes\/3591",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3592,
+                        "url": "outcomes\/3592",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3594,
+                        "url": "outcomes\/3594",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3595,
+                        "url": "outcomes\/3595",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3597,
+                        "url": "outcomes\/3597",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3596,
+                        "url": "outcomes\/3596",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3599,
+                        "url": "outcomes\/3599",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3600,
+                        "url": "outcomes\/3600",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3598,
+                        "url": "outcomes\/3598",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3601,
+                        "url": "outcomes\/3601",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3604,
+                        "url": "outcomes\/3604",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3603,
+                        "url": "outcomes\/3603",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3602,
+                        "url": "outcomes\/3602",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3606,
+                        "url": "outcomes\/3606",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3605,
+                        "url": "outcomes\/3605",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3607,
+                        "url": "outcomes\/3607",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3608,
+                        "url": "outcomes\/3608",
+                        "domain": "https:\/\/flexedu.instructure.com\/api\/v1\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                }
+            ],
+            "periodPlannings": []
+        }
+    ]
+}

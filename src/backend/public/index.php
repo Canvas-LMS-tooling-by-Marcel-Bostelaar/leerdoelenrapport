@@ -24,8 +24,9 @@ require __DIR__ . '/../routes.php';
 require __DIR__ . '/../middleware.php';
 
 $router = new Router($events, $container);
+registerNamedMiddleware($router);
 $router->group([
-    'middleware' => $middleware,
+    'middleware' => $middlewareEveryRequest,
 ], function () use ($router) {
     routes($router);
 });

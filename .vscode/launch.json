@@ -13,7 +13,7 @@
                 9000
             ],
             "ignore": [
-                "**/vendor/**/*.php",
+                "**/vendors/**/*.php",
             ]
         }
     ]

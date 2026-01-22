@@ -5,6 +5,8 @@ namespace App\Models\Config;
 use CanvasApiLibrary\Core\Models\CourseStub;
 use CanvasApiLibrary\Core\Models\Domain;
 use CanvasApiLibrary\Core\Models\SectionStub;
+use CanvasApiLibrary\Core\Providers\Interfaces\OutcomeProviderInterface;
+use CanvasApiLibrary\Core\Providers\Interfaces\SectionProviderInterface;
 
 class PeriodPlanning
 {
@@ -15,7 +17,7 @@ class PeriodPlanning
     public array $periods;
     /**
      * Summary of sections
-     * @var SectionStub[]
+     * @var DecoratedSection[]
      */
     public array $sections;
 
@@ -24,11 +26,11 @@ class PeriodPlanning
      * @param bool $fullData If true, will fetch and include full section data
      * @return array{periods: array, sections: array}
      */
-    public function toArray(bool $fullData = true): array
+    public function toArray(OutcomeProviderInterface $outcomeProvider, SectionProviderInterface $sectionProvider, bool $fullData = true): array
     {
         return [
-            'periods' => array_map(fn($p) => $p->toArray(), $this->periods),
-            'sections' => array_map(fn($s) => self::sectionToArray($s, $fullData), $this->sections)
+            'periods' => array_map(fn($p) => $p->toArray($outcomeProvider, $fullData), $this->periods),
+            'sections' => array_map(fn($s) => $s->toArray($sectionProvider, $fullData), $this->sections)
         ];
     }
 
@@ -40,40 +42,21 @@ class PeriodPlanning
             $data['periods'] ?? []
         );
         $planning->sections = array_map(
-            fn($s) => self::sectionFromArray($s),
+            fn($s) => DecoratedSection::fromArray($s),
             $data['sections'] ?? []
         );
         return $planning;
     }
 
-    private static function sectionToArray(SectionStub $section, bool $fullData = true): array
-    {
-        $stubData = [
-            "id" => $section->id,
-            "course_id" => $section->course->id,
-            "domain" => $section->domain->domain
-        ];
-        if(!$fullData){
-            return $stubData;
+    
+    /**
+     * Marks all sections in config that are missing in data as orphaned.
+     * @param SectionStub[] $sections
+     * @return void
+     */
+    public function reconcile(array $sections){
+        foreach($this->sections as $decoratedSection){
+            $decoratedSection->reconcile($sections);
         }
-        $fullSection = providers()->sectionProvider->populateSection($section);
-        return array_merge($stubData, [
-            "name" => $fullSection->name
-        ]);
-    }
-
-    private static function sectionFromArray(array $data): SectionStub{
-        $stub = new SectionStub();
-        $stub->id = $data['id'];
-
-        $domain = new Domain($data['domain']);
-        $stub->domain = $domain;
-
-        $course = new CourseStub();
-        $course->id = $data['course_id'];
-        $course->domain = $domain;
-        $stub->course = $course;
-
-        return $stub;
     }
 }

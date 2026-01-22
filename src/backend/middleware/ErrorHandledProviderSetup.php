@@ -55,6 +55,7 @@ class ErrorHandledProviderSetup
             new Interfaces\SectionProviderWrapper($providers->sectionProvider, $capturedFunc),
             new Interfaces\SubmissionProviderWrapper($providers->submissionProvider, $capturedFunc),
             new Interfaces\UserProviderWrapper($providers->userProvider, $capturedFunc),
+            new Interfaces\OutcomeGroupProviderWrapper($providers->outcomeGroupProvider, $capturedFunc),
             new Interfaces\OutcomeProviderWrapper($providers->outcomeProvider, $capturedFunc),
             new Interfaces\OutcomeResultProviderWrapper($providers->outcomeResultProvider, $capturedFunc),
             new ConfigProviderWrapper($providers->configProvider, $capturedFunc)

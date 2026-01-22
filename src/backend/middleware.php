@@ -1,13 +1,17 @@
 <?php
 use App\Middleware;
+use Illuminate\Routing\Router;
 
-$middleware = [
+$middlewareEveryRequest = [
     Middleware\ReadEnvFile::class,
-    Middleware\CatchUnhandledErrors::class,
+    // Middleware\CatchUnhandledErrors::class,
     Middleware\StaticApiKeyMiddleware::class,
-    Middleware\FilesystemConfigSetup::class,
     Middleware\CachedCanvasCommunicatorSetup::class, 
-    Middleware\NonCachingProviderSetup::class,
+    Middleware\ProviderSetup::class,
     Middleware\ErrorHandledProviderSetup::class,
     Middleware\CourseContextSetup::class,
 ];
+
+function registerNamedMiddleware(Router $router){
+    $router->aliasMiddleware('ensureCourseContext', Middleware\EnsureCourseContext::class);
+}

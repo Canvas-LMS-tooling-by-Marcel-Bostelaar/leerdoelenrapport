@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\CourseContextController;
+use App\Exceptions\ResultControlFlowEscapehatchException;
 use App\Models\Config\FullConfig;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,11 +19,16 @@ function routes(Router $router)
         return "hello world";
     });
 
-    $router->group(['prefix' => 'api'], function (Router $router) {
+    $router->group(['prefix' => 'api', 'middleware' => 'ensureCourseContext'], function (Router $router) {
         $router->get('config', function(){
             $course = course();
             $providers = providers();
-            return json_encode($providers->configProvider->getConfigInCourse($course)->toArray(false)); //temp false because dummy data has no actual url to fetch with
+            $rawProviders = providersRaw();
+            return json_encode($providers->configProvider->getConfigInCourse($course)
+            ->toArray(
+                $rawProviders->outcomeProvider, 
+                $rawProviders->sectionProvider, 
+                true));
         });
 
         $router->post('config', function(Request $request){

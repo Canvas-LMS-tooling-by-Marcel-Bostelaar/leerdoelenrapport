@@ -2,35 +2,57 @@
 
 namespace App\Models\Config;
 
+use CanvasApiLibrary\Core\Models\OutcomegroupStub;
+use CanvasApiLibrary\Core\Models\OutcomeStub;
+use CanvasApiLibrary\Core\Models\SectionStub;
+use CanvasApiLibrary\Core\Providers\Interfaces\OutcomeProviderInterface;
+use CanvasApiLibrary\Core\Providers\Interfaces\SectionProviderInterface;
+use CanvasApiLibrary\Core\Providers\Utility\Lookup;
+
 class FullConfig
 {
-    public function __construct() {
-        $this->rootPlannedOutcomeGroup = new PlannedOutcomeGroup();
-    }
-    public PlannedOutcomeGroup $rootPlannedOutcomeGroup;
-    
     /**
-     * List of period plannings
-     * @var PeriodPlanning[]
+     * Summary of groupingConfigs
+     * @var GroupingConfig[]
      */
-    public array $periodPlannings = [];
+    public array $groupingConfigs = [];
 
-    public function toArray(bool $fullData = true): array
+    public function toArray(OutcomeProviderInterface $outcomeProvider, SectionProviderInterface $sectionProvider, bool $fullData = true): array
     {
         return [
-            'rootPlannedOutcomeGroup' => $this->rootPlannedOutcomeGroup->toArray($fullData),
-            'periodPlannings' => array_map(fn($pp) => $pp->toArray($fullData), $this->periodPlannings)
+            'groupingConfigs' => array_map(
+                fn($gc) => $gc->toArray($outcomeProvider, $sectionProvider, $fullData),
+                $this->groupingConfigs
+            )
         ];
     }
 
     public static function fromArray(array $data): self
     {
         $config = new self();
-        $config->rootPlannedOutcomeGroup = PlannedOutcomeGroup::fromArray($data['rootPlannedOutcomeGroup']);
-        $config->periodPlannings = array_map(
-            fn($pp) => PeriodPlanning::fromArray($pp),
-            $data['periodPlannings']
+        $config->groupingConfigs = array_map(
+            fn($gc) => GroupingConfig::fromArray($gc),
+            $data['groupingConfigs']
         );
         return $config;
+    }
+
+    public function ensureContent(): void{
+        if(count($this->groupingConfigs) === 0){
+            $this->groupingConfigs[] = new GroupingConfig();
+        }
+    }
+
+    /**
+     * Adds outcomes not in config but in given set to the config, flags outcomes in config that are missing in data as orphaned.
+     * Marks all sections in config that are missing in data as orphaned.
+     * @param Lookup<OutcomegroupStub, OutcomeStub>[] $outcomes
+     * @param SectionStub[] $sections
+     * @return void
+     */
+    public function reconcile(array $outcomes, array $sections){
+        foreach($this->groupingConfigs as $groupingConfig){
+            $groupingConfig->reconcile($outcomes, $sections);
+        }
     }
 }

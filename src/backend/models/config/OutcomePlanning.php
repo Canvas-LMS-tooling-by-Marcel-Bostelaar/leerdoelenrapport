@@ -2,15 +2,23 @@
 
 namespace App\Models\Config;
 
-use App\Middleware\Util\ProviderContainer;
+use App\Exceptions\ResultControlFlowEscapehatchException;
 use CanvasApiLibrary\Core\Models\Domain;
-use CanvasApiLibrary\Core\Models\Outcome;
+use CanvasApiLibrary\Core\Models\OutcomegroupStub;
 use CanvasApiLibrary\Core\Models\OutcomeStub;
+use CanvasApiLibrary\Core\Providers\Interfaces\OutcomeProviderInterface;
+use CanvasApiLibrary\Core\Providers\Utility\Lookup;
+use CanvasApiLibrary\Core\Providers\Utility\Results\SuccessResult;
 
 class OutcomePlanning
 {
     public OutcomeStub $outcome;
-    public bool $enabled = false;
+
+    /**
+     * The status of the outcome. Enabled if shown in the report, disabled if not, orphaned if the outcome no longer exists in Canvas.
+     * @var string
+     */
+    public string $status = 'disabled'; // 'disabled', 'enabled', 'orphaned', orphaned when the outcome no longer exists in Canvas
     /**
      * Period - level mapping
      * @var array<int, int>
@@ -22,11 +30,11 @@ class OutcomePlanning
      * @param bool $fullData If true, will fetch and include full outcome data
      * @return array{outcome: array, periodLevels: int[]}
      */
-    public function toArray(bool $fullData = true): array
+    public function toArray(OutcomeProviderInterface $outcomeProvider, bool $fullData = true): array
     {
         return [
-            'outcome' => self::outcomeToArray($this->outcome, $fullData),
-            'enabled' => $this->enabled,
+            'outcome' => self::outcomeToArray($this->outcome, $outcomeProvider, $fullData),
+            'status' => $this->status,
             'periodLevels' => $this->periodLevels
         ];
     }
@@ -35,12 +43,12 @@ class OutcomePlanning
     {
         $planning = new self();
         $planning->outcome = self::outcomeFromArray($data['outcome']) ?? new OutcomeStub();
-        $planning->enabled = $data['enabled'] ?? false;
+        $planning->status = $data['status'] ?? 'disabled';
         $planning->periodLevels = $data['periodLevels'] ?? [];
         return $planning;
     }
 
-    private static function outcomeToArray(OutcomeStub $outcome, bool $fullData = true): array
+    private static function outcomeToArray(OutcomeStub $outcome, OutcomeProviderInterface $outcomeProvider, bool $fullData = true): array
     {
         $stubData = [
             'id' => $outcome->id,
@@ -48,7 +56,12 @@ class OutcomePlanning
             'domain' => $outcome->domain->domain
         ];
         if($fullData){
-            $populated = providers()->outcomeProvider->populateOutcome($outcome);
+            $populated = $outcomeProvider->populateOutcome($outcome);
+            if(!$populated instanceof SuccessResult){
+                //error encountered.
+                throw new ResultControlFlowEscapehatchException($populated);
+            }
+            $populated = $populated->value;
             
             return array_merge($stubData, [
                 'title' => $populated->title,
@@ -70,5 +83,27 @@ class OutcomePlanning
         $domain = new Domain($data['domain']);
         $outcome->domain = $domain;
         return $outcome;
+    }
+
+    public function setOrphaned(): void
+    {
+        $this->status = 'orphaned';
+    }
+
+    public function clearOrphaned(): void
+    {
+        if($this->status === 'orphaned'){
+            $this->status = 'disabled';
+        }
+    }
+
+    public function enable(): void
+    {
+        $this->status = 'enabled';
+    }
+
+    public function disable(): void
+    {
+        $this->status = 'disabled';
     }
 }

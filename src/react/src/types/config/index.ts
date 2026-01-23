@@ -1,20 +1,20 @@
-export interface FullConfig{
-    groupingConfigs: GroupingConfig[];
+export interface IFullConfig{
+    groupingConfigs: IGroupingConfig[];
 }
 
-export interface GroupingConfig {
+export interface IGroupingConfig {
     name: string;
-    outcomePlannings: OutcomePlanning[];
-    periodPlannings: PeriodPlanning[];
+    outcomePlannings: IOutcomePlanning[];
+    periodPlannings: IPeriodPlanning[];
 }
 
-export interface OutcomePlanning {
-    outcome: Outcome;
-    status: "enabled" | "disabled" | "orphaned";
+export interface IOutcomePlanning {
+    outcome: IOutcome;
+    status: "enabled" | "disabled" | "orphaned" | "enabled_uncounted";
     periodLevels: Map<number, number>; //cast via parser
 }
 
-export interface Outcome {
+export interface IOutcome {
     id: string;
     url: string;
     domain: string;
@@ -26,31 +26,31 @@ export interface Outcome {
     calculation_int: number|null;
 }
 
-export interface PeriodPlanning {
-    periods: Period[];
-    sections: DecoratedSection[];
+export interface IPeriodPlanning {
+    periods: IPeriod[];
+    sections: IDecoratedSection[];
 }
 
-export interface DecoratedSection {
-    section: Section;
+export interface IDecoratedSection {
+    section: ISection;
     isOrphaned: boolean;
 }
 
-export interface Section {
+export interface ISection {
     id: string;
     course_id: string;
     domain: string;
     name: string;
 }
 
-export interface Period {
+export interface IPeriod {
     startDate: Date; // Cast via parser
     endDate: Date; // Cast via parser
     periodNumber: number;
 }
 
 
-export function ParseFullConfigJson(jsonString: string): FullConfig {
+export function ParseFullConfigJson(jsonString: string): IFullConfig {
     let config = JSON.parse(jsonString, (key, value) => {
         if (key === 'startDate' || key === 'endDate') {
             return new Date(value);
@@ -60,10 +60,10 @@ export function ParseFullConfigJson(jsonString: string): FullConfig {
         }
         return value;
     });
-    return config as FullConfig;
+    return config as IFullConfig;
 }
 
-export function FullConfigToJson(config: FullConfig): string {
+export function FullConfigToJson(config: IFullConfig): string {
     return JSON.stringify(config, (key, value) => {
         if (key === 'startDate' || key === 'endDate') {
             return (value as Date).toISOString();

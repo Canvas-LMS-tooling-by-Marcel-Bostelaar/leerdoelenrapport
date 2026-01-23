@@ -15,10 +15,15 @@ class OutcomePlanning
     public OutcomeStub $outcome;
 
     /**
-     * The status of the outcome. Enabled if shown in the report, disabled if not, orphaned if the outcome no longer exists in Canvas.
+     * The status of the outcome.
+     * enabled if the outcome is being tracked for this context.
+     * disabled if not being tracked.
+     * enabled_uncounted if being tracked but not counted in the overall indicators.
+     * orphaned if the outcome no longer exists in Canvas, which also disables it.
      * @var string
      */
-    public string $status = 'disabled'; // 'disabled', 'enabled', 'orphaned', orphaned when the outcome no longer exists in Canvas
+    public string $status = 'disabled';
+    
     /**
      * Period - level mapping
      * @var array<int, int>

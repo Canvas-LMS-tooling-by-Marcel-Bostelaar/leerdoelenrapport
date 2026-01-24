@@ -20,9 +20,9 @@ class OutcomeController
                 'id' => $group->id,
                 'title' => $group->title,
                 'description' => $group->description,
-                'parent outcome id' => $group->parent_outcome_group?->id,
-                'child outcomes' => array_map(fn($x) => $x->id, $providers->outcomeProvider->getOutcomesInOutcomegroup($group)),
-                'child groups' => []
+                'parent_outcome_group_id' => $group->parent_outcome_group?->id,
+                'child_outcomes' => array_map(fn($x) => $x->id, $providers->outcomeProvider->getOutcomesInOutcomegroup($group)),
+                'child_groups' => []
             ];
         }
         $root = null;
@@ -33,12 +33,12 @@ class OutcomeController
         }
 
         foreach ($byId as &$node) {
-            if ($node['parent outcome id'] === null) {
+            if ($node['parent_outcome_group_id'] === null) {
                 $root = &$node;
             } else {
-                $byId[$node['parent outcome id']]['child groups'][] = &$node;
+                $byId[$node['parent_outcome_group_id']]['child_groups'][] = &$node;
             }
-            unset($node['parent outcome id']);
+            unset($node['parent_outcome_group_id']);
         }
 
         return jsonResponse($root);

@@ -1,5 +1,5 @@
 type TintoT<T> = ((original: T) => T);
-type Setter<T> = (arg: TintoT<T>) => void;
+type RestrictedSetter<T> = (arg: TintoT<T>) => void;
 
 /**
  * Fully function based useDerivedState implementation. Does not accept direct values for the setter.
@@ -14,14 +14,14 @@ function functionBasedUseDerivedState<A, B>(
   set: (updater: TintoT<A>) => void,
   selector: (originalState: A) => B,
   applicator: (originalState: A, transformedB: B) => A
-): [B, Setter<B>] {
+): [B, RestrictedSetter<B>] {
 
   const derivedState: B = selector(state);
   if(typeof derivedState === 'function'){
     throw new Error("Derived state cannot be a function. This is to avoid ambiguity between a function as state and a function as an updater.");
   }
 
-  const derivedSetter: Setter<B> = (arg: TintoT<B>) => {
+  const derivedSetter: RestrictedSetter<B> = (arg: TintoT<B>) => {
     set((originalSuper: A) => {
       return applicator(originalSuper, arg(selector(originalSuper)));
     });
@@ -31,7 +31,8 @@ function functionBasedUseDerivedState<A, B>(
 
 
 
-type DualSetter<T> = (arg: T | TintoT<T>) => void;
+export type StateSetter<T> = (arg: T | TintoT<T>) => void;
+export type useStateTuple<T> = [T, StateSetter<T>];
 
 /**
  * Allows for creating a derived state from a parent state with a selector and an applicator.
@@ -47,9 +48,9 @@ export function useDerivedState<A, B>(
   set: (updater: TintoT<A>) => void,
   selector: (state: A) => B,
   applicator: (originalState: A, transformedB: B) => A
-): [B, DualSetter<B>]{
+): useStateTuple<B> {
   const [derivedState, derivedSetState] = functionBasedUseDerivedState(state, set, selector, applicator);
-  const dualSetter: DualSetter<B> = (arg: B | TintoT<B>) => {
+  const dualSetter: StateSetter<B> = (arg: B | TintoT<B>) => {
     if(typeof arg === 'function'){
       // we know arg is TintoT<B>
       derivedSetState(arg as TintoT<B>);

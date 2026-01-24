@@ -10,9 +10,15 @@ export interface IGroupingConfig {
 
 export interface IOutcomePlanning {
     outcome: IOutcome;
-    status: "enabled" | "disabled" | "orphaned" | "enabled_uncounted";
+    status: IOutcomePlanningStatus;
     periodLevels: Map<number, number>; //cast via parser
 }
+
+export type IOutcomePlanningStatus =
+    "enabled"
+    | "disabled"
+    | "orphaned"
+    | "enabled_uncounted";
 
 export interface IOutcome {
     id: string;

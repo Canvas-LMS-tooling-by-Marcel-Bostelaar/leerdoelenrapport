@@ -29,28 +29,30 @@ function routes(Router $router)
         $router->get('outcomes', [OutcomeController::class, "outcomegroups"]);
     });
 
+    $router->group(['prefix' => 'dev'], function (Router $router) {
+        //dev utilities
+        $router->get('cache', function(){
+            if(session_status() == PHP_SESSION_NONE){
+                session_start();
+            }
+            if(empty($_SESSION)){
+                return "no cache<br><form method='post' action='./clear'><button type='submit'>Clear cache</button></form>";
+            }
+            return "<form method='post' action='./clear'><button type='submit'>Clear cache</button></form>" .
+            "</br><pre>" . 
+            json_encode($_SESSION, JSON_PRETTY_PRINT) . "</pre>";
+        });
 
-    //dev utilities
-    $router->get('cache', function(){
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        if(empty($_SESSION)){
-            return "no cache<br><form method='post' action='/cache/clear'><button type='submit'>Clear cache</button></form>";
-        }
-        return "<form method='post' action='/cache/clear'><button type='submit'>Clear cache</button></form>" .
-        "</br><pre>" . 
-        json_encode($_SESSION, JSON_PRETTY_PRINT) . "</pre>";
+        $router->post('cache/clear', function(){
+            if(session_status() == PHP_SESSION_NONE){
+                session_start();
+            }
+            unset($_SESSION["urls"]);
+            return "Cache cleared. <a href='./cache'>Go back</a>";
+        });
+
+        //utility function to set the current course in session, for when app is not yet integrated into Canvas
+        $router->resource('setCourse', CourseContextController::class);
     });
-
-    $router->post('cache/clear', function(){
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        unset($_SESSION["urls"]);
-        return "Cache cleared. <a href='/cache'>Go back</a>";
-    });
-
-    //utility function to set the current course in session, for when app is not yet integrated into Canvas
-    $router->resource('setCourse', CourseContextController::class);
+    
 }

@@ -49,9 +49,9 @@ function App() {
 
   return (
     <div> 
-      <a href="/setCourse">Set Course in Session</a>
+      <a href="/dev/setCourse">Set Course in Session</a>
       <br></br>
-      <a href="/cache">Cache</a>
+      <a href="/dev/cache">Cache</a>
       <br></br>
       <div>
         <button onClick={loadConfig}>Load (GET)</button>

@@ -1,7 +1,7 @@
 
 
 export type IOutcomeGrouping = {
-    id: string;
+    id: number;
     title: string;
     description: string | null;
     child_groups: IOutcomeGrouping[];

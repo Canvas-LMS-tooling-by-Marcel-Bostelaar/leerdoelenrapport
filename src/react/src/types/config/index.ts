@@ -69,7 +69,7 @@ export function ParseFullConfigJson(jsonString: string): IFullConfig {
     return config as IFullConfig;
 }
 
-export function FullConfigToJson(config: IFullConfig): string {
+export function FullConfigToJson(config: IFullConfig, prettyPrint: boolean = false): string {
     return JSON.stringify(config, (key, value) => {
         if (key === 'startDate' || key === 'endDate') {
             return (value as Date).toISOString();
@@ -78,7 +78,7 @@ export function FullConfigToJson(config: IFullConfig): string {
             return Object.fromEntries(value);
         }
         return value;
-    });
+    }, prettyPrint ? 2 : undefined);
 }
 
 

@@ -1,23 +1,51 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { FullConfig } from './components/outcomes/FullConfig'
+import { FullConfigToJson, ParseFullConfigJson, type IFullConfig } from './types/config'
+import type { IOutcomeGrouping } from './types/IOutcomeGrouping'
 
 function App() {
-  const url = "/api/config"
-  const [body, setBody] = useState('')
+  const configUrl = "/api/config"
+  const outcomeUrl = "/api/outcomes"
+  const [jsonBody, setJsonBody] = useState('');
+  const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping|undefined>(undefined);
+  const [fullConfig, setFullConfig] = useState<IFullConfig>({
+    groupingConfigs: []
+  });
 
-  const loadJson = async () => {
-    const response = await fetch(url)
-    const json = await response.json()
-    setBody(JSON.stringify(json, null, 2))
+  const loadConfig = async () => {
+    const response = await fetch(configUrl)
+    const json = await response.text()
+    setFullConfig(ParseFullConfigJson(json));
   }
 
-  const sendJson = async () => {
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: body,
-    })
+  const saveConfig = async () => {
+    if(fullConfig !== null){
+      await fetch(configUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: FullConfigToJson(fullConfig),
+      })
+    }
   }
+
+  const jsonEffect = () => {
+    if(fullConfig != null){
+      setJsonBody(FullConfigToJson(fullConfig, true))
+    }
+  }
+
+  const loadOutcomeGrouping = async () => {
+    const response = await fetch(outcomeUrl)
+    const json = await response.text()
+    const parsed = JSON.parse(json) as IOutcomeGrouping;
+    setOutcomeGrouping(parsed);
+  }
+
+  useEffect(jsonEffect, [fullConfig]);
+  useEffect(() => {
+    loadOutcomeGrouping();
+  }, []);
 
   return (
     <div> 
@@ -26,13 +54,20 @@ function App() {
       <a href="/cache">Cache</a>
       <br></br>
       <div>
-        <button onClick={loadJson}>Load (GET)</button>
-        <button onClick={sendJson}>Send (POST)</button>
+        <button onClick={loadConfig}>Load (GET)</button>
+        <button onClick={saveConfig}>Send (POST)</button>
       </div>
 
+      {outcomeGrouping === undefined ? <>No config loaded</> : (
+        <FullConfig 
+        config={fullConfig} 
+        setConfig={setFullConfig}
+        outcomeGrouping={outcomeGrouping}></FullConfig>)}
       <div>
         <div>Body</div>
-        <textarea rows={18} value={body} onChange={(event) => setBody(event.target.value)} />
+        <pre>
+          {jsonBody}
+        </pre>
       </div>
     </div>
   )

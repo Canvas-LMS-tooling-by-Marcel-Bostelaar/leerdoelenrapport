@@ -38,6 +38,7 @@ export function OutcomeGroup({outcomePlannings, setOutcomePlannings, grouping, p
     <thead>
         <tr>
             <th colSpan={periodCount}>{grouping.title}</th>
+            {/* <th>{grouping.title}</th> */}
         </tr>
         <tr>
             {Array.from({length: periodCount}).map((_, index) => (
@@ -54,7 +55,8 @@ export function OutcomeGroup({outcomePlannings, setOutcomePlannings, grouping, p
                 periodCount={periodCount}>
             </OutcomePlanning>;
         })}
-        {subgroupsSorted.map((subgroup) => {
+    </tbody>
+    {subgroupsSorted.map((subgroup) => {
             return <OutcomeGroup
                 key={subgroup.id}
                 outcomePlannings={outcomePlannings}
@@ -63,6 +65,5 @@ export function OutcomeGroup({outcomePlannings, setOutcomePlannings, grouping, p
                 periodCount={periodCount}
             />;
         })}
-    </tbody>
     </>;
 }

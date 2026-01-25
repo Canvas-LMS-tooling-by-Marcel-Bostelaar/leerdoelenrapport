@@ -7,7 +7,6 @@ type GroupingConfigProps = {
     config: IGroupingConfig;
     setConfig: StateSetter<IGroupingConfig>;
     grouping: IOutcomeGrouping;//grouping is read-only, changes are done via regular canvas functionality
-    periodCount: number;
 };
 
 export function GroupingConfig({config, setConfig, grouping}: GroupingConfigProps) {

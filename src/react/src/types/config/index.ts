@@ -21,7 +21,7 @@ export type IOutcomePlanningStatus =
     | "enabled_uncounted";
 
 export interface IOutcome {
-    id: string;
+    id: number;
     url: string;
     domain: string;
     title: string;
@@ -43,7 +43,7 @@ export interface IDecoratedSection {
 }
 
 export interface ISection {
-    id: string;
+    id: number;
     course_id: string;
     domain: string;
     name: string;
@@ -61,7 +61,13 @@ export function ParseFullConfigJson(jsonString: string): IFullConfig {
         if (key === 'startDate' || key === 'endDate') {
             return new Date(value);
         }
-        if (key === 'periodLevels' && typeof value === 'object' && !Array.isArray(value)) {
+        if (key === 'periodLevels') {
+            if(Array.isArray(value)) {
+                if(value.length === 0) {
+                    return new Map<number, number>();
+                }
+                throw new Error("Invalid periodLevels format");
+            }
             return new Map(Object.entries(value).map(([k, v]) => [Number(k), v]));
         }
         return value;

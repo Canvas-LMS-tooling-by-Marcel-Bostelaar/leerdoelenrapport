@@ -5,7 +5,7 @@ type PeriodCellProps = {
 };
 
 export function PeriodCell({currentLevel, onLevelChangeCommand}: PeriodCellProps) {
-    return <td>
+    return <td className="cell">
         <button onClick={onLevelChangeCommand}>
             Level: {currentLevel}
         </button>

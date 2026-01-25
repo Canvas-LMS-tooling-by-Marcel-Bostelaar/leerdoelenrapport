@@ -2,6 +2,7 @@ import { Popover } from "@base-ui/react";
 import type { IOutcomePlanning, IOutcomePlanningStatus } from "../../types/config";
 import { useDerivedState, type StateSetter } from "../../utility/useDerivedState";
 import { PeriodCell } from "./PeriodCell";
+import "./OutcomePlanning.css";
 
 type OutcomePlanningProps = {
     planning: IOutcomePlanning;
@@ -40,7 +41,7 @@ export function OutcomePlanning({planning, setPlanning, periodCount, deletePlann
 
     return <>
     <tr>
-        <td>
+        <td className="cell">
             <PopoverStateSelector currentState={status} setState={setStatus} deletePlanning={deletePlanning}></PopoverStateSelector>
             {planning.outcome.title}
         </td>
@@ -70,16 +71,18 @@ function PopoverStateSelector({currentState, setState, deletePlanning}: PopoverS
         <Popover.Portal>
             <Popover.Positioner sideOffset={8}>
                 <Popover.Popup>
-                    <p onClick={() => setState("enabled")}>Enable</p>
-                    <p onClick={() => setState("enabled_uncounted")}>Enable, do not count</p>
-                    <p onClick={() => setState("disabled")}>Disable</p>
-                    {
-                        currentState == "orphaned" ? <p onClick={() => {
-                            if (AreYouSureDelete()) {
-                                deletePlanning();
-                            }
-                        }}>Delete</p> : <></>
-                    }
+                    <div className="state_popup">
+                        <p onClick={() => setState("enabled")}>Enable</p>
+                        <p onClick={() => setState("enabled_uncounted")}>Enable, do not count</p>
+                        <p onClick={() => setState("disabled")}>Disable</p>
+                        {
+                            currentState == "orphaned" ? <p onClick={() => {
+                                if (AreYouSureDelete()) {
+                                    deletePlanning();
+                                }
+                            }}>Delete</p> : <></>
+                        }
+                    </div>
                 </Popover.Popup>
             </Popover.Positioner>
         </Popover.Portal>

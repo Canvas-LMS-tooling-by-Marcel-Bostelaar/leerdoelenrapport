@@ -3,20 +3,40 @@ import './App.css'
 import { FullConfig } from './components/outcomes/FullConfig'
 import { FullConfigToJson, ParseFullConfigJson, type IFullConfig } from './types/config'
 import type { IOutcomeGrouping } from './types/IOutcomeGrouping'
+import { useDerivedState } from './utility/useDerivedState'
+
+type DecoratedIFullConfig = {
+  saveAndReloadTodo: boolean,
+  config: IFullConfig
+}
 
 function App() {
   const configUrl = "/api/config"
   const outcomeUrl = "/api/outcomes"
   const [jsonBody, setJsonBody] = useState('');
   const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping|undefined>(undefined);
-  const [fullConfig, setFullConfig] = useState<IFullConfig>({
-    groupingConfigs: []
+  const [decoratedState, setDecorateState] = useState<DecoratedIFullConfig>({
+    saveAndReloadTodo: false,
+    config: {
+      groupingConfigs: []
+    }
   });
+  const [fullConfig, setFullConfig] = useDerivedState(decoratedState, setDecorateState,
+    ds => ds.config,
+    (ds, nc) => {return {...ds, config: nc}}
+  )
+  const [saveAndReloadTodo, setSaveAndReloadTodo] = useDerivedState(decoratedState, setDecorateState,
+    ds => ds.saveAndReloadTodo,
+    (ds, newbool) => {return {...ds, saveAndReloadTodo: newbool}}
+  )
 
   const loadConfig = async () => {
     const response = await fetch(configUrl)
     const json = await response.text()
-    setFullConfig(ParseFullConfigJson(json));
+    setDecorateState({
+      saveAndReloadTodo: false,
+      config: ParseFullConfigJson(json)
+    });
   }
 
   const saveConfig = async () => {
@@ -46,6 +66,11 @@ function App() {
   useEffect(() => {
     loadOutcomeGrouping();
   }, []);
+  useEffect(() => {
+    if(saveAndReloadTodo){
+      saveConfig().then(loadConfig)
+    }
+  }, [saveAndReloadTodo])
 
   return (
     <div> 
@@ -62,6 +87,7 @@ function App() {
         <FullConfig 
         config={fullConfig} 
         setConfig={setFullConfig}
+        saveAndReloadConfig={() => setSaveAndReloadTodo(true)}
         outcomeGrouping={outcomeGrouping}></FullConfig>)}
       <div>
         <div>Body</div>

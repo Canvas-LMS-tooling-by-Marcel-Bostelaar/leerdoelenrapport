@@ -23,13 +23,15 @@ class GroupingConfig
      * @var PeriodPlanning[]
      */
     public array $periodPlannings = [];
+    public int $periodCount = 6;
 
     public function toArray(OutcomeProviderInterface $outcomeProvider, SectionProviderInterface $sectionProvider, bool $fullData = true): array
     {
         return [
             'name' => $this->name,
             'outcomePlannings' => array_map(fn($op) => $op->toArray($outcomeProvider, $fullData), $this->outcomePlannings),
-            'periodPlannings' => array_map(fn($pp) => $pp->toArray($outcomeProvider, $sectionProvider, $fullData), $this->periodPlannings)
+            'periodPlannings' => array_map(fn($pp) => $pp->toArray($outcomeProvider, $sectionProvider, $fullData), $this->periodPlannings),
+            'periodCount' => $this->periodCount
         ];
     }
 
@@ -45,6 +47,7 @@ class GroupingConfig
             fn($pp) => PeriodPlanning::fromArray($pp),
             $data['periodPlannings']
         );
+        $config->periodCount = $data['periodCount'] ?? 6;
         return $config;
     }
 

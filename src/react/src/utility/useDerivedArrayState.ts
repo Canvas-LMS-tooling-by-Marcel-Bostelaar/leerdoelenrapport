@@ -21,9 +21,8 @@ export function useDerivedArrayState<T>(array: T[], setArray: StateSetter<T[]>) 
                 return newArr;
             });
         const deleteThis = () => setArray(original => {
-            let newList = [...original];
-            delete newList[indexedItem.index];
-            return newList;
+            console.log("Deleted item with index: ", indexedItem.index)
+            return original.filter((_, index) => index !== indexedItem.index);
         })
         return {get: get, set: set, delete: deleteThis};
     });

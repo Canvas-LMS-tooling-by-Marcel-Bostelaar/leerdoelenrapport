@@ -6,6 +6,7 @@ export interface IGroupingConfig {
     name: string;
     outcomePlannings: IOutcomePlanning[];
     periodPlannings: IPeriodPlanning[];
+    periodCount: number;
 }
 
 export interface IOutcomePlanning {

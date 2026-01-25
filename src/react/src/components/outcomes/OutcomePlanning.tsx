@@ -3,6 +3,7 @@ import type { IOutcomePlanning, IOutcomePlanningStatus } from "../../types/confi
 import { useDerivedState, type StateSetter } from "../../utility/useDerivedState";
 import { PeriodCell } from "./PeriodCell";
 import "./OutcomePlanning.css";
+import { AreYouSureDelete } from "../../utility/prompt";
 
 type OutcomePlanningProps = {
     planning: IOutcomePlanning;
@@ -76,11 +77,7 @@ function PopoverStateSelector({currentState, setState, deletePlanning}: PopoverS
                         <p onClick={() => setState("enabled_uncounted")}>Enable, do not count</p>
                         <p onClick={() => setState("disabled")}>Disable</p>
                         {
-                            currentState == "orphaned" ? <p onClick={() => {
-                                if (AreYouSureDelete()) {
-                                    deletePlanning();
-                                }
-                            }}>Delete</p> : <></>
+                            currentState == "orphaned" ? <p onClick={() => AreYouSureDelete(deletePlanning)}>Delete</p> : <></>
                         }
                     </div>
                 </Popover.Popup>
@@ -90,6 +87,3 @@ function PopoverStateSelector({currentState, setState, deletePlanning}: PopoverS
     );
 }
 
-function AreYouSureDelete() : boolean{
-    return confirm("Are you sure you want to delete this orphaned outcome from this configuration? This action cannot be undone.");
-}

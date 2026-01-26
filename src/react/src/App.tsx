@@ -6,17 +6,18 @@ import type { IOutcomeGrouping } from './types/IOutcomeGrouping'
 import { useDerivedState } from './utility/useDerivedState'
 
 type DecoratedIFullConfig = {
-  saveAndReloadTodo: boolean,
+  revalidateTodo: boolean,
   config: IFullConfig
 }
 
 function App() {
   const configUrl = "/api/config"
+  const revalidateUrl = "/api/config/revalidate"
   const outcomeUrl = "/api/outcomes"
   const [jsonBody, setJsonBody] = useState('');
   const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping|undefined>(undefined);
   const [decoratedState, setDecorateState] = useState<DecoratedIFullConfig>({
-    saveAndReloadTodo: false,
+    revalidateTodo: false,
     config: {
       groupingConfigs: []
     }
@@ -25,16 +26,16 @@ function App() {
     ds => ds.config,
     (ds, nc) => {return {...ds, config: nc}}
   )
-  const [saveAndReloadTodo, setSaveAndReloadTodo] = useDerivedState(decoratedState, setDecorateState,
-    ds => ds.saveAndReloadTodo,
-    (ds, newbool) => {return {...ds, saveAndReloadTodo: newbool}}
+  const [revalidateTodo, setRevalidateTodo] = useDerivedState(decoratedState, setDecorateState,
+    ds => ds.revalidateTodo,
+    (ds, newbool) => {return {...ds, revalidateTodo: newbool}}
   )
 
   const loadConfig = async () => {
     const response = await fetch(configUrl)
     const json = await response.text()
     setDecorateState({
-      saveAndReloadTodo: false,
+      revalidateTodo: false,
       config: ParseFullConfigJson(json)
     });
   }
@@ -47,6 +48,19 @@ function App() {
         body: FullConfigToJson(fullConfig),
       })
     }
+  }
+
+  const revalidateConfig = async () => {
+    let response = await fetch(revalidateUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: FullConfigToJson(fullConfig),
+    });
+    const json = await response.text()
+    setDecorateState({
+      revalidateTodo: false,
+      config: ParseFullConfigJson(json)
+    });
   }
 
   const jsonEffect = () => {
@@ -67,10 +81,10 @@ function App() {
     loadOutcomeGrouping();
   }, []);
   useEffect(() => {
-    if(saveAndReloadTodo){
-      saveConfig().then(loadConfig)
+    if(revalidateTodo){
+      revalidateConfig();
     }
-  }, [saveAndReloadTodo])
+  }, [revalidateTodo])
 
   return (
     <div> 
@@ -87,7 +101,7 @@ function App() {
         <FullConfig 
         config={fullConfig} 
         setConfig={setFullConfig}
-        saveAndReloadConfig={() => setSaveAndReloadTodo(true)}
+        revalidateConfig={() => setRevalidateTodo(true)}
         outcomeGrouping={outcomeGrouping}></FullConfig>)}
       <div>
         <div>Body</div>

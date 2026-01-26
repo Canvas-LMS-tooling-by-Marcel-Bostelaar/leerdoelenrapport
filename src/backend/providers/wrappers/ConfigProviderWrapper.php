@@ -35,4 +35,9 @@ class ConfigProviderWrapper implements ConfigProviderInterface{
         $val = $this->wrapped->saveConfig($course, $config);
         return ($this->resultProcessor)($val);
     }
+
+    public function reconcile(CourseStub $course, FullConfig $config, bool $skipCache = false, bool $doNotCache = false): mixed{
+        $val = $this->wrapped->reconcile($course, $config, $skipCache, $doNotCache);
+        return ($this->resultProcessor)($val);
+    }
 }

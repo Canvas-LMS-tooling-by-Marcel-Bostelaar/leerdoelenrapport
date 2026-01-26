@@ -8,11 +8,11 @@ import { useDerivedArrayState } from "../../utility/useDerivedArrayState";
 type FullConfigProps = {
     config: IFullConfig;
     setConfig: StateSetter<IFullConfig>;
-    saveAndReloadConfig: () => void;
+    revalidateConfig: () => void;
     outcomeGrouping: IOutcomeGrouping
 };
 
-export function FullConfig({ config, setConfig, saveAndReloadConfig, outcomeGrouping}: FullConfigProps) {
+export function FullConfig({ config, setConfig, revalidateConfig, outcomeGrouping}: FullConfigProps) {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [configs, setConfigs] = useDerivedState(
         config,
@@ -30,7 +30,7 @@ export function FullConfig({ config, setConfig, saveAndReloadConfig, outcomeGrou
             periodPlannings: [],
             periodCount: 6
         }]);
-        saveAndReloadConfig();
+        revalidateConfig();
     }
 
     if (configStates.length <= 0) {

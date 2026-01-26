@@ -36,4 +36,25 @@ class ConfigController
         $providers->configProvider->saveConfig($course, $config);
         return response("successfully saved config");
     }
+
+    public function revalidateConfig(Request $request){
+        $course = course();
+        $providers = providers();
+        $providersRaw = providersRaw();
+
+        $rawBody = $request->getContent();
+        $configData = json_decode($rawBody, true);
+
+        if ($configData === null) {
+            return new Response('No config data sent', 400);
+        }
+
+        $config = FullConfig::fromArray($configData); // Validate config data
+
+        $newConfig = $providers->configProvider->reconcile($course, $config);
+        return jsonResponse($newConfig->toArray(
+            $providersRaw->outcomeProvider, 
+            $providersRaw->sectionProvider, 
+            true));
+    }
 }

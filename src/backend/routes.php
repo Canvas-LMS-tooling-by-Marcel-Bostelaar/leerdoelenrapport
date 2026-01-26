@@ -26,6 +26,7 @@ function routes(Router $router)
     $router->group(['prefix' => 'api', 'middleware' => 'ensureCourseContext'], function (Router $router) {
         $router->get('config', [ConfigController::class, 'get']);
         $router->post('config', [ConfigController::class, 'store']);
+        $router->post('config/revalidate', [ConfigController::class, 'revalidateConfig']);
         $router->get('outcomes', [OutcomeController::class, "outcomegroups"]);
     });
 

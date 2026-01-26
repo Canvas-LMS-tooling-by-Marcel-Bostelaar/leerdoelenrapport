@@ -73,6 +73,19 @@ class FilesystemConfigProvider implements ConfigProviderInterface
             $config = FullConfig::fromArray($data);
         }
 
+        return $this->reconcile($course, $config, $skipCache, $doNotCache);
+    }
+
+    /**
+     * Reconciles the provided configuration with the current outcomes and sections in the course.
+     * @param CourseStub $course
+     * @param FullConfig $config
+     * @param bool $skipCache
+     * @param bool $doNotCache
+     * @return ErrorResult|NotFoundResult|SuccessResult<FullConfig>|UnauthorizedResult
+     */
+    public function reconcile(CourseStub $course, FullConfig $config, bool $skipCache = false, bool $doNotCache = false): mixed
+    {
         //reconcile with current outcomes and sections
         $outcomes = $this->outcomeGroupProvider->getOutcomegroupsInCourse($course)
         ->flatMapSuccess(fn($groups) => $this->outcomeProvider->getOutcomesInOutcomegroups($groups, $skipCache, $doNotCache))
@@ -93,7 +106,6 @@ class FilesystemConfigProvider implements ConfigProviderInterface
         }
         $config->ensureContent();
         $config->reconcile($outcomes, $sections->value);
-        
         // @phpstan-ignore-next-line
         return new SuccessResult($config);
     }

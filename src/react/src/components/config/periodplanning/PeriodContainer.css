@@ -1,0 +1,9 @@
+.overlapping-period{
+    background-color: rgba(255, 0, 0, 0.6);
+}
+.invalid-period{
+    background: rgba(255, 234, 0, 0.6);
+}
+.duplicate-period{
+    background: rgba(128, 0, 128, 0.6);
+}

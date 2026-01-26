@@ -1,12 +1,13 @@
 
 type PeriodCellProps = {
     currentLevel: number;
-    onLevelChangeCommand: () => void;
+    onCellClick: () => void;
+    onCellRightClick: () => void;
 };
 
-export function PeriodCell({currentLevel, onLevelChangeCommand}: PeriodCellProps) {
+export function PeriodCell({currentLevel, onCellClick, onCellRightClick}: PeriodCellProps) {
     return <td className="cell">
-        <button onClick={onLevelChangeCommand}>
+        <button onClick={onCellClick} onContextMenu={(e) => { e.preventDefault(); onCellRightClick(); }}>
             Level: {currentLevel}
         </button>
     </td>;

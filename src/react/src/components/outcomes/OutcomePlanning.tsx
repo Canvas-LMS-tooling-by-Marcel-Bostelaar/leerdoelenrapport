@@ -14,6 +14,7 @@ type OutcomePlanningProps = {
 
 export function OutcomePlanning({planning, setPlanning, periodCount, deletePlanning}: OutcomePlanningProps) {
     const levelChangeHandler = (old : number) => old + 1; //TODO get real one from context, so context can determine if it should count up, to how much, or change to a specific one directly.
+    const levelReverseHandler = (old : number) => Math.max(0, old - 1); //TODO get real one from context, so context can determine if it should count up, to how much, or change to a specific one directly.
     const [status, setStatus] = useDerivedState(
         planning,
         setPlanning,
@@ -24,7 +25,7 @@ export function OutcomePlanning({planning, setPlanning, periodCount, deletePlann
     const periodData = 
         Array.from({length: periodCount}).map((_, index) => {
             const currentLevel = planning.periodLevels.get(index) || 0;
-            const onLevelChangeCommand = () => setPlanning(
+            const onLeftClick = () => setPlanning(
                 old => {
                     let periodLevels = new Map(old.periodLevels);
                     periodLevels.set(index, levelChangeHandler(currentLevel));
@@ -34,9 +35,20 @@ export function OutcomePlanning({planning, setPlanning, periodCount, deletePlann
                     }
                 }
             );
+            const onRightClick = () => setPlanning(
+                old => {
+                    let periodLevels = new Map(old.periodLevels);
+                    periodLevels.set(index, levelReverseHandler(currentLevel));
+                    return {
+                        ...old,
+                        periodLevels: periodLevels
+                    }
+                }
+            );
             return {
                 currentLevel: currentLevel,
-                onLevelChangeCommand: onLevelChangeCommand
+                onCellClick: onLeftClick,
+                onCellRightClick: onRightClick
             }
         });
 
@@ -50,7 +62,8 @@ export function OutcomePlanning({planning, setPlanning, periodCount, deletePlann
             <PeriodCell 
                 key={index}
                 currentLevel={period.currentLevel}
-                onLevelChangeCommand={period.onLevelChangeCommand}
+                onCellClick={period.onCellClick}
+                onCellRightClick={period.onCellRightClick}
             />
         ))}
     </tr>

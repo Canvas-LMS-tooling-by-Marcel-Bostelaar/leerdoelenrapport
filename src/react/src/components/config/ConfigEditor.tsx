@@ -15,7 +15,7 @@ type DecoratedIFullConfig = {
 export function ConfigEditor() {
   const configUrl = "/api/config"
   const revalidateUrl = "/api/config/revalidate"
-  const outcomeUrl = "/api/outcomes"
+  const outcomeUrl = "/api/outcomegroups"
   const sectionUrl = "/api/sections"
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   useUnsavedChangesWarning(hasUnsavedChanges);

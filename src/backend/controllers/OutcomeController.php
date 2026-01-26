@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CanvasApiLibrary\Core\Models\Outcomegroup;
+use Illuminate\Http\Client\Request;
 
 class OutcomeController
 {

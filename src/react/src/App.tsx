@@ -9,6 +9,8 @@ function App() {
       <br></br>
       <a href="/dev/cache">Cache</a>
       <br></br>
+      <a href="/api/students">Students</a>
+      <br></br>
       <ConfigEditor />
     </div>
   )

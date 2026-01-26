@@ -1,5 +1,5 @@
 import { useState, type ReactElement } from "react";
-import { AreYouSureDelete } from "../../utility/prompt";
+import { AreYouSureDelete } from "src/utility/prompt";
 
 type ConfigTabsProps = {
     names: string[];

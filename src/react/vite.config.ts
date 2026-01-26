@@ -6,6 +6,11 @@ dotenv.config({ path: '../../.env' });
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      src: "/src",
+    },
+  },
   plugins: [
     react({
       babel: {

@@ -1,9 +1,9 @@
 import { Popover } from "@base-ui/react";
-import type { IOutcomePlanning, IOutcomePlanningStatus } from "../../types/config";
-import { useDerivedState, type StateSetter } from "../../utility/useDerivedState";
-import { PeriodCell } from "./PeriodCell";
-import "./OutcomePlanning.css";
-import { AreYouSureDelete } from "../../utility/prompt";
+import type { IOutcomePlanning, IOutcomePlanningStatus } from "src/types/config";
+import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
+import { PeriodCell } from "src/components/config/outcomes/PeriodCell";
+import "src/components/config/outcomes/OutcomePlanning.css";
+import { AreYouSureDelete } from "src/utility/prompt";
 
 type OutcomePlanningProps = {
     planning: IOutcomePlanning;

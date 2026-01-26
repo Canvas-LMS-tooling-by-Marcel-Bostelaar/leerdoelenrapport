@@ -1,9 +1,9 @@
-import type { IGroupingConfig, ISection } from "../../types/config";
-import type { IOutcomeGrouping } from "../../types/IOutcomeGrouping";
-import { AreYouSureDelete } from "../../utility/prompt";
-import { useDerivedState, type StateSetter } from "../../utility/useDerivedState";
-import { OutcomeGroup } from "./outcomes/OutcomeGroup";
-import { PeriodPlanningGroups } from "./periodplanning/PeriodPlanningGroups";
+import type { IGroupingConfig, ISection } from "src/types/config";
+import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
+import { AreYouSureDelete } from "src/utility/prompt";
+import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
+import { OutcomeGroup } from "src/components/config/outcomes/OutcomeGroup";
+import { PeriodPlanningGroups } from "src/components/config/periodplanning/PeriodPlanningGroups";
 
 type GroupingConfigProps = {
     config: IGroupingConfig;

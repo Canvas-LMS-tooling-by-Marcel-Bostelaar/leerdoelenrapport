@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import './App.css'
-import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type ISection } from './types/config'
-import type { IOutcomeGrouping } from './types/IOutcomeGrouping'
-import { useDerivedState } from './utility/useDerivedState'
-import { FullConfig } from './components/config/FullConfig'
+import 'src/App.css'
+import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type ISection } from 'src/types/config'
+import type { IOutcomeGrouping } from 'src/types/IOutcomeGrouping'
+import { useDerivedState } from 'src/utility/useDerivedState'
+import { FullConfig } from 'src/components/config/FullConfig'
 
 type DecoratedIFullConfig = {
   revalidateTodo: boolean,

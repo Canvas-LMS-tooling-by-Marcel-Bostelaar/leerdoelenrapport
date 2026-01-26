@@ -1,6 +1,6 @@
-import type { IPeriod } from "../../../types/config";
-import { useDerivedArrayState } from "../../../utility/useDerivedArrayState";
-import type { StateSetter } from "../../../utility/useDerivedState";
+import type { IPeriod } from "src/types/config";
+import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
+import type { StateSetter } from "src/utility/useDerivedState";
 
 type PeriodContainerProps = {
     periods: IPeriod[];

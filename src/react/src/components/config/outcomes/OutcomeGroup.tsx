@@ -1,8 +1,8 @@
-import type { IGroupingConfig } from "../../types/config";
-import type { IOutcomeGrouping } from "../../types/IOutcomeGrouping";
-import { useDerivedArrayState } from "../../utility/useDerivedArrayState";
-import { type StateSetter } from "../../utility/useDerivedState";
-import { OutcomePlanning } from "./OutcomePlanning";
+import type { IGroupingConfig } from "src/types/config";
+import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
+import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
+import { type StateSetter } from "src/utility/useDerivedState";
+import { OutcomePlanning } from "src/components/config/outcomes/OutcomePlanning";
 
 type OutcomeGroupProps = {
     outcomePlannings: IGroupingConfig["outcomePlannings"];

@@ -1,6 +1,6 @@
-import type { IDecoratedSection, ISection } from "../../../types/config";
-import { useDerivedArrayState } from "../../../utility/useDerivedArrayState";
-import { useDerivedState, type StateSetter } from "../../../utility/useDerivedState";
+import type { IDecoratedSection, ISection } from "src/types/config";
+import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
+import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 
 
 type SectionSelectorProps = {

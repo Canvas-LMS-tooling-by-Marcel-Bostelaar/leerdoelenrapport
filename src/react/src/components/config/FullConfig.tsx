@@ -1,9 +1,9 @@
-import type { IFullConfig, ISection } from "../../types/config";
-import { GroupingConfig } from "./GroupingConfig";
-import type { IOutcomeGrouping } from "../../types/IOutcomeGrouping";
-import { useDerivedState, type StateSetter } from "../../utility/useDerivedState";
-import { useDerivedArrayState } from "../../utility/useDerivedArrayState";
-import { ConfigTabs } from "./ConfigTabs";
+import type { IFullConfig, ISection } from "src/types/config";
+import { GroupingConfig } from "src/components/config/GroupingConfig";
+import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
+import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
+import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
+import { ConfigTabs } from "src/components/config/ConfigTabs";
 
 type FullConfigProps = {
     config: IFullConfig;

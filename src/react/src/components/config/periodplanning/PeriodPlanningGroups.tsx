@@ -1,8 +1,8 @@
-import type { IPeriodPlanning, ISection } from "../../../types/config";
-import { useDerivedArrayState } from "../../../utility/useDerivedArrayState";
-import { type StateSetter } from "../../../utility/useDerivedState";
-import { ConfigTabs } from "../ConfigTabs";
-import { PeriodPlanning } from "./PeriodPlanning";
+import type { IPeriodPlanning, ISection } from "src/types/config";
+import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
+import { type StateSetter } from "src/utility/useDerivedState";
+import { ConfigTabs } from "src/components/config/ConfigTabs";
+import { PeriodPlanning } from "src/components/config/periodplanning/PeriodPlanning";
 
 type PeriodPlanningGroupsProps = {
     plannings: IPeriodPlanning[];

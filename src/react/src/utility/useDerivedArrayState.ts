@@ -1,4 +1,4 @@
-import { useDerivedState, type StateSetter } from "./useDerivedState";
+import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 
 
 export interface derivedArrayStateItem<T> {

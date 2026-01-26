@@ -1,7 +1,7 @@
-import type { IPeriodPlanning, ISection } from "../../../types/config";
-import { useDerivedState, type StateSetter } from "../../../utility/useDerivedState";
-import { PeriodContainer } from "./PeriodContainer";
-import { SectionSelector } from "./SectionSelector";
+import type { IPeriodPlanning, ISection } from "src/types/config";
+import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
+import { PeriodContainer } from "src/components/config/periodplanning/PeriodContainer";
+import { SectionSelector } from "src/components/config/periodplanning/SectionSelector";
 
 type PeriodPlanningProps = {
     planning: IPeriodPlanning;

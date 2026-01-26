@@ -18,7 +18,7 @@ class CourseContextController
         else{
             $currentCourse = "Course ID: " . $currentCourse->id . " on Domain: " . $currentCourse->domain->domain;
         }
-        return '<p>' . $currentCourse . '</p><form method="post" action="/setCourse">
+        return '<p>' . $currentCourse . '</p><form method="post">
             Domain: <input type="text" name="domain"><br>
             Course ID: <input type="text" name="courseId"><br>
             <input type="submit" value="Set Course">

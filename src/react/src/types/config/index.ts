@@ -67,7 +67,9 @@ export function ParseFullConfigJson(jsonString: string): IFullConfig {
                 if(value.length === 0) {
                     return new Map<number, number>();
                 }
-                throw new Error("Invalid periodLevels format");
+                let mapped = value.map((item, index) => [index, item] as [number, number]);
+                let asMap = new Map<number, number>(mapped);
+                return asMap;
             }
             return new Map(Object.entries(value).map(([k, v]) => [Number(k), v]));
         }

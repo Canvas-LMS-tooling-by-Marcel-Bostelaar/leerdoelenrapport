@@ -3,6 +3,7 @@
 use App\Controllers\ConfigController;
 use App\Controllers\CourseContextController;
 use App\Controllers\OutcomeController;
+use App\Controllers\SectionController;
 use App\Exceptions\ResultControlFlowEscapehatchException;
 use App\Models\Config\FullConfig;
 use CanvasApiLibrary\Core\Models\Outcomegroup;
@@ -28,6 +29,7 @@ function routes(Router $router)
         $router->post('config', [ConfigController::class, 'store']);
         $router->post('config/revalidate', [ConfigController::class, 'revalidateConfig']);
         $router->get('outcomes', [OutcomeController::class, "outcomegroups"]);
+        $router->get('sections', [SectionController::class, "index"]);
     });
 
     $router->group(['prefix' => 'dev'], function (Router $router) {

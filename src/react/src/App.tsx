@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { FullConfig } from './components/outcomes/FullConfig'
-import { FullConfigToJson, ParseFullConfigJson, type IFullConfig } from './types/config'
+import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type ISection } from './types/config'
 import type { IOutcomeGrouping } from './types/IOutcomeGrouping'
 import { useDerivedState } from './utility/useDerivedState'
+import { FullConfig } from './components/config/FullConfig'
 
 type DecoratedIFullConfig = {
   revalidateTodo: boolean,
@@ -14,8 +14,10 @@ function App() {
   const configUrl = "/api/config"
   const revalidateUrl = "/api/config/revalidate"
   const outcomeUrl = "/api/outcomes"
+  const sectionUrl = "/api/sections"
   const [jsonBody, setJsonBody] = useState('');
   const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping|undefined>(undefined);
+  const [allSections, setAllSections] = useState<ISection[]|undefined>(undefined);
   const [decoratedState, setDecorateState] = useState<DecoratedIFullConfig>({
     revalidateTodo: false,
     config: {
@@ -76,9 +78,17 @@ function App() {
     setOutcomeGrouping(parsed);
   }
 
+  const loadSections = async () => {
+    const response = await fetch(sectionUrl)
+    const json = await response.text()
+    const parsed = JSON.parse(json) as ISection[];
+    setAllSections(parsed);
+  }
+
   useEffect(jsonEffect, [fullConfig]);
   useEffect(() => {
     loadOutcomeGrouping();
+    loadSections();
   }, []);
   useEffect(() => {
     if(revalidateTodo){
@@ -97,12 +107,15 @@ function App() {
         <button onClick={saveConfig}>Send (POST)</button>
       </div>
 
-      {outcomeGrouping === undefined ? <>No config loaded</> : (
+      {outcomeGrouping === undefined || allSections === undefined ? <>No config loaded</> : (
         <FullConfig 
         config={fullConfig} 
         setConfig={setFullConfig}
         revalidateConfig={() => setRevalidateTodo(true)}
-        outcomeGrouping={outcomeGrouping}></FullConfig>)}
+        outcomeGrouping={outcomeGrouping}
+        allSections={allSections}>
+
+        </FullConfig>)}
       <div>
         <div>Body</div>
         <pre>

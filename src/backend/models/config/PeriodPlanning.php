@@ -21,6 +21,8 @@ class PeriodPlanning
      */
     public array $sections;
 
+    public string $name = "";
+
     /**
      * Summary of toArray
      * @param bool $fullData If true, will fetch and include full section data
@@ -30,7 +32,8 @@ class PeriodPlanning
     {
         return [
             'periods' => array_map(fn($p) => $p->toArray($outcomeProvider, $fullData), $this->periods),
-            'sections' => array_map(fn($s) => $s->toArray($sectionProvider, $fullData), $this->sections)
+            'sections' => array_map(fn($s) => $s->toArray($sectionProvider, $fullData), $this->sections),
+            'name' => $this->name
         ];
     }
 
@@ -45,6 +48,7 @@ class PeriodPlanning
             fn($s) => DecoratedSection::fromArray($s),
             $data['sections'] ?? []
         );
+        $planning->name = $data['name'] ?? "Unnamed section group";
         return $planning;
     }
 

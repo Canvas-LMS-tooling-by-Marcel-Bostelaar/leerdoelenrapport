@@ -35,7 +35,7 @@ class DecoratedSection
         return $decoratedSection;
     }
 
-    private static function sectionToArray(SectionProviderInterface $sectionProvider, SectionStub $section, bool $fullData = true): array
+    public static function sectionToArray(SectionProviderInterface $sectionProvider, SectionStub $section, bool $fullData = true): array
     {
         $stubData = [
             "id" => $section->id,
@@ -51,7 +51,7 @@ class DecoratedSection
         ]);
     }
 
-    private static function sectionFromArray(array $data): SectionStub{
+    public static function sectionFromArray(array $data): SectionStub{
         $stub = new SectionStub();
         $stub->id = $data['id'];
 

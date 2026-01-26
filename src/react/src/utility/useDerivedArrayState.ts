@@ -1,7 +1,7 @@
 import { useDerivedState, type StateSetter } from "./useDerivedState";
 
 
-interface derivedArrayStateItem<T> {
+export interface derivedArrayStateItem<T> {
     get: T;
     set: StateSetter<T>;
     delete: () => void;

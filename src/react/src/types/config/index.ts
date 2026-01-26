@@ -34,6 +34,7 @@ export interface IOutcome {
 }
 
 export interface IPeriodPlanning {
+    name: string;
     periods: IPeriod[];
     sections: IDecoratedSection[];
 }

@@ -21,6 +21,15 @@ export function FullConfig({ config, setConfig, revalidateConfig, outcomeGroupin
         (_, newSub) => {return {groupingConfigs: newSub}}
     );
     const configStates = useDerivedArrayState(configs, setConfigs);
+    const configNames = configStates.map(item => {
+        const [get, set] = useDerivedState(
+            item.get,
+            item.set,
+            x => x.name,
+            (_, newName) => { return { ...item.get, name: newName } }
+        )
+        return { get, set };
+    });
 
     const addNewConfig = () => {
         setConfigs(x => [...x, {
@@ -32,22 +41,23 @@ export function FullConfig({ config, setConfig, revalidateConfig, outcomeGroupin
         revalidateConfig();
     }
 
-    return (
-        <ConfigTabs names={configs.map(c => c.name)} onAdd={addNewConfig} >
-            {
-                ...configStates.map(
-                    (item, index) => {
-                        return <GroupingConfig
-                            key={index}
-                            config={item.get}
-                            setConfig={item.set}
-                            deleteConfig={item.delete}
-                            grouping={outcomeGrouping}
-                            allSections={allSections}
-                        />
-                    }
-                )
-            }
-        </ConfigTabs>
+    return (<>
+            <h1>Configurations:</h1>
+            <ConfigTabs names={configNames.map(c => c.get)} setNames={configNames.map(c => c.set)} deletes={configStates.map(s => s.delete)} onAdd={addNewConfig} >
+                {
+                    ...configStates.map(
+                        (item, index) => {
+                            return <GroupingConfig
+                                key={index}
+                                config={item.get}
+                                setConfig={item.set}
+                                grouping={outcomeGrouping}
+                                allSections={allSections}
+                            />
+                        }
+                    )
+                }
+            </ConfigTabs>
+        </>
     );
 }

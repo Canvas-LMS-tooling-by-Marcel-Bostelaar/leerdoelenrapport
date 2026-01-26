@@ -2,11 +2,13 @@
 
 namespace App\Models\Config;
 
+use App\Exceptions\ResultControlFlowEscapehatchException;
 use CanvasApiLibrary\Core\Models\CourseStub;
 use CanvasApiLibrary\Core\Models\Domain;
 use CanvasApiLibrary\Core\Models\SectionStub;
 use CanvasApiLibrary\Core\Providers\Interfaces\OutcomeProviderInterface;
 use CanvasApiLibrary\Core\Providers\Interfaces\SectionProviderInterface;
+use CanvasApiLibrary\Core\Providers\Utility\Results\SuccessResult;
 use Section;
 
 class DecoratedSection
@@ -46,6 +48,10 @@ class DecoratedSection
             return $stubData;
         }
         $fullSection = $sectionProvider->populateSection($section);
+        if(!$fullSection instanceof SuccessResult){
+            throw new ResultControlFlowEscapehatchException($fullSection);
+        }
+        $fullSection = $fullSection->value;
         return array_merge($stubData, [
             "name" => $fullSection->name
         ]);

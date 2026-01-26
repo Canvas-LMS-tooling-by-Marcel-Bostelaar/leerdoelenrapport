@@ -81,9 +81,9 @@ export function ParseFullConfigJson(jsonString: string): IFullConfig {
 
 export function FullConfigToJson(config: IFullConfig, prettyPrint: boolean = false): string {
     return JSON.stringify(config, (key, value) => {
-        if (key === 'startDate' || key === 'endDate') {
-            return (value as Date).toISOString();
-        }
+        // if (key === 'startDate' || key === 'endDate') {
+        //     return (value as Date).toISOString();
+        // }
         if (key === 'periodLevels' && value instanceof Map) {
             return Object.fromEntries(value);
         }

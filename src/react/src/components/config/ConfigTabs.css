@@ -1,0 +1,27 @@
+
+
+.tabLabel {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tabSelected {
+    /* background-color: #f0f0f0; */
+    color: green;
+    font-weight: bold;
+}
+
+.tabInactive {
+    /* background-color: #e0e0e0; */
+    color: red;
+}
+
+.tabNew {
+    /* background-color: #d0d0d0; */
+    font-weight: bold;
+    color: darkgreen;
+}

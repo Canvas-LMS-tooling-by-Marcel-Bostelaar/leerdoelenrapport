@@ -9,12 +9,11 @@ class SectionController
 {
     public function index(){
         $course = course();
-        $providers = providers();
 
         /** @var Section[] $sections*/
-        $sections = $providers->sectionProvider->getAllSectionsInCourse($course);
+        $sections = providers()->sectionProvider->getAllSectionsInCourse($course);
 
 
-        return jsonResponse(array_map(fn($section) => DecoratedSection::sectionToArray($providers->sectionProvider, $section, true), $sections));
+        return jsonResponse(array_map(fn($section) => DecoratedSection::sectionToArray(providersRaw()->sectionProvider, $section, true), $sections));
     }
 }

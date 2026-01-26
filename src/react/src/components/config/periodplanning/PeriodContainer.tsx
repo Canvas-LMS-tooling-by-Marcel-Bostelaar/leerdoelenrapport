@@ -48,7 +48,7 @@ function SinglePeriodContainer({period, setPeriod, deletePeriod}: SinglePeriodCo
             setPeriod({...period, periodNumber: newNumber});
         }} />
         </label>
-        <button onClick={deletePeriod}>Delete Period</button>
+        <button onClick={deletePeriod}>🗑️</button>
         <label>Start Date<input type="date" value={period.startDate.toISOString().substring(0,10)} onChange={(e) => {
             const newDate = new Date(e.target.value);
             setPeriod({...period, startDate: newDate});

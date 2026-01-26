@@ -38,7 +38,8 @@ export function SectionSelector({activeSections, setActiveSections, allSections}
                     selected: true,
                     wrapped: section
                 };
-            }).concat(inactiveSections),
+            }).concat(inactiveSections)
+            .sort((a, b) => b.wrapped.section.name.localeCompare(a.wrapped.section.name)),
         (_, newItem) => {
             return newItem.filter(item => item.selected).map(item => item.wrapped);
         }
@@ -69,6 +70,7 @@ function SectionSelectorInternal({sections, setSections}: SectionSelectorInterna
         }
     })
     return <div>
+        <h3>Sections</h3>
         {arraySetters.map((item, index) => <SectionItem key={index} section={item.get} setSection={item.set} deleteSection={item.delete} />)}
     </div>
 }

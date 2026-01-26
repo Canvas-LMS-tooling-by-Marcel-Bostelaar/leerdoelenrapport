@@ -42,7 +42,6 @@ export function FullConfig({ config, setConfig, revalidateConfig, outcomeGroupin
     }
 
     return (<>
-            <h1>Configurations:</h1>
             <ConfigTabs names={configNames.map(c => c.get)} setNames={configNames.map(c => c.set)} deletes={configStates.map(s => s.delete)} onAdd={addNewConfig} >
                 {
                     ...configStates.map(

@@ -1,0 +1,7 @@
+.ConfigTitle{
+    display: inline-block;
+}
+
+button.ConfigTitle{
+    margin-left: 10px;
+}

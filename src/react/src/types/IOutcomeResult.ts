@@ -7,13 +7,16 @@ export type IOutcomeResult = {
 
 export type IOutcomeResultGroup = {
     assesment_description: string;
-    css_class: string;
     outcome_results: Map<number, IOutcomeResult>;
     date: Date;
 }
 
-export type IOutcomeResultSet = {
-    total: IOutcomeResultGroup;
-    generated: IOutcomeResultGroup[];
-    individual_assesments: IOutcomeResultGroup[];
+export type IOutcomeResultSet<T> = {
+    total: T;
+    generated: T[];
+    individual_assessments: T[];
+}
+
+export type CssDecoratedIOutcomeResultGroup = IOutcomeResultGroup & {
+    cssClass: string;
 }

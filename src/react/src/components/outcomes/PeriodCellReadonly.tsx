@@ -1,9 +1,9 @@
-import type { IOutcomeResultGroup } from "src/types/IOutcomeResult";
+import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
 
 type PeriodCellReadonlyProps = {
     outcomeID: number;
     currentLevel: number;
-    outcomeResults: IOutcomeResultGroup[];
+    outcomeResults: CssDecoratedIOutcomeResultGroup[];
 };
 
 export function PeriodCellReadonly({outcomeID, currentLevel, outcomeResults}: PeriodCellReadonlyProps) {
@@ -14,7 +14,7 @@ export function PeriodCellReadonly({outcomeID, currentLevel, outcomeResults}: Pe
         }
         return x.outcome_results.get(outcomeID)!.score === currentLevel;
     })
-    .map(x => x.css_class);
+    .map(x => x.cssClass);
     return <td className="cell">
         Level: {currentLevel}
         {

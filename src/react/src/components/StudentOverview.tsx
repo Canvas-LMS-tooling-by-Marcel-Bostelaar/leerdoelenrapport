@@ -17,7 +17,7 @@ export function StudentOverview() {
 
         {
             students.map(student => (<>
-                <a key={student.id} href={`/students/${student.id}`}>{student.name}</a>
+                <a key={student.id} href={`/students/${student.id}/${encodeURIComponent(student.name)}`}>{student.name}</a>
                 <br />
                 </>
             ))

@@ -1,5 +1,5 @@
 type TintoT<T> = ((original: T) => T);
-type RestrictedSetter<T> = (arg: TintoT<T>) => void;
+export type RestrictedSetter<T> = (arg: TintoT<T>) => void;
 
 /**
  * Fully function based useDerivedState implementation. Does not accept direct values for the setter.
@@ -50,14 +50,18 @@ export function useDerivedState<A, B>(
   applicator: (originalState: A, transformedB: B) => A
 ): useStateTuple<B> {
   const [derivedState, derivedSetState] = functionBasedUseDerivedState(state, set, selector, applicator);
-  const dualSetter: StateSetter<B> = (arg: B | TintoT<B>) => {
+  const dualSetter: StateSetter<B> = makeFullSetter(derivedSetState);
+  return [derivedState, dualSetter];
+}
+
+export function makeFullSetter<T>(setter: RestrictedSetter<T>) : StateSetter<T>{
+  return (arg: T | TintoT<T>) => {
     if(typeof arg === 'function'){
       // we know arg is TintoT<B>
-      derivedSetState(arg as TintoT<B>);
+      setter(arg as TintoT<T>);
     } else {
       // we know arg is B
-      derivedSetState(() => arg);
+      setter(() => arg);
     }
   };
-  return [derivedState, dualSetter];
 }

@@ -1,12 +1,12 @@
 import type { IOutcomePlanning } from "src/types/config";
 import "src/components/config/outcomes/OutcomePlanning.css";
 import { PeriodCellReadonly } from "./PeriodCellReadonly";
-import type { IOutcomeResultGroup } from "src/types/IOutcomeResult";
+import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
 
 type OutcomePlanningReadonlyProps = {
     planning: IOutcomePlanning;
     periodCount: number;
-    outcomeResults: IOutcomeResultGroup[];
+    outcomeResults: CssDecoratedIOutcomeResultGroup[];
 };
 
 export function OutcomePlanningReadonly({planning, periodCount, outcomeResults}: OutcomePlanningReadonlyProps) {

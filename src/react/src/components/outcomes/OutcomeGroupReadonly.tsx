@@ -1,13 +1,13 @@
 import type { IOutcomePlanning } from "src/types/config";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import { OutcomePlanningReadonly } from "./OutcomePlanningReadonly";
-import type { IOutcomeResultGroup } from "src/types/IOutcomeResult";
+import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
 
 type OutcomeGroupReadonlyProps = {
     outcomePlannings: IOutcomePlanning[];
     grouping: IOutcomeGrouping;
     periodCount: number;
-    outcomeResults: IOutcomeResultGroup[];
+    outcomeResults: CssDecoratedIOutcomeResultGroup[];
 };
 
 export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, outcomeResults}: OutcomeGroupReadonlyProps) {
@@ -16,6 +16,8 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
         //filter to only direct children of this grouping
         .filter(op => grouping.child_outcomes.includes(op.outcome.id))
         .filter(op => op.status !== 'disabled' && op.status !== "orphaned");
+    const anyChildrenEnabled = getAllChildOutcomes(grouping, outcomePlannings).some(op => op.status !== 'disabled' && op.status !== "orphaned");
+    const anyDirectChildrenEnabled = filtered.length > 0;
     const directChildrenSorted = filtered
         //sort by title
         .sort((a, b) => {
@@ -30,7 +32,11 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
         return titleA.localeCompare(titleB);
     });
 
-    return<>
+    return(
+    !anyChildrenEnabled ? <></> :
+    <>
+    {anyDirectChildrenEnabled && (
+    <>
     <thead>
         <tr>
             <th colSpan={periodCount}>{grouping.title}</th>
@@ -52,6 +58,7 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
                 outcomeResults={outcomeResults}/>
         })}
     </tbody>
+    </>)}
     {subgroupsSorted.map((subgroup) => {
             return <OutcomeGroupReadonly
                 key={subgroup.id}
@@ -61,5 +68,16 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
                 outcomeResults={outcomeResults}
             />;
         })}
-    </>;
+    </>);
+}
+
+function getAllChildOutcomes(grouping: IOutcomeGrouping, outcomePlannings: IOutcomePlanning[]): IOutcomePlanning[] {
+    let results: IOutcomePlanning[] = [];
+    // Add direct child outcomes
+    results.push(...outcomePlannings.filter(op => grouping.child_outcomes.includes(op.outcome.id)));
+    // Recursively add outcomes from child groups
+    grouping.child_groups.forEach(subgroup => {
+        results.push(...getAllChildOutcomes(subgroup, outcomePlannings));
+    });
+    return results;
 }

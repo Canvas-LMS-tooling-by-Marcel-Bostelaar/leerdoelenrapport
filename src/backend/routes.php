@@ -33,7 +33,8 @@ function routes(Router $router)
         $router->get('outcomegroups', [OutcomeController::class, "outcomegroups"]);
         $router->group(['prefix' => 'students'], function (Router $router) {
             $router->get('/', [StudentController::class, "index"]);
-            $router->get('{studentId}/outcomeresults', [StudentController::class, "outcomeResults"]);
+            $router->get('{studentId}/outcomes', [StudentController::class, "outcomeResults"]);
+            $router->get('{studentId}/sections', [StudentController::class, "sections"]);
         });
         
     });

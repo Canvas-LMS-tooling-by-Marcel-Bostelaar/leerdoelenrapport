@@ -17,6 +17,7 @@ export function ConfigEditor() {
   const revalidateUrl = "/api/config/revalidate"
   const outcomeUrl = "/api/outcomegroups"
   const sectionUrl = "/api/sections"
+  const [isLoaded, setIsLoaded] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   useUnsavedChangesWarning(hasUnsavedChanges);
   const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping|undefined>(undefined);
@@ -50,6 +51,7 @@ export function ConfigEditor() {
       config: ParseFullConfigJson(json)
     });
     setHasUnsavedChanges(false);
+    setIsLoaded(true);
   }
 
   const saveConfig = async () => {
@@ -110,7 +112,7 @@ export function ConfigEditor() {
         <button onClick={loadConfig} className='ConfigTitle'>Reload</button>
         <button onClick={saveConfig} className='ConfigTitle'>Save</button>
 
-        {outcomeGrouping === undefined || allSections === undefined ? <>No config loaded</> : (
+        {outcomeGrouping === undefined || allSections === undefined || !isLoaded ? <>No config loaded</> : (
             <FullConfig 
             config={fullConfig} 
             setConfig={setFullConfig}

@@ -57,7 +57,6 @@ class OutcomePlanning
     {
         $stubData = [
             'id' => $outcome->id,
-            'url' => $outcome->url,
             'domain' => $outcome->domain->domain
         ];
         if($fullData){
@@ -84,7 +83,6 @@ class OutcomePlanning
     {
         $outcome = new OutcomeStub();
         $outcome->id = $data['id'];
-        $outcome->url = $data['url'];
         $domain = new Domain($data['domain']);
         $outcome->domain = $domain;
         return $outcome;

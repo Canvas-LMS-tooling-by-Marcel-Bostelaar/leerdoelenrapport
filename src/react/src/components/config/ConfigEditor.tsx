@@ -94,9 +94,9 @@ export function ConfigEditor() {
 
   //Fetch needed information.
   useEffect(() => {
-    loadOutcomeGrouping();
-    loadSections();
-    loadConfig();
+    loadOutcomeGrouping()
+    .then(loadSections)
+    .then(loadConfig);
   }, []);
 
   //Revalidate if needed.

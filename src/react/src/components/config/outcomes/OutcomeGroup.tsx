@@ -23,35 +23,20 @@ export function OutcomeGroup({outcomePlannings, setOutcomePlannings, grouping, p
         .sort((a, b) => {
             const titleA = a.get.outcome.title.toLowerCase();
             const titleB = b.get.outcome.title.toLowerCase();
-            if (titleA < titleB) return -1;
-            if (titleA > titleB) return 1;
-            return 0;
+            return titleA.localeCompare(titleB);
         });
-    // const directChildrenSorted = useDerivedArrayState(outcomePlannings, setOutcomePlannings)
-    //     //filter to only direct children of this grouping
-    //     .filter(op => op.get.outcome.id in grouping.child_outcomes)
-    //     //sort by title
-    //     .sort((a, b) => {
-    //         const titleA = a.get.outcome.title.toLowerCase();
-    //         const titleB = b.get.outcome.title.toLowerCase();
-    //         if (titleA < titleB) return -1;
-    //         if (titleA > titleB) return 1;
-    //         return 0;
-    //     });
 
     const subgroupsSorted = Array.from(grouping.child_groups).sort((a, b) => {
         const titleA = a.title.toLowerCase();
         const titleB = b.title.toLowerCase();
-        if (titleA < titleB) return -1;
-        if (titleA > titleB) return 1;
-        return 0;
+        return titleA.localeCompare(titleB);
     });
 
     return<>
     <thead>
         <tr>
             <th colSpan={periodCount}>{grouping.title}</th>
-            {/* <th>{grouping.title}</th> */}
+            
         </tr>
         <tr>
             <th>Outcome</th>

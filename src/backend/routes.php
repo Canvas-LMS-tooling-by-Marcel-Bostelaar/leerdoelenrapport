@@ -16,14 +16,14 @@ use Illuminate\Routing\Router;
 function routes(Router $router)
 {
 
-    $router->get('/', function(){
+    $router->get('/{any}', function(){
         return file_get_contents(__DIR__ . '/public/static/index.html');
-    });
+    })->where('any', '^(?!api|dev).*');
 
-    $router->get('/hello', function (Request $request) {
-        $providers = providers();
-        return "hello world";
-    });
+    // $router->get('/hello', function (Request $request) {
+    //     $providers = providers();
+    //     return "hello world";
+    // });
 
     $router->group(['prefix' => 'api', 'middleware' => 'ensureCourseContext'], function (Router $router) {
         $router->get('config', [ConfigController::class, 'get']);

@@ -10,14 +10,12 @@ class StudentController
     public function index(){
         $course = course();
         $students = providers()->userProvider->getUsersInCourse($course, "student");
-        foreach($students as $student){
-            ?>
-            <div>
-                <a href="/api/students/<?= $student->id; ?>/outcomeresults"><?= htmlspecialchars($student->name); ?></a>
-            </div>
-            <?php
-        }
-        return;
+        return jsonResponse(array_map(function($student) {
+            return [
+                'id' => $student->id,
+                'name' => $student->name
+            ];
+        }, $students));
     }
 
     public function outcomeResults($studentId){

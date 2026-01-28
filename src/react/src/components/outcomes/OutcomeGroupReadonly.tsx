@@ -44,10 +44,11 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
         </tr>
         <tr>
             <th>Outcome</th>
-            <th key={-1}></th>
+            <th key={-1}>❌</th> {/*TODO hover text explaining not proven */}
             {Array.from({length: periodCount}).map((_, index) => (
                 <th key={index}>Period {index + 1}</th>
             ))}
+             <th key={-2}>&gt;</th> {/*TODO hover text explaining score higher than highest planned*/}
         </tr>
     </thead>
     <tbody>

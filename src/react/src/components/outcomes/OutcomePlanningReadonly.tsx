@@ -2,6 +2,7 @@ import type { IOutcomePlanning } from "src/types/config";
 import "src/components/config/outcomes/OutcomePlanning.css";
 import { PeriodCellReadonly } from "./PeriodCellReadonly";
 import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
+import "./OutcomePlanningReadonly.css";
 
 type OutcomePlanningReadonlyProps = {
     planning: IOutcomePlanning;
@@ -12,6 +13,7 @@ type OutcomePlanningReadonlyProps = {
 type lvlAndCss = {
     level: number;
     css: string;
+    score: number;
 }
 
 type reduceType = {
@@ -36,12 +38,34 @@ export function OutcomePlanningReadonly({planning, periodCount, outcomeResults}:
                 .map(x => {
                     return {
                         css: x.cssClass,
-                        level: planning.periodLevels.get(period) || 0
+                        level: planning.periodLevels.get(period) || 0,
+                        score: x.outcome_results.get(planning.outcome.id)!.score
                     }}
                 )
             );
+
+    const aboveEndlevelColumn = outcomeResults.map(x => {return {
+        outcome: x,
+        result: x.outcome_results.get(planning.outcome.id)
+    }})
+    .filter(x => x.result !== undefined)
+    .map(x => {
+        const maxLevel = planning.periodLevels.size === 0 ? 0 : Math.max(...planning.periodLevels.values());
+        if(x.result!.score > maxLevel ){
+            return {
+                css: x.outcome.cssClass,
+                level: Number.POSITIVE_INFINITY,
+                score: x.result!.score
+            };
+        }
+        return undefined;
+    })
+    .filter(x => x !== undefined);
+
+    const combinedMarkerList = [...markerList, aboveEndlevelColumn];
+
     //Show only the last instances of markers (but keep level 0 always)
-    const onlyLastInstance = showOnlyFirstOccurrence([...markerList].reverse(), x => x.level == 0).reverse();
+    const onlyLastInstance = showOnlyFirstOccurrence([...combinedMarkerList].reverse(), x => x.level == 0).reverse();
 
     //Show only first instance of 0 markers (dont process others)
     const withZeroFirst = showOnlyFirstOccurrence(onlyLastInstance, x => x.level !== 0);
@@ -56,8 +80,9 @@ export function OutcomePlanningReadonly({planning, periodCount, outcomeResults}:
         { withZeroFirst.map((x, index) => (
             <PeriodCellReadonly 
                 key={index}
-                currentLevel={planning.periodLevels.get(index - 1) || 0}
-                cssMarkerClasses={x.map(y => y.css)}
+                //Last column is for above endlevel
+                currentLevel={index !== periodCount + 1 ? planning.periodLevels.get(index - 1) || 0 : Number.POSITIVE_INFINITY}
+                cssMarkerClasses={x.map(y => ({css: y.css, score: y.score}))}
             />
         ))}
     </tr>
@@ -73,7 +98,7 @@ function RoughlyEquals(a: number, integerNumber: number){
     return Math.round(a) == Math.round(integerNumber)
 }
 
-function showOnlyFirstOccurrence(markerList: {level: number; css: string}[][], dontProcessPredicate: (item: lvlAndCss) => boolean)     {
+function showOnlyFirstOccurrence(markerList: lvlAndCss[][], dontProcessPredicate: (item: lvlAndCss) => boolean)     {
     return markerList.reduce<reduceType>((prev, curr, _, __) => {
         const doShow = curr.filter(x => dontProcessPredicate(x) || !prev.seen.has(x.css + x.level.toString()));
         let newMap = new Map(prev.seen);

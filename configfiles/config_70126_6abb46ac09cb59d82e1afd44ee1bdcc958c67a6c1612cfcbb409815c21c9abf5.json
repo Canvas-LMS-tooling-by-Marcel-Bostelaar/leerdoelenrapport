@@ -1,7 +1,7 @@
 {
     "groupingConfigs": [
         {
-            "name": "My config",
+            "name": "Cohort main",
             "outcomePlannings": [
                 {
                     "outcome": {
@@ -457,7 +457,7 @@
                     "name": "Jaar 2"
                 }
             ],
-            "periodCount": 6
+            "periodCount": 12
         }
     ]
 }

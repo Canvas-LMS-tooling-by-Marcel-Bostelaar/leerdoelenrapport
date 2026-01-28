@@ -172,13 +172,12 @@ type gettersetter<T> = {
 function useInvertedOutcomeStateSet(get: IOutcomeResultSet<FullyDecoratedORG>, set: StateSetter<IOutcomeResultSet<FullyDecoratedORG>>) : IOutcomeResultSet<gettersetter<FullyDecoratedORG>> {
     const [subItemsGet, subItemsSet] = useDerivedState<IOutcomeResultSet<FullyDecoratedORG>, (IOutcomeResultSet<FullyDecoratedORG>|FullyDecoratedORG)[]>(get, set, "subItems");
     const generatedArraySetters = useDerivedArrayState(subItemsGet, subItemsSet);
-    const mapped = generatedArraySetters.map(item => {
-        if('subItems' in item.get){
-            const [childset, childGet] = useInvertedOutcomeStateSet(item.get as IOutcomeResultSet<FullyDecoratedORG>, item.set as StateSetter<IOutcomeResultSet<FullyDecoratedORG>>);
-            return {get: childset as IOutcomeResultSet<gettersetter<FullyDecoratedORG>>, set: item.set as StateSetter<IOutcomeResultSet<FullyDecoratedORG>>};
-        } else {
+    const mapped : gettersetter<FullyDecoratedORG|IOutcomeResultSet<gettersetter<FullyDecoratedORG>>>[] = generatedArraySetters.map(item => {
+        if(!('subItems' in item.get)){
             return {get: item.get as FullyDecoratedORG, set: item.set as StateSetter<FullyDecoratedORG>};
         }
+        const [childset, childGet] = useInvertedOutcomeStateSet(item.get as IOutcomeResultSet<FullyDecoratedORG>, item.set as StateSetter<IOutcomeResultSet<FullyDecoratedORG>>);
+        // return {get: childset as IOutcomeResultSet<gettersetter<FullyDecoratedORG>>, set: item.set as StateSetter<IOutcomeResultSet<FullyDecoratedORG>>};
     });
     return {
         name: get.name,

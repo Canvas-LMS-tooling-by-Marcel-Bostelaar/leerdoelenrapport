@@ -1,5 +1,5 @@
 export type IOutcomeResult = {
-    id: number;
+    // id: number; //Removed id, as there can be virtual results not from the actual canvas backend.
     score: number;
     learning_outcome_id: number;
     submitted_or_assessed_at: Date;

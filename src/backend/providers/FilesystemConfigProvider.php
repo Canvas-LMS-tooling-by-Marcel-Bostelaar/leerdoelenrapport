@@ -89,8 +89,7 @@ class FilesystemConfigProvider implements ConfigProviderInterface
         //reconcile with current outcomes and sections
         $outcomes = $this->outcomeGroupProvider->getOutcomegroupsInCourse($course)
         ->flatMapSuccess(fn($groups) => $this->outcomeProvider->getOutcomesInOutcomegroups($groups, $skipCache, $doNotCache))
-        ->mapSuccess(fn($outcomes) => $outcomes->getAll())
-        ->mapSuccess(fn($y) => array_merge(...$y));
+        ->mapSuccess(fn($outcomes) => $outcomes->getAll());
 
         if(!$outcomes instanceof SuccessResult){
             return $outcomes;

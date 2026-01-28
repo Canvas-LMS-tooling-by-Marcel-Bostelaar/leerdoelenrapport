@@ -39,11 +39,12 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
     <>
     <thead>
         <tr>
-            <th colSpan={periodCount}>{grouping.title}</th>
+            <th colSpan={periodCount + 1}>{grouping.title}</th>
             
         </tr>
         <tr>
             <th>Outcome</th>
+            <th key={-1}></th>
             {Array.from({length: periodCount}).map((_, index) => (
                 <th key={index}>Period {index + 1}</th>
             ))}

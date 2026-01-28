@@ -13,12 +13,7 @@ type PeriodPlanningGroupsProps = {
 export function PeriodPlanningGroups({plannings, setPlannings, allSections}: PeriodPlanningGroupsProps) {
     const states = useDerivedArrayState(plannings, setPlannings);
     const nameStates = states.map(item => {
-            const [get, set] = useDerivedState(
-                item.get,
-                item.set,
-                x => x.name,
-                (_, newName) => { return { ...item.get, name: newName } }
-            )
+            const [get, set] = useDerivedState<IPeriodPlanning, string>(item.get,item.set,"name");
             return { get, set };
         }
     );

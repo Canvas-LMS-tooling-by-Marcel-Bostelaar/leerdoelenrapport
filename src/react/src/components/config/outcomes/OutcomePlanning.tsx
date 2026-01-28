@@ -15,12 +15,7 @@ type OutcomePlanningProps = {
 export function OutcomePlanning({planning, setPlanning, periodCount, deletePlanning}: OutcomePlanningProps) {
     const levelChangeHandler = (old : number) => old + 1; //TODO get real one from context, so context can determine if it should count up, to how much, or change to a specific one directly.
     const levelReverseHandler = (old : number) => Math.max(0, old - 1); //TODO get real one from context, so context can determine if it should count up, to how much, or change to a specific one directly.
-    const [status, setStatus] = useDerivedState(
-        planning,
-        setPlanning,
-        plan => plan.status,
-        (plan, newStatus) => {return {...plan, status: newStatus}}
-    );
+    const [status, setStatus] = useDerivedState<IOutcomePlanning, IOutcomePlanningStatus>(planning,setPlanning,"status");
     
     const periodData = 
         Array.from({length: periodCount}).map((_, index) => {

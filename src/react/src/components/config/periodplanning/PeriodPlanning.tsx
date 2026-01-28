@@ -1,4 +1,4 @@
-import type { IPeriodPlanning, ISection } from "src/types/config";
+import type { IDecoratedSection, IPeriod, IPeriodPlanning, ISection } from "src/types/config";
 import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 import { PeriodContainer } from "src/components/config/periodplanning/PeriodContainer";
 import { SectionSelector } from "src/components/config/periodplanning/SectionSelector";
@@ -10,18 +10,8 @@ type PeriodPlanningProps = {
 };
 
 export function PeriodPlanning({planning, setPlanning, allSections}: PeriodPlanningProps){
-    const [periods, setPeriods] = useDerivedState(
-        planning,
-        setPlanning,
-        x => x.periods,
-        (_, newSub) => { return { ...planning, periods: newSub } }
-    );
-    const [activeSections, setActiveSections] = useDerivedState(
-        planning,
-        setPlanning,
-        x => x.sections,
-        (_, newSub) => { return { ...planning, sections: newSub } }
-    );
+    const [periods, setPeriods] = useDerivedState<IPeriodPlanning, IPeriod[]>(planning,setPlanning,"periods");
+    const [activeSections, setActiveSections] = useDerivedState<IPeriodPlanning, IDecoratedSection[]>(planning,setPlanning,"sections");
 
     return <>
     <SectionSelector activeSections={activeSections} setActiveSections={setActiveSections} allSections={allSections}></SectionSelector>

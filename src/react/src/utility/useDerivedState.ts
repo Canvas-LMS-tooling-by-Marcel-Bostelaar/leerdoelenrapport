@@ -43,7 +43,7 @@ export type useStateTuple<T> = [T, StateSetter<T>];
  * @param applicator The function to apply a transformation to the derived state and update the parent state
  * @returns A tuple containing the derived state and its setter
  */
-export function useDerivedState<A, B>(
+function useDerivedStateApplicator<A, B>(
   state: A,
   set: (updater: TintoT<A>) => void,
   selector: (state: A) => B,
@@ -52,6 +52,51 @@ export function useDerivedState<A, B>(
   const [derivedState, derivedSetState] = functionBasedUseDerivedState(state, set, selector, applicator);
   const dualSetter: StateSetter<B> = makeFullSetter(derivedSetState);
   return [derivedState, dualSetter];
+}
+
+function useDerivedStateField<A extends object, B>(
+  state: A,
+  set: (updater: TintoT<A>) => void,
+  field: string & keyof A
+): useStateTuple<B>{
+  return useDerivedStateApplicator(
+    state,
+    set,
+    (original) => original[field] as B,
+    (original, newValue) => {
+      return {
+        ...original,
+        [field]: newValue
+      }
+    }
+  );
+}
+
+export function useDerivedState<A, B>(
+  state: A,
+  set: (updater: TintoT<A>) => void,
+  selector: (state: A) => B,
+  applicator: (originalState: A, transformedB: B) => A
+): useStateTuple<B>;
+
+export function useDerivedState<A extends object, B>(
+  state: A,
+  set: (updater: TintoT<A>) => void,
+  field: string & keyof A
+): useStateTuple<B>;
+
+export function useDerivedState<A, B>(
+  state: A,
+  set: (updater: TintoT<A>) => void,
+  selectorOrField: ((state: A) => B) | (string & keyof A),
+  applicator?: (originalState: A, transformedB: B) => A
+): useStateTuple<B> {
+  if (typeof selectorOrField === 'string') {
+    return useDerivedStateField<A & object, B>(state as A & object, set as (updater: TintoT<A & object>) => void, selectorOrField);
+  } else if (applicator) {
+    return useDerivedStateApplicator<A, B>(state, set, selectorOrField, applicator);
+  }
+  throw new Error("Invalid arguments provided to useDerivedState.");
 }
 
 export function makeFullSetter<T>(setter: RestrictedSetter<T>) : StateSetter<T>{

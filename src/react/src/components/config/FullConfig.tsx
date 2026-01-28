@@ -1,4 +1,4 @@
-import type { IFullConfig, ISection } from "src/types/config";
+import { type IGroupingConfig, type IFullConfig, type ISection } from "src/types/config";
 import { GroupingConfig } from "src/components/config/GroupingConfig";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
@@ -14,20 +14,10 @@ type FullConfigProps = {
 };
 
 export function FullConfig({ config, setConfig, revalidateConfig, outcomeGrouping, allSections}: FullConfigProps) {
-    const [configs, setConfigs] = useDerivedState(
-        config,
-        setConfig,
-        x => x.groupingConfigs,
-        (_, newSub) => {return {groupingConfigs: newSub}}
-    );
+    const [configs, setConfigs] = useDerivedState<IFullConfig, IGroupingConfig[]>(config, setConfig,"groupingConfigs");
     const configStates = useDerivedArrayState(configs, setConfigs);
     const configNames = configStates.map(item => {
-        const [get, set] = useDerivedState(
-            item.get,
-            item.set,
-            x => x.name,
-            (_, newName) => { return { ...item.get, name: newName } }
-        )
+        const [get, set] = useDerivedState<IGroupingConfig, string>(item.get,item.set,"name");
         return { get, set };
     });
 

@@ -1,4 +1,4 @@
-import type { IGroupingConfig, ISection } from "src/types/config";
+import type { IGroupingConfig, IOutcomePlanning, IPeriodPlanning, ISection } from "src/types/config";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 import { OutcomeGroup } from "src/components/config/outcomes/OutcomeGroup";
@@ -12,25 +12,9 @@ type GroupingConfigProps = {
 };
 
 export function GroupingConfig({config, setConfig, grouping, allSections}: GroupingConfigProps) {
-    const [periodCount, setPeriodCount] = useDerivedState(
-        config,
-        setConfig,
-        c => c.periodCount,
-        (c, newPC) => {return {...c, periodCount: newPC}}
-    );
-    const [outcomePlannings, setOutcomePlannings] = useDerivedState(
-        config,
-        setConfig,
-        (config) => config.outcomePlannings,
-        (config, newOutcomePlannings) => ({...config, outcomePlannings: newOutcomePlannings})
-    );
-    const [periodPlannings, setPeriodPlannings] = useDerivedState(
-        config,
-        setConfig,
-        (config) => config.periodPlannings,
-        (config, newPeriodPlannings) => ({...config, periodPlannings: newPeriodPlannings})
-    );
-
+    const [periodCount, setPeriodCount] = useDerivedState<IGroupingConfig, number>(config,setConfig,"periodCount");    
+    const [outcomePlannings, setOutcomePlannings] = useDerivedState<IGroupingConfig, IOutcomePlanning[]>(config,setConfig,"outcomePlannings");
+    const [periodPlannings, setPeriodPlannings] = useDerivedState<IGroupingConfig, IPeriodPlanning[]>(config,setConfig,"periodPlannings");
     return <div>
     <h2>Sections and periods</h2>
     <PeriodPlanningGroups plannings={periodPlannings} setPlannings={setPeriodPlannings} allSections={allSections}></PeriodPlanningGroups>

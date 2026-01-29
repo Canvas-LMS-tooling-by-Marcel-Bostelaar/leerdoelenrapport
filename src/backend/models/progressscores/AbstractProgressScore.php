@@ -8,10 +8,10 @@ use CanvasApiLibrary\Core\Models\OutcomeResult;
 use Exception;
 
 abstract class AbstractProgressScore {
-    public int $learning_outcome_id;
-    public int $user_id;
-    public ?int $outcome_result_id;
-    public int $outcomeWeight;
+    public readonly int $learning_outcome_id;
+    public readonly int $user_id;
+    public readonly ?int $outcome_result_id;
+    protected int $outcomeWeight;
 
     public public function __construct(OutcomeResult $result, OutcomePlanning $planning) {
         $this->validatePlanning($planning);

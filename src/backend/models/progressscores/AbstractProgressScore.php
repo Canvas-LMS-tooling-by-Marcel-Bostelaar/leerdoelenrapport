@@ -13,7 +13,7 @@ abstract class AbstractProgressScore {
     public readonly ?int $outcome_result_id;
     protected int $outcomeWeight;
 
-    public public function __construct(OutcomeResult $result, OutcomePlanning $planning) {
+    public function __construct(OutcomeResult $result, OutcomePlanning $planning) {
         $this->validatePlanning($planning);
 
         $this->learning_outcome_id = $planning->outcome->id;

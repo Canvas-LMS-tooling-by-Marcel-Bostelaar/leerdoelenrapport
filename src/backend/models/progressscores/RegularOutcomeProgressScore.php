@@ -10,7 +10,7 @@ use LogicException;
 
 class RegularOutcomeProgressScore extends AbstractProgressScore {
 
-    public readonly bool $isAboveEndlevel = false;
+    public readonly bool $isAboveEndlevel;
 
     private float $bareScore;
 
@@ -22,14 +22,16 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
      * @param float $aheadBehindPeriodPentalty A (positive) pentalty value that is awarded or subtracked for each period a student is fully behind the start/end of the planned period.
      * @return void
      */
-    public public function __construct(OutcomeResult $result, OutcomePlanning $planning, int $periodNumberForReport, float $aheadBehindPeriodPentalty) {
+    public function __construct(OutcomeResult $result, OutcomePlanning $planning, int $periodNumberForReport, float $aheadBehindPeriodPentalty) {
         parent::__construct($result, $planning);
 
         $score = $result->score;
-        $highestPlannedScore = max(0, ...$planning->periodLevels);
+        $highestPlannedScore = max([0, ...$planning->periodLevels]);
 
         if($highestPlannedScore < $score){
             $this->isAboveEndlevel = true;
+        } else {
+            $this->isAboveEndlevel = false;
         }
 
         $gapFilledPlanning = $this::getGapFilledPlanning($planning);
@@ -61,7 +63,7 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
         /**
          * @var int
          */
-        $highestPlannedScore = max(0, ...array_keys($gapFilledPlanning));
+        $highestPlannedScore = max([0, ...array_keys($gapFilledPlanning)]);
         $correctedScore = min($highestPlannedScore, $score);
 
         $relevantSegment = self::tryGetRelevantRange($gapFilledPlanning, $periodNumberForReport);
@@ -170,7 +172,7 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
     private static function calcScoreWithinSegment(array $segment, int $period, float $score): float{
         $start = $segment['segment']['start'];
         $end = $segment['segment']['end'];
-        $targetScore = $segment['segment']['score'];
+        $targetScore = $segment['score'];
         $normalizedScore = max(min($score - $targetScore + 1, 1), -1); //cap normalized score to 1 and -1, so if score is above or below target, you only get the % ahead of this segment as if it was the targeted end level.
 
         $periodDelta = 1 / ($end - $start + 1);
@@ -250,11 +252,11 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
      * @return mixed null | [segment, segmentScore]
      */
     private static function tryGetPrevious(int $period, array $gapfilled){
-        $cloned = array_reverse($gapfilled);
+        $scores = array_reverse(array_keys($gapfilled));
         
-        foreach($cloned as $score => $segment){
-            if($segment['end'] < $period){
-                return [$segment, $score];
+        foreach($scores as $score){
+            if($gapfilled[$score]['end'] < $period){
+                return [$gapfilled[$score], $score];
             }
         }
         return null;

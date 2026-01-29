@@ -34,6 +34,15 @@ class FullConfig
             fn($gc) => GroupingConfig::fromArray($gc),
             $data['groupingConfigs']
         );
+
+        //ensure names are unique
+        $asNamed = array_map(
+            fn($gc) => $gc->name,
+            $config->groupingConfigs
+        );
+        if(count($asNamed) !== count(array_unique($asNamed))){
+            throw new \Exception("GroupingConfig names must be unique");
+        }
         return $config;
     }
 

@@ -3,7 +3,7 @@ import { NotFound } from "../NotFound";
 import { useEffect, useState } from "react";
 import type { CssDecoratedIOutcomeResultGroup, IOutcomeResultGroup, IOutcomeResultSet } from "src/types/IOutcomeResult";
 import type { IFullConfig, ISection } from "src/types/config";
-import { loadConfig, loadOutcomeGrouping, loadStudentResults, loadStudentSections } from "../../utility/apiCalls";
+import { loadConfig, loadOutcomeGrouping, loadProgressScores, loadStudentResults, loadStudentSections } from "../../utility/apiCalls";
 import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
 import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 import { useSpecificCookie } from "src/utility/useSpecificCookie";
@@ -118,6 +118,7 @@ function StudentIndividualViewDataFetching({studentId, name}: {studentId: number
     const [sections, setSections] = useState<ISection[] | undefined>(undefined);
     const [config, setConfig] = useState<IFullConfig | undefined>(undefined);
     const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping | undefined>(undefined);
+    const [progressScores, setProgressScores] = useState<any>(undefined);
 
     const allLoaded = results !== undefined && sections !== undefined && config !== undefined && outcomeGrouping !== undefined;
 
@@ -130,6 +131,12 @@ function StudentIndividualViewDataFetching({studentId, name}: {studentId: number
         loadStudentResults(studentId, setResults)
         .then(() => loadStudentSections(studentId, setSections));
     }, [studentId]);
+
+    useEffect(() =>{
+        if(config){
+            loadProgressScores(studentId, config.groupingConfigs[0], 0.0, 5, setProgressScores);
+        }
+    }, [studentId, config]);
 
     return (<>
         {

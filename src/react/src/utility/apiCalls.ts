@@ -1,4 +1,4 @@
-import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type ISection } from "src/types/config";
+import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type IGroupingConfig, type ISection } from "src/types/config";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import type { IOutcomeResult, IOutcomeResultGroup, IOutcomeResultSet } from "src/types/IOutcomeResult";
 
@@ -72,4 +72,10 @@ export async function loadStudentSections(studentId: number, setter: (val: ISect
     const json = await response.text()
     const parsed = JSON.parse(json) as ISection[];
     setter(parsed);
+}
+
+export async function loadProgressScores(studentId: number, groupingConfig: IGroupingConfig, aheadBehindPenalty: number, period: number, setter: (val: any) => void) {
+    const response = await fetch(`/api/students/${studentId}/progressscores?grouping=${encodeURIComponent(groupingConfig.name)}&aheadBehindPeriodPentalty=${encodeURIComponent(aheadBehindPenalty.toString())}&period=${encodeURIComponent(period.toString())}`, {})
+    const json = await response.text()
+    setter(json);
 }

@@ -31,6 +31,12 @@ class OutcomePlanning
     public array $periodLevels = [];
 
     /**
+     * The weight in calculating an overal tracking score for this outcome.
+     * @var int
+     */
+    public int $weight = 1; //currently unimplemented
+
+    /**
      * Summary of toArray
      * @param bool $fullData If true, will fetch and include full outcome data
      * @return array{outcome: array, periodLevels: int[]}

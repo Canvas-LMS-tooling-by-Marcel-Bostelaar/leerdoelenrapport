@@ -5,7 +5,10 @@ namespace App\Controllers;
 use App\Models\Config\DecoratedSection;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
+use CanvasApiLibrary\Core\Models\Section;
+use CanvasApiLibrary\Core\Models\User;
 use CanvasApiLibrary\Core\Models\UserStub;
+use CanvasApiLibrary\Core\Providers\Utility\Lookup;
 use DateTime;
 
 class StudentController
@@ -54,12 +57,24 @@ class StudentController
     }
 
     public function sections($studentId){
-        $data = json_decode('[{"id":55355,"course_id":70126,"domain":"https:\/\/flexedu.instructure.com\/","name":"2A - 25\/26"}]');
-        return jsonResponse($data);
-        //TODO
-        // $course = course();
-        // $sections = providers()->sectionProvider->getSectionsForStudentInCourse($course, $studentId);
-        // return jsonResponse(array_map(fn($section) => DecoratedSection::sectionToArray(providersRaw()->sectionProvider, $section, true), $sections));
+        //TODO replace with direct call, must be implemented in api. This is very inefficient.
+        /** @var Section[] $sections*/
+        $sections = providers()->sectionProvider->getAllSectionsInCourse(course());
+        /**
+         * @var Lookup<Section, User>
+         */
+        $studentsPerSection = providers()->userProvider->getUsersInSections($sections, "Student");
+        $validSections = [];
+        foreach ($sections as $section) {
+            $students = $studentsPerSection->get($section);
+            foreach ($students as $student) {
+                if ($student->id == $studentId) {
+                    $validSections[] = $section;
+                    break;
+                }
+            }
+        }
+        return jsonResponse(array_map(fn($section) => DecoratedSection::sectionToArray(providersRaw()->sectionProvider, $section, true), $validSections));
     }
 
     /**

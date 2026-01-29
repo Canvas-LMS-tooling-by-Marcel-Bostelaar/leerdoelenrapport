@@ -12,8 +12,9 @@ export type IOutcomeResultGroup = {
 }
 
 export type IOutcomeResultSet<T> = {
-    name: string;
-    subItems: (T | IOutcomeResultSet<T>)[];
+    total: T;
+    generated: T[];
+    individual_assessments: T[];
 }
 
 export type CssDecoratedIOutcomeResultGroup = IOutcomeResultGroup & {

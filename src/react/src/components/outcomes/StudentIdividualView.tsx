@@ -52,7 +52,7 @@ function StudentIndividualViewRender({name, resultStateObject, sections, config,
         )
     )
 
-    const enabledOutcomeResults = flattenOutcomeResultSet(resultStateObject)
+    const enabledOutcomeResults = [resultStateObject.total, ...resultStateObject.individual_assessments, ...resultStateObject.generated]
     .filter(x => x.get.enabled).map(x => x.get.item);
 
     return (
@@ -146,20 +146,28 @@ function makeCssClassFromString(input: string): string {
 
 function makeIntoSelectableOutcomeResultSet(results: IOutcomeResultSet<IOutcomeResultGroup>, knownEnables: Map<string, boolean>): IOutcomeResultSet<FullyDecoratedORG> {
     return {
-        name: results.name,
-        subItems: results.subItems.map(item => {
-            if('subItems' in item){
-                return makeIntoSelectableOutcomeResultSet(item, knownEnables);
-            } else {
-                return {
-                    enabled: knownEnables.get(item.assesment_description) || true,
-                    item: {
-                        ...item,
-                        cssClass: 'outcome-result-' + makeCssClassFromString(item.assesment_description)
-                    }
-                };
+        total: 
+        {
+            enabled: knownEnables.get("total") || true,
+            item: {
+                ...results.total,
+                cssClass: 'total-result'
             }
-        })
+        },
+        generated: results.generated.map(group => ({
+            enabled: knownEnables.get(group.assesment_description) || true,
+            item: {
+                ...group,
+                cssClass: 'generated-result-' + makeCssClassFromString(group.assesment_description)
+            }
+        })),
+        individual_assessments: results.individual_assessments.map(group => ({
+            enabled: knownEnables.get(group.assesment_description) || true,
+            item: {
+                ...group,
+                cssClass: 'individual-assessment-result-' + makeCssClassFromString(group.assesment_description)
+            }
+        }))
     };
 }
 
@@ -168,21 +176,47 @@ type gettersetter<T> = {
     set: StateSetter<T>;
 }
 
-
 function useInvertedOutcomeStateSet(get: IOutcomeResultSet<FullyDecoratedORG>, set: StateSetter<IOutcomeResultSet<FullyDecoratedORG>>) : IOutcomeResultSet<gettersetter<FullyDecoratedORG>> {
-    const [subItemsGet, subItemsSet] = useDerivedState<IOutcomeResultSet<FullyDecoratedORG>, (IOutcomeResultSet<FullyDecoratedORG>|FullyDecoratedORG)[]>(get, set, "subItems");
-    const generatedArraySetters = useDerivedArrayState(subItemsGet, subItemsSet);
-    const mapped : gettersetter<FullyDecoratedORG|IOutcomeResultSet<gettersetter<FullyDecoratedORG>>>[] = generatedArraySetters.map(item => {
-        if(!('subItems' in item.get)){
-            return {get: item.get as FullyDecoratedORG, set: item.set as StateSetter<FullyDecoratedORG>};
+    const [totalGet, totalSet] = useDerivedState(
+        get, set,
+        x => x.total,
+        (original, newItem) => {
+            return {
+                ...original,
+                total: newItem
+            };
         }
-        const [childset, childGet] = useInvertedOutcomeStateSet(item.get as IOutcomeResultSet<FullyDecoratedORG>, item.set as StateSetter<IOutcomeResultSet<FullyDecoratedORG>>);
-        // return {get: childset as IOutcomeResultSet<gettersetter<FullyDecoratedORG>>, set: item.set as StateSetter<IOutcomeResultSet<FullyDecoratedORG>>};
-    });
+    );
+
+    const [generatedGet, generatedSet] = useDerivedState(
+        get, set,
+        x => x.generated,
+        (original, newItem) => {
+            return {
+                ...original,
+                generated: newItem
+            };
+        }
+    );
+    const [individualGet, individualSet] = useDerivedState(
+        get, set,
+        x => x.individual_assessments,
+        (original, newItem) => {
+            return {
+                ...original,
+                individual_assessments: newItem
+            };
+        }
+    );
+
+    const generatedArraySetters = useDerivedArrayState(generatedGet, generatedSet);
+    const individualArraySetters = useDerivedArrayState(individualGet, individualSet);
+
     return {
-        name: get.name,
-        subItems: mapped
-    }
+        total: {get: totalGet, set: totalSet},
+        generated: generatedArraySetters.map(item => ({get: item.get, set: item.set})),
+        individual_assessments: individualArraySetters.map(item => ({get: item.get, set: item.set}))
+    };
 }
 
 function createEnabledDisabledMap(set: IOutcomeResultSet<FullyDecoratedORG>): Map<string, boolean> {
@@ -212,14 +246,4 @@ function mapToObject(map: Map<string, boolean>): object {
         obj[key] = value;
     }
     return obj;
-}
-
-function flattenOutcomeResultSet<T extends object>(set: IOutcomeResultSet<T>): T[] {
-    return set.subItems.map(x => {
-        if('subItems' in x){
-            return flattenOutcomeResultSet(x);
-        } else {
-            return [x];
-        }
-    }).flat();
 }

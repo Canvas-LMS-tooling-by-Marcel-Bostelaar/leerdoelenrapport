@@ -3,6 +3,7 @@
 namespace App\Middleware\Util;
 
 use App\Providers\Interfaces\ConfigProviderInterface;
+use App\Providers\Interfaces\ProgressScoreProviderInterface;
 use CanvasApiLibrary\Core\Providers\Interfaces;
 
 class ProviderContainer
@@ -17,7 +18,8 @@ class ProviderContainer
         public readonly Interfaces\OutcomeGroupProviderInterface $outcomeGroupProvider,
         public readonly Interfaces\OutcomeProviderInterface $outcomeProvider,
         public readonly Interfaces\OutcomeResultProviderInterface $outcomeResultProvider,
-        public readonly ConfigProviderInterface $configProvider
+        public readonly ConfigProviderInterface $configProvider,
+        public readonly ProgressScoreProviderInterface $progressScoreProvider,
     ) {
     }
 }

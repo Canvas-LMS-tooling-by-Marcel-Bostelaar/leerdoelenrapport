@@ -3,6 +3,7 @@
 namespace App\Middleware;
 
 use App\Providers\FilesystemConfigProvider;
+use App\Providers\ProgressScoreProvider;
 use CanvasApiLibrary\Core\Providers;
 use App\Middleware\Util\ProviderContainer;
 use Illuminate\Container\Container;
@@ -39,6 +40,13 @@ class ProviderSetup
             $OutcomeGroupProvider
         );
 
+        $ProgressScoreProvider = new ProgressScoreProvider(
+            $configProvider,
+            $OutcomeResultProvider,
+            $OutcomeGroupProvider,
+            $OutcomeProvider
+        );
+
         //Container
         $container = new ProviderContainer(
             $AssignmentProvider,
@@ -50,7 +58,8 @@ class ProviderSetup
             $OutcomeGroupProvider,
             $OutcomeProvider,
             $OutcomeResultProvider,
-            $configProvider
+            $configProvider,
+            $ProgressScoreProvider
         );
 
         // Bind to the application container for global helper access

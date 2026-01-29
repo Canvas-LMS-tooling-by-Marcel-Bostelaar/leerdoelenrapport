@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Exceptions\ResultControlFlowEscapehatchException;
 use App\Models\Config\DecoratedSection;
 use App\Models\Config\GroupingConfig;
 use App\Models\Progressscores\RegularOutcomeProgressScore;
+use App\Utility\OutcomesUtility;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
 use CanvasApiLibrary\Core\Models\Section;
@@ -34,7 +36,14 @@ class StudentController
         $studentStub->domain = $course->domain;
 
         $total = providers()->outcomeResultProvider->getOutcomeResultsInCourse($course, [$studentStub]);
-        $total = self::addZeroResultForMissingOutcomes($total, $studentStub);
+        $total = OutcomesUtility::addZeroResultForMissingOutcomes($total, $studentStub, $course, providersRaw()->outcomeGroupProvider, providersRaw()->outcomeProvider, false, false);
+        if(!$total instanceof SuccessResult){
+            throw new ResultControlFlowEscapehatchException($total);
+        }
+        /**
+         * @var OutcomeResult[]
+         */
+        $total = $total->value;
         return jsonResponse([
             "total" => self::createOutcomeResultGroup($total, "Total"),
             "generated" => [],
@@ -72,31 +81,71 @@ class StudentController
         if(!$groupingConfig){
             return jsonResponse(['error' => 'Grouping config not found'], 404);
         }
+        /**
+         * @var RegularOutcomeProgressScore[]
+         */
+        $progressItems = providers()->progressScoreProvider->getProgressScoresForStudent($studentStub, $groupingConfig, $course, $aheadBehindPeriodPentalty, $period);
+        $results = array_map(function($item) {
+            [
+                'outcome_id' => $item->outcome_id,
+                'progress_score' => $item->score,
+                'weighted_progress_score' => $item->weightedScore,
+            ];
+        }, $progressItems);
+        return jsonResponse($results);
+    }
 
-        $total = providers()->outcomeResultProvider->getOutcomeResultsInCourse($course, [$studentStub]);
-        $total = self::addZeroResultForMissingOutcomes($total, $studentStub);
-        //zip outcomeplanning to outcomeresult
-        $planningToResult = [];
-        foreach($groupingConfig->outcomePlannings as $outcomePlanning){
-            foreach($total as $outcomeResult){
-                if($outcomeResult->learning_outcome->id === $outcomePlanning->outcome->id){
-                    $planningToResult[] = [
-                        'planning' => $outcomePlanning,
-                        'result' => $outcomeResult
-                    ];
-                    break;
-                }
+    public function progressScoreSummarized(Request $request){
+        $groupingName = $request->input('grouping');
+        $aheadBehindPeriodPentalty = floatval($request->input('aheadBehindPeriodPentalty', '0.0'));
+        if(!$request->has('period')){
+            return jsonResponse(['error' => 'Missing period'], 400);
+        }
+        $period = intval($request->input('period', '0'));
+        if(!$groupingName){
+            return jsonResponse(['error' => 'Missing grouping name'], 400);
+        }
+        $course = course();
+        $fullConfig = providers()->configProvider->getConfigInCourse($course);
+        $fullConfig->ensureContent();
+        /**
+         * @var GroupingConfig
+         */
+        $groupingConfig = null;
+        foreach($fullConfig->groupingConfigs as $gc){
+            if($gc->name === $groupingName){
+                $groupingConfig = $gc;
+                break;
             }
         }
-        $results = array_map(function($item) use ($groupingConfig, $aheadBehindPeriodPentalty, $period){
-            $progressScore = new RegularOutcomeProgressScore($item['result'], $item['planning'], $period, $aheadBehindPeriodPentalty);
-            return [
-                'outcome_id' => $item['planning']->outcome->id,
-                'progress_score' => $progressScore->score,
-                'weighted_progress_score' => $progressScore->weightedScore,
+        if(!$groupingConfig){
+            return jsonResponse(['error' => 'Grouping config not found'], 404);
+        }
+        /**
+         * @var User[]
+         */
+        $students = providers()->userProvider->getUsersInCourse($course, "student");
+        /**
+         * @var Lookup<UserStub, RegularOutcomeProgressScore>
+         */
+        $progressScores = providers()->progressScoreProvider->getProgressScoresForStudents($students, $groupingConfig, $course, $aheadBehindPeriodPentalty, $period);
+        $summed = [];
+        foreach($students as $student){
+            $studentScores = $progressScores->get($student);
+            $totalScore = 0.0;
+            $totalWeightedScore = 0.0;
+            foreach($studentScores as $scoreItem){
+                $totalScore += $scoreItem->score;
+                $totalWeightedScore += $scoreItem->weightedScore;
+            }
+            $summed[] = [
+                'student_id' => $student->id,
+                'student_name' => $student->name,
+                'total_progress_score' => $totalScore,
+                'total_weighted_progress_score' => $totalWeightedScore,
             ];
-        }, $planningToResult);
-        return jsonResponse($results);
+        }
+        return jsonResponse($summed);
     }
 
     /**
@@ -141,36 +190,5 @@ class StudentController
             }
         }
         return jsonResponse(array_map(fn($section) => DecoratedSection::sectionToArray(providersRaw()->sectionProvider, $section, true), $validSections));
-    }
-
-    /**
-     * Adds an outcome of 0 to all missing outcomes in the result list.
-     * @param OutcomeResult[] $results
-     * @return OutcomeResult[] Updated outcome result list with a 0 score outcome for all missing outcomes.
-     */
-    private static function addZeroResultForMissingOutcomes(array $results, UserStub $user): array{
-        $course = course();
-        $outcomeGroups = providers()->outcomeGroupProvider->getOutcomegroupsInCourse($course);
-        /**
-         * @var Outcome[]
-         */
-        $outcomes = providers()->outcomeProvider->getOutcomesInOutcomegroups($outcomeGroups)->getAll();
-        $mapped = [];
-        foreach ($results as $result) {
-            $mapped[$result->learning_outcome->id] = $result;
-        }
-        foreach ($outcomes as $outcome) {
-            if (!isset($mapped[$outcome->id])) {
-                $item = new OutcomeResult();
-                $item->id = -1;
-                $item->domain = $course->domain;
-                $item->score = 0;
-                $item->learning_outcome = $outcome;
-                $item->submitted_or_assessed_at = new DateTime("1970-01-01T00:00:00Z");
-                $item->user = $user;
-                $mapped[$outcome->id] = $item;
-            }
-        }
-        return array_values($mapped);
     }
 }

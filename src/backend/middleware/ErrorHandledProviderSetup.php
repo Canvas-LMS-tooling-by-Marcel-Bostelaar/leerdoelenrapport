@@ -7,6 +7,7 @@ use App\Middleware\Util\Exceptions\UnauthorizedException;
 use App\Middleware\Util\Exceptions\UnknownErrorException;
 use App\Providers\Wrappers\ConfigProviderWrapper;
 use App\Middleware\Util\ProviderContainer;
+use App\Providers\Wrappers\ProgressScoreProviderWrapper;
 use CanvasApiLibrary\Core\Providers\Interfaces;
 use CanvasApiLibrary\Core\Providers\Utility\Results\ErrorResult;
 use CanvasApiLibrary\Core\Providers\Utility\Results\NotFoundResult;
@@ -58,7 +59,8 @@ class ErrorHandledProviderSetup
             new Interfaces\OutcomeGroupProviderWrapper($providers->outcomeGroupProvider, $capturedFunc),
             new Interfaces\OutcomeProviderWrapper($providers->outcomeProvider, $capturedFunc),
             new Interfaces\OutcomeResultProviderWrapper($providers->outcomeResultProvider, $capturedFunc),
-            new ConfigProviderWrapper($providers->configProvider, $capturedFunc)
+            new ConfigProviderWrapper($providers->configProvider, $capturedFunc),
+            new ProgressScoreProviderWrapper($providers->progressScoreProvider, $capturedFunc)
         );
         //bind cleaned up providers to clean api providers
         $app->instance('api.providers.cleanresults', $cleanProviders);

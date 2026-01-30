@@ -3,7 +3,7 @@ import { ConfigEditor } from 'src/components/config/ConfigEditor'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { StudentOverview } from 'src/components/StudentOverview';
 import { NotFound } from './components/NotFound';
-import { StudentIndividualViewRouterChild } from './components/outcomes/StudentIdividualView';
+import { StudentIndividualViewRouterChild } from './components/outcomes/StudentIndividualView';
 
 
 function App() {

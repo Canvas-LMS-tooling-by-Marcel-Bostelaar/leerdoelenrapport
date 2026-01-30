@@ -10,6 +10,7 @@ import { useSpecificCookie } from "src/utility/useSpecificCookie";
 import { TabGroup } from "../TabGroup";
 import { OutcomeGroupReadonly } from "./OutcomeGroupReadonly";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
+import "./StudentIndividualView.css";
 
 
 /**

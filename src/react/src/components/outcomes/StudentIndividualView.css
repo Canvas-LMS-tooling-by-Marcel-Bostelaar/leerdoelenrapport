@@ -1,0 +1,28 @@
+
+.marker {
+    font-size: 10px;
+    background-color: gray;
+}
+.cell{
+    border: 1px solid black;
+}
+.cell.level_0{
+    background-color: lightgray;
+}
+.cell.level_1{
+    background-color: green;
+}
+.cell.level_2{
+    background-color: orange;
+}
+.cell.level_3{
+    background-color: turquoise;
+}
+
+.progress-cell.positive{
+    background-color: greenyellow;
+}
+.progress-cell.negative{
+    background-color: lightcoral;
+}
+

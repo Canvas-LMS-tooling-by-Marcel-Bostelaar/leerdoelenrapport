@@ -19,7 +19,7 @@ export function OutcomeGroupReadonly({studentId, groupingConfigName, grouping, p
     const [progressScores, setProgressScores] = useState<IProgressScore[]>([]);
 
     useEffect(() =>{
-        loadProgressScores(studentId, groupingConfigName, 0.0, 5, setProgressScores);
+        loadProgressScores(studentId, groupingConfigName, 0.0, 4, setProgressScores);
     }, [studentId, groupingConfigName]);
     
     return <OutcomeGroupReadonlyEffectless
@@ -40,7 +40,10 @@ type OutcomeGroupReadonlyEffectlessProps = {
 };
 
 function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping, outcomeResults, progressScores}: OutcomeGroupReadonlyEffectlessProps) {
-
+    const scoresAsMap = new Map<number, IProgressScore>();
+    progressScores.forEach(score => {
+        scoresAsMap.set(score.outcome_id, score);
+    });
     const filtered = outcomePlannings
         //filter to only direct children of this grouping
         .filter(op => grouping.child_outcomes.includes(op.outcome.id))
@@ -73,11 +76,12 @@ function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping
         </tr>
         <tr>
             <th>Outcome</th>
-            <th key={-1}>❌</th> {/*TODO hover text explaining not proven */}
+            <th key={-1}>#</th> {/*TODO hover text explaining progress score */}
+            <th key={-2}>❌</th> {/*TODO hover text explaining not proven */}
             {Array.from({length: periodCount}).map((_, index) => (
                 <th key={index}>Period {index + 1}</th>
             ))}
-             <th key={-2}>&gt;</th> {/*TODO hover text explaining score higher than highest planned*/}
+             <th key={-3}>&gt;</th> {/*TODO hover text explaining score higher than highest planned*/}
         </tr>
     </thead>
     <tbody>
@@ -86,7 +90,8 @@ function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping
                 key={index}
                 planning={state}
                 periodCount={periodCount}
-                outcomeResults={outcomeResults}/>
+                outcomeResults={outcomeResults}
+                score={scoresAsMap.get(state.outcome.id)}/>
         })}
     </tbody>
     </>)}

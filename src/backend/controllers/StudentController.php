@@ -88,65 +88,12 @@ class StudentController
         $progressItems = providers()->progressScoreProvider->getProgressScoresForStudent($studentStub, $groupingConfig, $course, $aheadBehindPeriodPentalty, $period);
         $results = array_map(function(RegularOutcomeProgressScore $item) {
             return [
-                'outcome_id' => $item->outcome_result_id,
+                'outcome_id' => $item->learning_outcome_id,
                 'progress_score' => $item->score,
                 'weighted_progress_score' => $item->weightedScore,
             ];
         }, $progressItems);
         return jsonResponse($results);
-    }
-
-    public function progressScoreSummarized(Request $request){
-        $groupingName = $request->input('grouping');
-        $aheadBehindPeriodPentalty = floatval($request->input('aheadBehindPeriodPentalty', '0.0'));
-        if(!$request->has('period')){
-            return jsonResponse(['error' => 'Missing period'], 400);
-        }
-        $period = intval($request->input('period', '0'));
-        if(!$groupingName){
-            return jsonResponse(['error' => 'Missing grouping name'], 400);
-        }
-        $course = course();
-        $fullConfig = providers()->configProvider->getConfigInCourse($course);
-        $fullConfig->ensureContent();
-        /**
-         * @var GroupingConfig
-         */
-        $groupingConfig = null;
-        foreach($fullConfig->groupingConfigs as $gc){
-            if($gc->name === $groupingName){
-                $groupingConfig = $gc;
-                break;
-            }
-        }
-        if(!$groupingConfig){
-            return jsonResponse(['error' => 'Grouping config not found'], 404);
-        }
-        /**
-         * @var User[]
-         */
-        $students = providers()->userProvider->getUsersInCourse($course, "student");
-        /**
-         * @var Lookup<UserStub, RegularOutcomeProgressScore>
-         */
-        $progressScores = providers()->progressScoreProvider->getProgressScoresForStudents($students, $groupingConfig, $course, $aheadBehindPeriodPentalty, $period);
-        $summed = [];
-        foreach($students as $student){
-            $studentScores = $progressScores->get($student);
-            $totalScore = 0.0;
-            $totalWeightedScore = 0.0;
-            foreach($studentScores as $scoreItem){
-                $totalScore += $scoreItem->score;
-                $totalWeightedScore += $scoreItem->weightedScore;
-            }
-            $summed[] = [
-                'student_id' => $student->id,
-                'student_name' => $student->name,
-                'total_progress_score' => $totalScore,
-                'total_weighted_progress_score' => $totalWeightedScore,
-            ];
-        }
-        return jsonResponse($summed);
     }
 
     /**

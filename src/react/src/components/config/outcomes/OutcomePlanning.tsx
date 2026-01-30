@@ -72,18 +72,28 @@ type PopoverStateSelectorProps = {
 };
 
 function PopoverStateSelector({currentState, setState, deletePlanning}: PopoverStateSelectorProps) {
+    let stateMapper = (s: IOutcomePlanningStatus) => {switch(s){
+        case "disabled":
+            return "❌";
+        case "enabled":
+            return "✅";
+        case "enabled_uncounted":
+            return "☑️(uncounted)";
+        case "orphaned":
+            return "🥺Orphaned";
+    }};
     return (
     <Popover.Root>
         <Popover.Trigger>
-            <span>State: {currentState}</span>
+            <span>State: {stateMapper(currentState)}</span>
         </Popover.Trigger>
         <Popover.Portal>
             <Popover.Positioner sideOffset={8}>
                 <Popover.Popup>
                     <div className="state_popup">
-                        <p onClick={() => setState("enabled")}>Enable</p>
-                        <p onClick={() => setState("enabled_uncounted")}>Enable, do not count</p>
-                        <p onClick={() => setState("disabled")}>Disable</p>
+                        <p onClick={() => setState("enabled")}>✅Enable</p>
+                        <p onClick={() => setState("enabled_uncounted")}>☑️Enable, do not count</p>
+                        <p onClick={() => setState("disabled")}>❌Disable</p>
                         {
                             currentState == "orphaned" ? <p onClick={() => AreYouSureDelete(deletePlanning)}>Delete</p> : <></>
                         }

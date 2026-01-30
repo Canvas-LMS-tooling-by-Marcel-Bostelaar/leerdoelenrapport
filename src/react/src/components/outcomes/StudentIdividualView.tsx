@@ -3,7 +3,7 @@ import { NotFound } from "../NotFound";
 import { useEffect, useState } from "react";
 import type { CssDecoratedIOutcomeResultGroup, IOutcomeResultGroup, IOutcomeResultSet } from "src/types/IOutcomeResult";
 import type { IFullConfig, ISection } from "src/types/config";
-import { loadConfig, loadOutcomeGrouping, loadProgressScores, loadStudentResults, loadStudentSections } from "../../utility/apiCalls";
+import { loadConfig, loadOutcomeGrouping, loadStudentResults, loadStudentSections } from "../../utility/apiCalls";
 import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
 import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 import { useSpecificCookie } from "src/utility/useSpecificCookie";
@@ -31,6 +31,7 @@ type StudentIndividualViewRenderProps = {
     sections: ISection[];
     config: IFullConfig;
     outcomeGrouping: IOutcomeGrouping;
+    studentId: number;
 };
 
 type EnabledDecoration<T> = {
@@ -40,7 +41,7 @@ type EnabledDecoration<T> = {
 
 type FullyDecoratedORG = EnabledDecoration<CssDecoratedIOutcomeResultGroup>;
 
-function StudentIndividualViewRender({name, resultStateObject, sections, config, outcomeGrouping}: StudentIndividualViewRenderProps) {
+function StudentIndividualViewRender({name, resultStateObject, sections, config, outcomeGrouping, studentId}: StudentIndividualViewRenderProps) {
     //Set of ids of sections the student is in
     const knownStudentSectionIds = new Set(sections.map(section => section.id));
     //Filter to only grouping configs where the student is in at least one linked section
@@ -60,13 +61,15 @@ function StudentIndividualViewRender({name, resultStateObject, sections, config,
         <>
             <TabGroup names={configsStudentIsIn.map(cfg => cfg.name)}>
                 {
-                    configsStudentIsIn.map((groupingConfig, index) => (
+                    configsStudentIsIn.map((groupingConfig) => (
                         <OutcomeGroupReadonly 
-                        key={index} 
-                        outcomePlannings={groupingConfig.outcomePlannings} 
+                        key={groupingConfig.name}
                         grouping={outcomeGrouping}
-                        periodCount={groupingConfig.periodCount}
                         outcomeResults={enabledOutcomeResults}
+                        studentId={studentId}
+                        groupingConfigName={groupingConfig.name}
+                        periodCount={groupingConfig.periodCount}
+                        outcomePlannings={groupingConfig.outcomePlannings}
                         />
                     ))
                 }
@@ -81,13 +84,14 @@ type CalculationProps = {
     sections: ISection[];
     config: IFullConfig;
     outcomeGrouping: IOutcomeGrouping;
+    studentId: number;
 }
 
 /**
  * Creates togglable state, with cookie saving. Creates state object that it passes to render.
  * @returns 
  */
-function StudentIndividualViewStateCalculation({name, results, sections, config, outcomeGrouping}: CalculationProps){
+function StudentIndividualViewStateCalculation({name, results, sections, config, outcomeGrouping, studentId}: CalculationProps){
     //Get previous enabled show/hide from cookies
     const [savedEnables, setSavedEnables] = useSpecificCookie("enabled_outcome_results", () => new Map<string, boolean>(), 
         mapToObject, 
@@ -107,7 +111,7 @@ function StudentIndividualViewStateCalculation({name, results, sections, config,
     //Create outcome result set that contains setters for all items, from the previous state.
     const invertedOutcomeState = useInvertedOutcomeStateSet(resultState, setResultState);
 
-    return <StudentIndividualViewRender name={name} resultStateObject={invertedOutcomeState} sections={sections} config={config} outcomeGrouping={outcomeGrouping}/>
+    return <StudentIndividualViewRender name={name} resultStateObject={invertedOutcomeState} sections={sections} config={config} outcomeGrouping={outcomeGrouping} studentId={studentId}/>
 }
 
 /**
@@ -118,7 +122,7 @@ function StudentIndividualViewDataFetching({studentId, name}: {studentId: number
     const [sections, setSections] = useState<ISection[] | undefined>(undefined);
     const [config, setConfig] = useState<IFullConfig | undefined>(undefined);
     const [outcomeGrouping, setOutcomeGrouping] = useState<IOutcomeGrouping | undefined>(undefined);
-    const [progressScores, setProgressScores] = useState<any>(undefined);
+    // const [progressScores, setProgressScores] = useState<IProgressScore[] | undefined>(undefined);
 
     const allLoaded = results !== undefined && sections !== undefined && config !== undefined && outcomeGrouping !== undefined;
 
@@ -132,16 +136,10 @@ function StudentIndividualViewDataFetching({studentId, name}: {studentId: number
         .then(() => loadStudentSections(studentId, setSections));
     }, [studentId]);
 
-    useEffect(() =>{
-        if(config){
-            loadProgressScores(studentId, config.groupingConfigs[0], 0.0, 5, setProgressScores);
-        }
-    }, [studentId, config]);
-
     return (<>
         {
         allLoaded ?
-        <StudentIndividualViewStateCalculation name={name} results={results} sections={sections} config={config} outcomeGrouping={outcomeGrouping}/>
+        <StudentIndividualViewStateCalculation name={name} results={results} sections={sections} config={config} outcomeGrouping={outcomeGrouping} studentId={studentId}/>
          : <p>Loading...</p>}
     </>);
 }

@@ -6,7 +6,7 @@ use App\Models\Config\GroupingConfig;
 use App\Models\Progressscores\RegularOutcomeProgressScore;
 use App\Providers\Interfaces\ConfigProviderInterface;
 use App\Providers\Traits\ProgressScoreProviderTrait;
-use App\Utility\OutcomesUtility;
+use App\Utility\OutcomeUtility;
 use CanvasApiLibrary\Core\Models\CourseStub;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
 use CanvasApiLibrary\Core\Models\UserStub;

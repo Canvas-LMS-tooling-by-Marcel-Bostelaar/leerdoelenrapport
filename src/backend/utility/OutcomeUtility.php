@@ -14,21 +14,18 @@ use CanvasApiLibrary\Core\Providers\Utility\Results\NotFoundResult;
 use CanvasApiLibrary\Core\Providers\Utility\Results\UnauthorizedResult;
 use DateTime;
 
-class OutcomesUtility{
+class OutcomeUtility{
     /**
      * Adds an outcome of 0 to all missing outcomes in the result list.
      * @param OutcomeResult[] $results
      * @return ErrorResult|SuccessResult<OutcomeResult[]>|NotFoundResult|UnauthorizedResult Updated outcome result list with a 0 score outcome for all missing outcomes.
      */
-    public static function addZeroResultForMissingOutcomes(array $results, UserStub $user, CourseStub $course, OutcomegroupProviderInterface $outcomeGroupProvider, OutcomeProviderInterface $outcomeProvider, bool $skipCache, bool $doNotCache): array{
+    public static function addZeroResultForMissingOutcomes(array $results, UserStub $user, CourseStub $course, OutcomegroupProviderInterface $outcomeGroupProvider, OutcomeProviderInterface $outcomeProvider, bool $skipCache, bool $doNotCache): mixed{
         $outcomeGroups = $outcomeGroupProvider->getOutcomegroupsInCourse($course, $skipCache, $doNotCache);
         if(!$outcomeGroups instanceof SuccessResult){
             return $outcomeGroups;
         }
         $outcomeGroups = $outcomeGroups->value;
-        /**
-         * @var Outcome[]
-         */
         $outcomes = $outcomeProvider->getOutcomesInOutcomegroups($outcomeGroups, $skipCache, $doNotCache)->mapSuccess(fn($x) => $x->getAll());
         if(!$outcomes instanceof SuccessResult){
             return $outcomes;

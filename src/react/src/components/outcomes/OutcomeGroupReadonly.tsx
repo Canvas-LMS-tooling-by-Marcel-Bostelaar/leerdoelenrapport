@@ -2,15 +2,44 @@ import type { IOutcomePlanning } from "src/types/config";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import { OutcomePlanningReadonly } from "./OutcomePlanningReadonly";
 import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
+import { useEffect, useState } from "react";
+import type { IProgressScore } from "src/types/IProgressScore";
+import { loadProgressScores } from "src/utility/apiCalls";
 
 type OutcomeGroupReadonlyProps = {
-    outcomePlannings: IOutcomePlanning[];
+    studentId: number;
+    groupingConfigName: string;
     grouping: IOutcomeGrouping;
     periodCount: number;
     outcomeResults: CssDecoratedIOutcomeResultGroup[];
+    outcomePlannings: IOutcomePlanning[];
 };
 
-export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, outcomeResults}: OutcomeGroupReadonlyProps) {
+export function OutcomeGroupReadonly({studentId, groupingConfigName, grouping, periodCount, outcomeResults, outcomePlannings} : OutcomeGroupReadonlyProps) {
+    const [progressScores, setProgressScores] = useState<IProgressScore[]>([]);
+
+    useEffect(() =>{
+        loadProgressScores(studentId, groupingConfigName, 0.0, 5, setProgressScores);
+    }, [studentId, groupingConfigName]);
+    
+    return <OutcomeGroupReadonlyEffectless
+            grouping={grouping}
+            outcomeResults={outcomeResults}
+            progressScores={progressScores}
+            periodCount={periodCount}
+            outcomePlannings={outcomePlannings}
+        />;
+}
+
+type OutcomeGroupReadonlyEffectlessProps = {
+    grouping: IOutcomeGrouping;
+    outcomeResults: CssDecoratedIOutcomeResultGroup[];
+    progressScores: IProgressScore[];
+    periodCount: number;
+    outcomePlannings: IOutcomePlanning[];
+};
+
+function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping, outcomeResults, progressScores}: OutcomeGroupReadonlyEffectlessProps) {
 
     const filtered = outcomePlannings
         //filter to only direct children of this grouping
@@ -62,12 +91,13 @@ export function OutcomeGroupReadonly({outcomePlannings, grouping, periodCount, o
     </tbody>
     </>)}
     {subgroupsSorted.map((subgroup) => {
-            return <OutcomeGroupReadonly
+            return <OutcomeGroupReadonlyEffectless
                 key={subgroup.id}
-                outcomePlannings={outcomePlannings}
                 grouping={subgroup}
-                periodCount={periodCount}
                 outcomeResults={outcomeResults}
+                progressScores={progressScores}
+                periodCount={periodCount}
+                outcomePlannings={outcomePlannings}
             />;
         })}
     </>);

@@ -6,13 +6,14 @@ use App\Exceptions\ResultControlFlowEscapehatchException;
 use App\Models\Config\DecoratedSection;
 use App\Models\Config\GroupingConfig;
 use App\Models\Progressscores\RegularOutcomeProgressScore;
-use App\Utility\OutcomesUtility;
+use App\Utility\OutcomeUtility;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
 use CanvasApiLibrary\Core\Models\Section;
 use CanvasApiLibrary\Core\Models\User;
 use CanvasApiLibrary\Core\Models\UserStub;
 use CanvasApiLibrary\Core\Providers\Utility\Lookup;
+use CanvasApiLibrary\Core\Providers\Utility\Results\SuccessResult;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,8 @@ class StudentController
         $studentStub->domain = $course->domain;
 
         $total = providers()->outcomeResultProvider->getOutcomeResultsInCourse($course, [$studentStub]);
-        $total = OutcomesUtility::addZeroResultForMissingOutcomes($total, $studentStub, $course, providersRaw()->outcomeGroupProvider, providersRaw()->outcomeProvider, false, false);
-        if(!$total instanceof SuccessResult){
+        $total = OutcomeUtility::addZeroResultForMissingOutcomes($total, $studentStub, $course, providersRaw()->outcomeGroupProvider, providersRaw()->outcomeProvider, false, false);
+        if(!($total instanceof SuccessResult)){
             throw new ResultControlFlowEscapehatchException($total);
         }
         /**
@@ -85,9 +86,9 @@ class StudentController
          * @var RegularOutcomeProgressScore[]
          */
         $progressItems = providers()->progressScoreProvider->getProgressScoresForStudent($studentStub, $groupingConfig, $course, $aheadBehindPeriodPentalty, $period);
-        $results = array_map(function($item) {
-            [
-                'outcome_id' => $item->outcome_id,
+        $results = array_map(function(RegularOutcomeProgressScore $item) {
+            return [
+                'outcome_id' => $item->outcome_result_id,
                 'progress_score' => $item->score,
                 'weighted_progress_score' => $item->weightedScore,
             ];

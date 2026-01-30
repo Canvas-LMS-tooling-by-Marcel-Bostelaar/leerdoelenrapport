@@ -1,6 +1,7 @@
-import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type IGroupingConfig, type ISection } from "src/types/config";
+import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type ISection } from "src/types/config";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import type { IOutcomeResult, IOutcomeResultGroup, IOutcomeResultSet } from "src/types/IOutcomeResult";
+import type { IProgressScore } from "src/types/IProgressScore";
 
 const configUrl = "/api/config";
 const outcomeUrl = "/api/outcomegroups"
@@ -74,8 +75,9 @@ export async function loadStudentSections(studentId: number, setter: (val: ISect
     setter(parsed);
 }
 
-export async function loadProgressScores(studentId: number, groupingConfig: IGroupingConfig, aheadBehindPenalty: number, period: number, setter: (val: any) => void) {
-    const response = await fetch(`/api/students/${studentId}/progressscores?grouping=${encodeURIComponent(groupingConfig.name)}&aheadBehindPeriodPentalty=${encodeURIComponent(aheadBehindPenalty.toString())}&period=${encodeURIComponent(period.toString())}`, {})
-    const json = await response.text()
-    setter(json);
+export async function loadProgressScores(studentId: number, groupingConfigName: string, aheadBehindPenalty: number, period: number, setter: (val: IProgressScore[]) => void) {
+    const response = await fetch(`/api/students/${studentId}/progressscores?grouping=${encodeURIComponent(groupingConfigName)}&aheadBehindPeriodPentalty=${encodeURIComponent(aheadBehindPenalty.toString())}&period=${encodeURIComponent(period.toString())}`, {})
+    const json = await response.text();
+    const parsed = JSON.parse(json) as IProgressScore[];
+    setter(parsed);
 }

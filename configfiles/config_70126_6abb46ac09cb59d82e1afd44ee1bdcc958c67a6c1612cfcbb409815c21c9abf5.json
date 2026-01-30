@@ -8,7 +8,7 @@
                         "id": 3557,
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
-                    "status": "enabled",
+                    "status": "disabled",
                     "periodLevels": []
                 },
                 {
@@ -16,7 +16,7 @@
                         "id": 3558,
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
-                    "status": "enabled",
+                    "status": "disabled",
                     "periodLevels": []
                 },
                 {
@@ -25,7 +25,15 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 1,
+                        "3": 2,
+                        "4": 2,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -33,7 +41,13 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "3": 1,
+                        "4": 2,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -41,7 +55,14 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2,
+                        "4": 2,
+                        "5": 2,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -50,12 +71,14 @@
                     },
                     "status": "enabled",
                     "periodLevels": [
+                        0,
+                        0,
+                        0,
+                        0,
                         1,
+                        0,
                         2,
-                        2,
-                        3,
-                        3,
-                        4
+                        3
                     ]
                 },
                 {
@@ -64,7 +87,13 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "0": 1,
+                        "1": 3,
+                        "3": 3,
+                        "5": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -72,7 +101,11 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "5": 1,
+                        "6": 2,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -80,7 +113,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "0": 1,
+                        "1": 2,
+                        "2": 3,
+                        "3": 3,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3,
+                        "8": 0
+                    }
                 },
                 {
                     "outcome": {
@@ -88,7 +130,14 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2,
+                        "4": 2,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -104,7 +153,11 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 2,
+                        "3": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -112,7 +165,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        2,
+                        2,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -120,7 +182,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "4": 1,
+                        "5": 2,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -128,7 +195,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "4": 1,
+                        "5": 2,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -136,7 +208,13 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "4": 1,
+                        "5": 1,
+                        "6": 1,
+                        "7": 1
+                    }
                 },
                 {
                     "outcome": {
@@ -144,7 +222,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "4": 3,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -152,7 +235,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        1,
+                        1,
+                        2,
+                        2,
+                        2,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -160,7 +252,15 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "0": 1,
+                        "1": 1,
+                        "2": 1,
+                        "3": 2,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -168,7 +268,10 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "6": 1,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -176,7 +279,13 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "4": 1,
+                        "5": 1,
+                        "6": 1,
+                        "7": 1
+                    }
                 },
                 {
                     "outcome": {
@@ -184,7 +293,13 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 1,
+                        "4": 1,
+                        "5": 1,
+                        "6": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -192,7 +307,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -200,7 +324,15 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "5": 1,
+                        "6": 1,
+                        "7": 1,
+                        "8": 3,
+                        "9": 3,
+                        "10": 3,
+                        "11": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -208,7 +340,17 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        1,
+                        2,
+                        3,
+                        3,
+                        3,
+                        0
+                    ]
                 },
                 {
                     "outcome": {
@@ -216,7 +358,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -224,7 +375,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        2,
+                        2,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -232,7 +392,14 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 1,
+                        "4": 1,
+                        "5": 2,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -240,7 +407,15 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -248,7 +423,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        1,
+                        2,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -256,7 +440,15 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 2,
+                        "3": 2,
+                        "4": 2,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -264,7 +456,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1,
+                        "5": 3,
+                        "6": 3,
+                        "7": 3,
+                        "8": 0
+                    }
                 },
                 {
                     "outcome": {
@@ -272,7 +473,17 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        0
+                    ]
                 },
                 {
                     "outcome": {
@@ -280,7 +491,11 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2,
+                        "5": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -288,7 +503,13 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "0": 1,
+                        "1": 1,
+                        "2": 1,
+                        "3": 2,
+                        "5": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -296,7 +517,16 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -328,7 +558,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -336,7 +571,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": [
+                        2,
+                        2,
+                        2,
+                        3
+                    ]
                 },
                 {
                     "outcome": {
@@ -344,7 +584,11 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "1": 1,
+                        "3": 2,
+                        "5": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -352,7 +596,11 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2,
+                        "5": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -360,7 +608,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 1,
+                        "4": 2,
+                        "5": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -376,7 +629,9 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "5": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -400,7 +655,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "8": 3,
+                        "9": 3,
+                        "10": 3,
+                        "11": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -408,7 +668,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "8": 3,
+                        "9": 3,
+                        "10": 3,
+                        "11": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -416,7 +681,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "8": 3,
+                        "9": 3,
+                        "10": 3,
+                        "11": 3
+                    }
                 },
                 {
                     "outcome": {
@@ -424,7 +694,12 @@
                         "domain": "https:\/\/flexedu.instructure.com\/"
                     },
                     "status": "enabled",
-                    "periodLevels": []
+                    "periodLevels": {
+                        "8": 3,
+                        "9": 3,
+                        "10": 3,
+                        "11": 3
+                    }
                 }
             ],
             "periodPlannings": [
@@ -437,6 +712,14 @@
                         }
                     ],
                     "sections": [
+                        {
+                            "section": {
+                                "id": 55357,
+                                "course_id": 70126,
+                                "domain": "https:\/\/flexedu.instructure.com\/"
+                            },
+                            "isOrphaned": false
+                        },
                         {
                             "section": {
                                 "id": 55356,

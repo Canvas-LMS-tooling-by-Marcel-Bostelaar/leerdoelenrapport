@@ -21,5 +21,5 @@ export function PeriodCellReadonly({cssMarkerClasses, currentLevel}: PeriodCellR
 }
 
 function Marker({className, actualScore}: {className: string, actualScore: number}) {
-    return <span className={className + " marker"}>({actualScore})</span>;
+    return <span className={className + " marker"}>({actualScore.toFixed(1)})</span>;
 }

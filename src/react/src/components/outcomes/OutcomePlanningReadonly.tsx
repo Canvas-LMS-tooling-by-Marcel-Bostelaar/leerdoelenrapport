@@ -4,6 +4,7 @@ import { PeriodCellReadonly } from "./PeriodCellReadonly";
 import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
 import type { IProgressScore } from "src/types/IProgressScore";
 import { ProgressCell } from "./ProgressCell";
+import { groupBy, groupByMap } from "src/utility/groupBy";
 
 type OutcomePlanningReadonlyProps = {
     planning: IOutcomePlanning;
@@ -13,67 +14,82 @@ type OutcomePlanningReadonlyProps = {
     actualTotalScore: number;
 };
 
-type lvlAndCss = {
-    level: number;
-    css: string;
-    score: number;
-}
-
-type reduceType = {
-    seen: Map<string, boolean>, //[cssclass, level] : hasBeenSeen
-    total: lvlAndCss[][] //css classes, list of classes per period
-}
-
 export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, progressScore, actualTotalScore}: OutcomePlanningReadonlyProps) {
-    //create list of markets per period
-    const markerList = Array.from({length: periodCount + 1}).map((_, index) => index - 1)
-        .map(period => 
-            outcomeResults
-                .filter(x => {
-                    const score = x.outcome_results.get(planning.outcome.id);
-                    const periodLevel = planning.periodLevels.get(period) || 0;
-                    if(score === undefined){
-                        return false
-                    }
-                    return RoughlyEquals(score.score, periodLevel)
-                    }
-                )
-                .map(x => {
-                    return {
-                        css: x.cssClass,
-                        level: planning.periodLevels.get(period) || 0,
-                        score: x.outcome_results.get(planning.outcome.id)!.score
-                    }}
-                )
-            );
+    const highestPlannedScore = Math.max(0, ...planning.periodLevels.values())
+    const relevantResults = outcomeResults.map(x => {
+        return {
+            css: x.cssClass,
+            score: x.outcome_results.get(planning.outcome.id)?.score
+        }
+    })
+    .filter(x => x.score !== undefined);
 
-    const aboveEndlevelColumn = outcomeResults.map(x => {return {
-        outcome: x,
-        result: x.outcome_results.get(planning.outcome.id)
-    }})
-    .filter(x => x.result !== undefined)
-    .map(x => {
-        const maxLevel = planning.periodLevels.size === 0 ? 0 : Math.max(...planning.periodLevels.values());
-        if(x.result!.score > maxLevel ){
+
+    //place markers on all normal (not 0th period, not end period), only if there is a score
+    const markers = Array.from({length: periodCount}).flatMap((_, period) => 
+        relevantResults.map(x => {
             return {
-                css: x.outcome.cssClass,
-                level: Number.POSITIVE_INFINITY,
-                score: x.result!.score
+                css: x.css,
+                score: x.score!,
+                level: planning.periodLevels.get(period) || 0,
+                period: period
+        }})
+    );
+    let groupedByCss = groupBy(markers, x => x.css)
+    let a = groupedByCss.map(x => {
+        return {
+            css: x.key,
+            score: x.items[0].score,
+            items: x.items
+        }
+    })
+    //Filter away markers where score > period level
+    let b = a.map(item => {
+        return {
+            ...item, 
+            items: item.items.filter(period => {
+                const show = (Math.floor(period.score) >= period.level);
+                return show;
+            }
+            )
+        }
+    })
+    //Add inf marker if score > highest planned
+    let c = b.map(item => {
+        console.log(item.score, highestPlannedScore, item.score > highestPlannedScore);
+        if(item.score > highestPlannedScore){
+            return {
+                ...item,
+                items: [{css: item.css, score: item.score, level: Infinity, period: periodCount}]
             };
         }
-        return undefined;
+        return item;
     })
-    .filter(x => x !== undefined);
+    //Remove all markers where period level is 0
+    let d = c.map(item => {
+        return {
+            ...item,
+            items: item.items.filter(x => x.level !== 0)
+        }
+    })
+    //Shown only last marker
+    let e = d.map(item => {
+        if(item.score === 0 || item.items.length == 0){
+            return {css: item.css, score: 0, level: 0, period: -1}
+        }
+        return item.items.at(-1)!;
+    });
 
-    const combinedMarkerList = [...markerList, aboveEndlevelColumn];
-
-    //Show only the last instances of markers (but keep level 0 always)
-    const onlyLastInstance = showOnlyFirstOccurrence([...combinedMarkerList].reverse(), x => x.level == 0).reverse();
-
-    //Show only first instance of 0 markers (dont process others)
-    const withZeroFirst = showOnlyFirstOccurrence(onlyLastInstance, x => x.level !== 0);
-
-    //
+    const markersByPeriod = groupByMap(e, x=> x.period);
+    const finalMarkers = Array.from({length: periodCount + 2})
+    .map((_, period) => markersByPeriod.get(period - 1) || [])
+    .map(x => x.map(y => {
+        return {
+            css: y.css,
+            level: y.level,
+            score: y.score
+        }
+    }));
 
     return <>
     <tr>
@@ -81,7 +97,7 @@ export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, 
             {planning.outcome.title} {planning.status === "enabled_uncounted" ? (<NotCountedElement/>) : <></>}
         </td>
         <ProgressCell progressScore={progressScore} actualTotalScore={actualTotalScore}/>
-        { withZeroFirst.map((x, index) => (
+        { finalMarkers.map((x, index) => (
             <PeriodCellReadonly 
                 key={index}
                 //Last column is for above endlevel
@@ -95,21 +111,4 @@ export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, 
 
 function NotCountedElement(){
     return <span>💤</span>
-}
-
-function RoughlyEquals(a: number, integerNumber: number){
-    //TODO configure range
-    return Math.round(a) == Math.round(integerNumber)
-}
-
-function showOnlyFirstOccurrence(markerList: lvlAndCss[][], dontProcessPredicate: (item: lvlAndCss) => boolean)     {
-    return markerList.reduce<reduceType>((prev, curr, _, __) => {
-        const doShow = curr.filter(x => dontProcessPredicate(x) || !prev.seen.has(x.css + x.level.toString()));
-        let newMap = new Map(prev.seen);
-        doShow.forEach(x => newMap.set(x.css + x.level.toString(), true));
-        return {
-            seen: newMap,
-            total: [...prev.total, doShow]
-        };
-    }, {seen : new Map(), total: []}).total;
 }

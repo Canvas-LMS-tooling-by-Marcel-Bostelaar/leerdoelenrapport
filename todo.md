@@ -1,5 +1,5 @@
 [x] Fix bug in backend progress calc
-[] Make sure marker show up in lower level even if there is no exact match for score
+[x] Make sure marker show up in lower level even if there is no exact match for score
 [x] Display actual score
 [x] Save "expected score" in progress calc backend (by running calc again with 0 penalty for ahead/behind)
 [] Fix backend to store float not int score on outcome result

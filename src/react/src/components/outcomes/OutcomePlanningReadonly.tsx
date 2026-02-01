@@ -56,7 +56,6 @@ export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, 
     })
     //Add inf marker if score > highest planned
     let c = b.map(item => {
-        console.log(item.score, highestPlannedScore, item.score > highestPlannedScore);
         if(item.score > highestPlannedScore){
             return {
                 ...item,

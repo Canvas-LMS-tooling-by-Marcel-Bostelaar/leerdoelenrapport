@@ -4,4 +4,5 @@ export type IProgressScore = {
     weighted_progress_score: number;
     expected_score: number;
     is_above_endlevel: boolean;
+    last_graded_at: Date;
 };

@@ -1,0 +1,8 @@
+.scoreCell_negative {
+    background-color: hsl(0, 67%, 73%);
+}
+
+.studentOverviewTable td {
+    padding: 8px;
+    border: 1px solid #000000;
+}

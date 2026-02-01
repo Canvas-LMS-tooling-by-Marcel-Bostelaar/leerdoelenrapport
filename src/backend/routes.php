@@ -30,6 +30,7 @@ function routes(Router $router)
         $router->post('config', [ConfigController::class, 'store']);
         $router->post('config/revalidate', [ConfigController::class, 'revalidateConfig']);
         $router->get('sections', [SectionController::class, "index"]);
+        $router->get('sections/{sectionId}/students', [SectionController::class, "students"]);
         $router->get('outcomegroups', [OutcomeController::class, "outcomegroups"]);
         $router->group(['prefix' => 'students'], function (Router $router) {
             $router->get('/', [StudentController::class, "index"]);

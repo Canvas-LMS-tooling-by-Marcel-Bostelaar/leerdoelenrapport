@@ -92,7 +92,8 @@ class StudentController
                 'progress_score' => $item->score,
                 'weighted_progress_score' => $item->weightedScore,
                 'expected_score' => $item->expectedScore,
-                'is_above_endlevel' => $item->isAboveEndlevel
+                'is_above_endlevel' => $item->isAboveEndlevel,
+                'last_graded_at' => $item->lastGradedAt->format(DATE_ATOM)
             ];
         }, $progressItems);
         return jsonResponse($results);

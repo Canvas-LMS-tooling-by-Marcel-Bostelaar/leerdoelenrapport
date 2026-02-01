@@ -5,6 +5,7 @@ namespace App\Models\Progressscores;
 use App\Models\Config\OutcomePlanning;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
+use DateTime;
 use Exception;
 use LogicException;
 
@@ -36,6 +37,9 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
         }
 
         $gapFilledPlanning = $this::getGapFilledPlanning($planning);
+        if($score === null){
+            $score = 0;
+        }
         $this->bareScore = $this::calculateScore($score, $gapFilledPlanning, $periodNumberForReport, $aheadBehindPeriodPentalty);
         //Call with score of 0 and no pentalty, returns negative expected score.
         $this->expectedScore = -1 * $this::calculateScore(0, $gapFilledPlanning, $periodNumberForReport, 0.0);

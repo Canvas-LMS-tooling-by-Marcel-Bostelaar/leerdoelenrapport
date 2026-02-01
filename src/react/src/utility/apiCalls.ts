@@ -2,6 +2,7 @@ import { FullConfigToJson, ParseFullConfigJson, type IFullConfig, type ISection 
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import type { IOutcomeResult, IOutcomeResultGroup, IOutcomeResultSet } from "src/types/IOutcomeResult";
 import type { IProgressScore } from "src/types/IProgressScore";
+import type { StateSetter } from "./useDerivedState";
 
 const configUrl = "/api/config";
 const outcomeUrl = "/api/outcomegroups"
@@ -78,6 +79,39 @@ export async function loadStudentSections(studentId: number, setter: (val: ISect
 export async function loadProgressScores(studentId: number, groupingConfigName: string, aheadBehindPenalty: number, period: number, setter: (val: IProgressScore[]) => void) {
     const response = await fetch(`/api/students/${studentId}/progressscores?grouping=${encodeURIComponent(groupingConfigName)}&aheadBehindPeriodPentalty=${encodeURIComponent(aheadBehindPenalty.toString())}&period=${encodeURIComponent(period.toString())}`, {})
     const json = await response.text();
-    const parsed = JSON.parse(json) as IProgressScore[];
+    const parsed = JSON.parse(json, (key, value) => {
+        if(key === 'last_graded_at' && typeof value === 'string'){
+            return new Date(value);
+        }
+        return value;
+    }) as IProgressScore[];
     setter(parsed);
+}
+
+export type Student = {
+    id: number;
+    name: string;
+}
+export async function loadStudents(setter: StateSetter<Student[]>) {
+    const response = await fetch('/api/students')
+    const json = await response.text()
+    const parsed = JSON.parse(json) as Student[];
+    setter(parsed);
+}
+
+export async function loadStudentsInSection(sectionId: number, setter: StateSetter<Student[]>) {
+    const response = await fetch(`/api/sections/${sectionId}/students`)
+    const json = await response.text()
+    const parsed = JSON.parse(json) as Student[];
+    setter(parsed);
+}
+
+export async function loadStudentsInMultipleSections(sectionIds: number[], setter: StateSetter<Student[]>[]) {
+    for(let i = 0; i < sectionIds.length; i++){
+        const sectionId = sectionIds[i];
+        const response = await fetch(`/api/sections/${sectionId}/students`)
+        const json = await response.text()
+        const parsed = JSON.parse(json) as Student[];
+        setter[i](parsed);
+    }
 }

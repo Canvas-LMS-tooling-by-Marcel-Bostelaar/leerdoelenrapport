@@ -2,10 +2,10 @@
 [x] Make sure marker show up in lower level even if there is no exact match for score
 [x] Display actual score
 [x] Save "expected score" in progress calc backend (by running calc again with 0 penalty for ahead/behind)
-[] Fix backend to store float not int score on outcome result
-[] Display progres scores in student overview next to student
-[] Show "last graded x time ago"
-[] Group students in overview by section.
+[x] Fix backend to store float not int score on outcome result
+[x] Display progres scores in student overview next to student
+[x] Show "last graded x time ago"
+[x] Group students in overview by section.
 
 Should
 [] Pdf export

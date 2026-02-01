@@ -13,6 +13,7 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
     public readonly bool $isAboveEndlevel;
 
     private float $bareScore;
+    public readonly float $expectedScore;
 
     /**
      * Summary of __construct
@@ -36,6 +37,8 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
 
         $gapFilledPlanning = $this::getGapFilledPlanning($planning);
         $this->bareScore = $this::calculateScore($score, $gapFilledPlanning, $periodNumberForReport, $aheadBehindPeriodPentalty);
+        //Call with score of 0 and no pentalty, returns negative expected score.
+        $this->expectedScore = -1 * $this::calculateScore(0, $gapFilledPlanning, $periodNumberForReport, 0.0);
     }
 
     public float $score{
@@ -187,12 +190,6 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
                 return [
                     'score' => $score,
                     'segment' => $segment
-                ];
-            }
-            if($segment['start'] > $period){
-                return [
-                    'score' => $score - 1,
-                    'segment' => $segment[$score - 1]
                 ];
             }
         }

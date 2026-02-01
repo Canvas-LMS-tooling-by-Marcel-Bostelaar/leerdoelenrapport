@@ -19,10 +19,10 @@
     background-color: turquoise;
 }
 
-.progress-cell.positive{
+.progress-cell.positive, .scorecolor_positive{
     background-color: greenyellow;
 }
-.progress-cell.negative{
+.progress-cell.negative, .scorecolor_negative{
     background-color: lightcoral;
 }
 

@@ -91,6 +91,8 @@ class StudentController
                 'outcome_id' => $item->learning_outcome_id,
                 'progress_score' => $item->score,
                 'weighted_progress_score' => $item->weightedScore,
+                'expected_score' => $item->expectedScore,
+                'is_above_endlevel' => $item->isAboveEndlevel
             ];
         }, $progressItems);
         return jsonResponse($results);

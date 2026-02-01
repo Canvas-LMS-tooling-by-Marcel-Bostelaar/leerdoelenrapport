@@ -9,7 +9,8 @@ type OutcomePlanningReadonlyProps = {
     planning: IOutcomePlanning;
     periodCount: number;
     outcomeResults: CssDecoratedIOutcomeResultGroup[];
-    score: IProgressScore | undefined;
+    progressScore: IProgressScore | undefined;
+    actualTotalScore: number;
 };
 
 type lvlAndCss = {
@@ -23,7 +24,7 @@ type reduceType = {
     total: lvlAndCss[][] //css classes, list of classes per period
 }
 
-export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, score}: OutcomePlanningReadonlyProps) {
+export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, progressScore, actualTotalScore}: OutcomePlanningReadonlyProps) {
     //create list of markets per period
     const markerList = Array.from({length: periodCount + 1}).map((_, index) => index - 1)
         .map(period => 
@@ -79,7 +80,7 @@ export function OutcomePlanningReadonly({planning, periodCount, outcomeResults, 
         <td className="cell">
             {planning.outcome.title} {planning.status === "enabled_uncounted" ? (<NotCountedElement/>) : <></>}
         </td>
-        <ProgressCell progressScore={score} />
+        <ProgressCell progressScore={progressScore} actualTotalScore={actualTotalScore}/>
         { withZeroFirst.map((x, index) => (
             <PeriodCellReadonly 
                 key={index}

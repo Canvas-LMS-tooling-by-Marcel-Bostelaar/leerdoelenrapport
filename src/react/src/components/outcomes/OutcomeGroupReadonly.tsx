@@ -2,36 +2,9 @@ import type { IOutcomePlanning } from "src/types/config";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import { OutcomePlanningReadonly } from "./OutcomePlanningReadonly";
 import type { CssDecoratedIOutcomeResultGroup } from "src/types/IOutcomeResult";
-import { useEffect, useState } from "react";
 import type { IProgressScore } from "src/types/IProgressScore";
-import { loadProgressScores } from "src/utility/apiCalls";
 
 type OutcomeGroupReadonlyProps = {
-    studentId: number;
-    groupingConfigName: string;
-    grouping: IOutcomeGrouping;
-    periodCount: number;
-    outcomeResults: CssDecoratedIOutcomeResultGroup[];
-    outcomePlannings: IOutcomePlanning[];
-};
-
-export function OutcomeGroupReadonly({studentId, groupingConfigName, grouping, periodCount, outcomeResults, outcomePlannings} : OutcomeGroupReadonlyProps) {
-    const [progressScores, setProgressScores] = useState<IProgressScore[]>([]);
-
-    useEffect(() =>{
-        loadProgressScores(studentId, groupingConfigName, 0.0, 4, setProgressScores);
-    }, [studentId, groupingConfigName]);
-    
-    return <OutcomeGroupReadonlyEffectless
-            grouping={grouping}
-            outcomeResults={outcomeResults}
-            progressScores={progressScores}
-            periodCount={periodCount}
-            outcomePlannings={outcomePlannings}
-        />;
-}
-
-type OutcomeGroupReadonlyEffectlessProps = {
     grouping: IOutcomeGrouping;
     outcomeResults: CssDecoratedIOutcomeResultGroup[];
     progressScores: IProgressScore[];
@@ -39,7 +12,7 @@ type OutcomeGroupReadonlyEffectlessProps = {
     outcomePlannings: IOutcomePlanning[];
 };
 
-function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping, outcomeResults, progressScores}: OutcomeGroupReadonlyEffectlessProps) {
+export function OutcomeGroupReadonly({periodCount, outcomePlannings, grouping, outcomeResults, progressScores}: OutcomeGroupReadonlyProps) {
     const scoresAsMap = new Map<number, IProgressScore>();
     progressScores.forEach(score => {
         scoresAsMap.set(score.outcome_id, score);
@@ -63,7 +36,7 @@ function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping
         const titleB = b.title.toLowerCase();
         return titleA.localeCompare(titleB);
     });
-
+    
     return(
     !anyChildrenEnabled ? <></> :
     <>
@@ -76,12 +49,13 @@ function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping
         </tr>
         <tr>
             <th>Outcome</th>
-            <th key={-1}>#</th> {/*TODO hover text explaining progress score */}
-            <th key={-2}>❌</th> {/*TODO hover text explaining not proven */}
+            <th key={-1}>#</th> {/*TODO hover text explaining actual score */}
+            <th key={-2}>Δ</th> {/*TODO hover text explaining progress score */}
+            <th key={-3}>❌</th> {/*TODO hover text explaining not proven */}
             {Array.from({length: periodCount}).map((_, index) => (
                 <th key={index}>Period {index + 1}</th>
             ))}
-             <th key={-3}>&gt;</th> {/*TODO hover text explaining score higher than highest planned*/}
+             <th key={-4}>&gt;</th> {/*TODO hover text explaining score higher than highest planned*/}
         </tr>
     </thead>
     <tbody>
@@ -91,12 +65,14 @@ function OutcomeGroupReadonlyEffectless({periodCount, outcomePlannings, grouping
                 planning={state}
                 periodCount={periodCount}
                 outcomeResults={outcomeResults}
-                score={scoresAsMap.get(state.outcome.id)}/>
+                progressScore={scoresAsMap.get(state.outcome.id)}
+                actualTotalScore={outcomeResults.find(or => or.outcome_results.has(state.outcome.id))?.outcome_results.get(state.outcome.id)?.score || 0}
+            />;
         })}
     </tbody>
     </>)}
     {subgroupsSorted.map((subgroup) => {
-            return <OutcomeGroupReadonlyEffectless
+            return <OutcomeGroupReadonly
                 key={subgroup.id}
                 grouping={subgroup}
                 outcomeResults={outcomeResults}

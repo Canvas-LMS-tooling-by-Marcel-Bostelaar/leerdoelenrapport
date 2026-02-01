@@ -8,9 +8,9 @@ import { useDerivedArrayState } from "src/utility/useDerivedArrayState";
 import { useDerivedState, type StateSetter } from "src/utility/useDerivedState";
 import { useSpecificCookie } from "src/utility/useSpecificCookie";
 import { TabGroup } from "../TabGroup";
-import { OutcomeGroupReadonly } from "./OutcomeGroupReadonly";
 import type { IOutcomeGrouping } from "src/types/IOutcomeGrouping";
 import "./StudentIndividualView.css";
+import { OutcomeReportView } from "./OutcomeReportView";
 
 
 /**
@@ -63,7 +63,7 @@ function StudentIndividualViewRender({name, resultStateObject, sections, config,
             <TabGroup names={configsStudentIsIn.map(cfg => cfg.name)}>
                 {
                     configsStudentIsIn.map((groupingConfig) => (
-                        <OutcomeGroupReadonly 
+                        <OutcomeReportView 
                         key={groupingConfig.name}
                         grouping={outcomeGrouping}
                         outcomeResults={enabledOutcomeResults}

@@ -1,0 +1,581 @@
+{
+    "groupingConfigs": [
+        {
+            "name": "Jaar 1",
+            "outcomePlannings": [
+                {
+                    "outcome": {
+                        "id": 3609,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3610,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "disabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3564,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 1,
+                        "3": 2
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3565,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "3": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3560,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3563,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3559,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "0": 1,
+                        "1": 3,
+                        "3": 3
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3562,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3561,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        2,
+                        3,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3577,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3568,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled_uncounted",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3576,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 2,
+                        "3": 3
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3574,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        2
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3575,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3569,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3567,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3572,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3573,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        1,
+                        2,
+                        2
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3571,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        2
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3570,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3566,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3581,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3589,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3585,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3580,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3578,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3586,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        2
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3587,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3588,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 1,
+                        "3": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3584,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3583,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 2,
+                        "3": 2
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3579,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "1": 1,
+                        "2": 1,
+                        "3": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3582,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3590,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled_uncounted",
+                    "periodLevels": {
+                        "2": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3593,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled_uncounted",
+                    "periodLevels": [
+                        1,
+                        1,
+                        1,
+                        2
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3591,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3592,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled_uncounted",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3594,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled_uncounted",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3595,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3597,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        3,
+                        3,
+                        3,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3596,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": [
+                        2,
+                        2,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "outcome": {
+                        "id": 3599,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "1": 1,
+                        "3": 2
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3600,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 2
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3598,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": {
+                        "2": 1,
+                        "3": 1
+                    }
+                },
+                {
+                    "outcome": {
+                        "id": 3601,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3604,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3603,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3602,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3606,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3605,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3607,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                },
+                {
+                    "outcome": {
+                        "id": 3608,
+                        "domain": "https:\/\/flexedu.instructure.com\/"
+                    },
+                    "status": "enabled",
+                    "periodLevels": []
+                }
+            ],
+            "periodPlannings": [
+                {
+                    "periods": [],
+                    "sections": [
+                        {
+                            "section": {
+                                "id": 55362,
+                                "course_id": 70125,
+                                "domain": "https:\/\/flexedu.instructure.com\/"
+                            },
+                            "isOrphaned": false
+                        },
+                        {
+                            "section": {
+                                "id": 55363,
+                                "course_id": 70125,
+                                "domain": "https:\/\/flexedu.instructure.com\/"
+                            },
+                            "isOrphaned": false
+                        },
+                        {
+                            "section": {
+                                "id": 55361,
+                                "course_id": 70125,
+                                "domain": "https:\/\/flexedu.instructure.com\/"
+                            },
+                            "isOrphaned": false
+                        }
+                    ],
+                    "name": "New section group"
+                }
+            ],
+            "periodCount": 4
+        }
+    ]
+}

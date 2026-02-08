@@ -20,9 +20,10 @@ type OutcomeReportViewProps = {
 
 export function OutcomeReportView({studentId, groupingConfigName, grouping, periodCount, outcomeResults, outcomePlannings}: OutcomeReportViewProps){
     const [progressScores, setProgressScores] = useState<IProgressScore[]>([]);
+    const period = 1;
 
     useEffect(() =>{
-        loadProgressScores(studentId, groupingConfigName, 0.0, 4, setProgressScores);
+        loadProgressScores(studentId, groupingConfigName, 0.0, period, setProgressScores);
     }, [studentId, groupingConfigName]);
 
     const {overallProgressScoreWeighted, overallBehindCount, overallBehindScore, lastGraded} = sumOutcomeProgress(progressScores, outcomePlannings);

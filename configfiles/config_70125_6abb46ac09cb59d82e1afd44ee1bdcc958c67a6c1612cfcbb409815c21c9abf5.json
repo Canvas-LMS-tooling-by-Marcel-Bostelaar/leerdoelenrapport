@@ -549,6 +549,14 @@
                     "sections": [
                         {
                             "section": {
+                                "id": 55328,
+                                "course_id": 70125,
+                                "domain": "https:\/\/flexedu.instructure.com\/"
+                            },
+                            "isOrphaned": false
+                        },
+                        {
+                            "section": {
                                 "id": 55362,
                                 "course_id": 70125,
                                 "domain": "https:\/\/flexedu.instructure.com\/"

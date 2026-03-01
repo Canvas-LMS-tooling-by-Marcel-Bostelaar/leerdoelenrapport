@@ -9,6 +9,7 @@ use App\Models\Progressscores\RegularOutcomeProgressScore;
 use App\Utility\OutcomeUtility;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
+use CanvasApiLibrary\Core\Models\OutcomeResultRollup;
 use CanvasApiLibrary\Core\Models\Section;
 use CanvasApiLibrary\Core\Models\User;
 use CanvasApiLibrary\Core\Models\UserStub;
@@ -31,18 +32,20 @@ class StudentController
     }
 
     public function outcomeResults($studentId){
+        error_reporting(E_ERROR | E_PARSE);
         $course = course();
         $studentStub = new UserStub();
         $studentStub->id = $studentId;
         $studentStub->domain = $course->domain;
-
-        $total = providers()->outcomeResultProvider->getOutcomeResultsInCourse($course, [$studentStub]);
-        $total = OutcomeUtility::addZeroResultForMissingOutcomes($total, $studentStub, $course, providersRaw()->outcomeGroupProvider, providersRaw()->outcomeProvider, false, false);
+        $total = providers()->outcomeResultRollupProvider->getOutcomeResultRollupsInCourse($course, $studentStub->id);
+        // $total = providers()->outcomeResultProvider->getOutcomeResultsInCourse($course, [$studentStub]);
+        // var_dump($total);
+        $total = OutcomeUtility::addZeroResultForMissingRollups($total, $studentStub, $course, providersRaw()->outcomeGroupProvider, providersRaw()->outcomeProvider, false, false);
         if(!($total instanceof SuccessResult)){
             throw new ResultControlFlowEscapehatchException($total);
         }
         /**
-         * @var OutcomeResult[]
+         * @var OutcomeResultRollup[]
          */
         $total = $total->value;
         return jsonResponse([
@@ -101,7 +104,7 @@ class StudentController
 
     /**
      * Summary of createOutcomeResultGroup
-     * @param OutcomeResult[] $outcomeResults
+     * @param OutcomeResultRollup[] $outcomeResults
      * @param string $description
      * @return array{assessment_description: string, date: mixed, outcome_results: array}
      */
@@ -111,13 +114,13 @@ class StudentController
             $mapped[$outcomeResult->learning_outcome->id] = [
                 'score' => $outcomeResult->score,
                 'learning_outcome_id' => $outcomeResult->learning_outcome->id,
-                'submitted_or_assessed_at' => $outcomeResult->submitted_or_assessed_at?->format(DATE_ATOM),
+                'submitted_at' => $outcomeResult->submitted_at?->format(DATE_ATOM),
             ];
         }
 
         return [
             'assessment_description' => $description,
-            'date' => max(array_column($outcomeResults, 'submitted_or_assessed_at'))?->format(DATE_ATOM),
+            'date' => max(array_column($outcomeResults, 'submitted_at'))?->format(DATE_ATOM),
             'outcome_results' => $mapped,
         ];
     }

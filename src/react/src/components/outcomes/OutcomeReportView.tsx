@@ -20,7 +20,7 @@ type OutcomeReportViewProps = {
 
 export function OutcomeReportView({studentId, groupingConfigName, grouping, periodCount, outcomeResults, outcomePlannings}: OutcomeReportViewProps){
     const [progressScores, setProgressScores] = useState<IProgressScore[]>([]);
-    const period = 1;
+    const period = 5;
 
     useEffect(() =>{
         loadProgressScores(studentId, groupingConfigName, 0.0, period, setProgressScores);

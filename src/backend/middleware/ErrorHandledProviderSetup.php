@@ -59,6 +59,7 @@ class ErrorHandledProviderSetup
             new Interfaces\OutcomeGroupProviderWrapper($providers->outcomeGroupProvider, $capturedFunc),
             new Interfaces\OutcomeProviderWrapper($providers->outcomeProvider, $capturedFunc),
             new Interfaces\OutcomeResultProviderWrapper($providers->outcomeResultProvider, $capturedFunc),
+            new Interfaces\OutcomeResultRollupProviderWrapper($providers->outcomeResultRollupProvider, $capturedFunc),
             new ConfigProviderWrapper($providers->configProvider, $capturedFunc),
             new ProgressScoreProviderWrapper($providers->progressScoreProvider, $capturedFunc)
         );

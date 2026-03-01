@@ -26,6 +26,7 @@ class ProviderSetup
         $OutcomeGroupProvider = new Providers\OutcomeGroupProvider($canvasCommunicator, $clientIDProvider);
         $OutcomeProvider = new Providers\OutcomeProvider($canvasCommunicator, $clientIDProvider);
         $OutcomeResultProvider = new Providers\OutcomeResultProvider($canvasCommunicator, $clientIDProvider);
+        $OutcomeResultRollupProvider = new Providers\OutcomeResultRollupProvider($canvasCommunicator, $clientIDProvider);
         
 
         //Config provider
@@ -58,6 +59,7 @@ class ProviderSetup
             $OutcomeGroupProvider,
             $OutcomeProvider,
             $OutcomeResultProvider,
+            $OutcomeResultRollupProvider,
             $configProvider,
             $ProgressScoreProvider
         );

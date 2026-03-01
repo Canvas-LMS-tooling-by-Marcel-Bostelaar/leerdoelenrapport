@@ -10,7 +10,7 @@ export function StudentGeneralOverview(){
     //get config
     const [config, setConfig] = useState<IFullConfig | null>(null);
     const aheadBehindPentalty = 0;
-    const period = 1;
+    const period = 5;
 
     useEffect(() => {
         loadConfig(setConfig);

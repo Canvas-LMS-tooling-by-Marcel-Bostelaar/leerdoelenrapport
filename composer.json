@@ -15,7 +15,7 @@
     "require": {
         "illuminate/routing": "^12.46",
         "illuminate/events": "^12.46",
-        "canvasapilibrary/orm": "1.2.*",
+        "canvasapilibrary/orm": "dev-main as 1.2.99",
         "canvasapilibrary/redis-cache-provider": "1.2.*",
         "ondrej-vrto/php-filename-sanitize": "^1.6"
     },

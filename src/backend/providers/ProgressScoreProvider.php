@@ -50,7 +50,7 @@ class ProgressScoreProvider implements ProgressScoreProviderInterface
     public function getProgressScoresForStudent(UserStub $student, GroupingConfig $config, CourseStub $course, float $aheadBehindPeriodPentalty, int $period, bool $skipCache = false, bool $doNotCache = false) : mixed{
         $total = $this->outcomeResultProvider->getOutcomeResultsInCourse($course, [$student], $skipCache, $doNotCache);
         $total = $total->flatMapSuccess(function($total) use ($student, $course, $skipCache, $doNotCache) {
-            return OutcomeUtility::addZeroResultForMissingOutcomes($total, $student, $course, $this->outcomeGroupProvider, $this->outcomeProvider, $skipCache, $doNotCache);
+            return OutcomeUtility::addZeroResultForMissingRollups($total, $student, $course, $this->outcomeGroupProvider, $this->outcomeProvider, $skipCache, $doNotCache);
         });
         if(!$total instanceof SuccessResult){
             return $total;

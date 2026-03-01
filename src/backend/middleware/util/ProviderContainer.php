@@ -18,6 +18,7 @@ class ProviderContainer
         public readonly Interfaces\OutcomeGroupProviderInterface $outcomeGroupProvider,
         public readonly Interfaces\OutcomeProviderInterface $outcomeProvider,
         public readonly Interfaces\OutcomeResultProviderInterface $outcomeResultProvider,
+        public readonly Interfaces\OutcomeResultRollupProviderInterface $outcomeResultRollupProvider,
         public readonly ConfigProviderInterface $configProvider,
         public readonly ProgressScoreProviderInterface $progressScoreProvider,
     ) {

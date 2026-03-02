@@ -5,6 +5,7 @@ namespace App\Models\Progressscores;
 use App\Models\Config\OutcomePlanning;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
+use CanvasApiLibrary\Core\Models\OutcomeResultRollup;
 use DateTime;
 use Exception;
 use LogicException;
@@ -18,13 +19,13 @@ class RegularOutcomeProgressScore extends AbstractProgressScore {
 
     /**
      * Summary of __construct
-     * @param OutcomeResult $result
+     * @param OutcomeResultRollup $result
      * @param OutcomePlanning $planning
      * @param int $periodNumberForReport Period number (0 based) for the period for which to write the report. Will assume end of period.
      * @param float $aheadBehindPeriodPentalty A (positive) pentalty value that is awarded or subtracked for each period a student is fully behind the start/end of the planned period.
      * @return void
      */
-    public function __construct(OutcomeResult $result, OutcomePlanning $planning, int $periodNumberForReport, float $aheadBehindPeriodPentalty) {
+    public function __construct(OutcomeResultRollup $result, OutcomePlanning $planning, int $periodNumberForReport, float $aheadBehindPeriodPentalty) {
         parent::__construct($result, $planning);
 
         $score = $result->score;

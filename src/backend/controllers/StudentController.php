@@ -56,6 +56,8 @@ class StudentController
     }
 
     public function progressScores(Request $request, $studentId){
+        
+        error_reporting(E_ERROR | E_PARSE);
         $groupingName = $request->input('grouping');
         $aheadBehindPeriodPentalty = floatval($request->input('aheadBehindPeriodPentalty', '0.0'));
         if(!$request->has('period')){

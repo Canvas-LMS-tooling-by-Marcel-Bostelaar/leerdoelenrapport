@@ -9,7 +9,7 @@ use App\Providers\Interfaces\ProgressScoreProviderInterface;
 use App\Providers\Traits\ProgressScoreProviderTrait;
 use App\Utility\OutcomeUtility;
 use CanvasApiLibrary\Core\Models\CourseStub;
-use CanvasApiLibrary\Core\Models\OutcomeResult;
+use CanvasApiLibrary\Core\Models\OutcomeResultRollup;
 use CanvasApiLibrary\Core\Models\UserStub;
 use CanvasApiLibrary\Core\Providers\Interfaces\OutcomegroupProviderInterface;
 use CanvasApiLibrary\Core\Providers\Interfaces\OutcomeProviderInterface;
@@ -45,10 +45,10 @@ class ProgressScoreProvider implements ProgressScoreProviderInterface
      * @param int $period
      * @param bool $skipCache
      * @param bool $doNotCache
-     * @return SuccessResult<OutcomeResult[]>|ErrorResult|NotFoundResult|UnauthorizedResult
+     * @return SuccessResult<OutcomeResultRollup[]>|ErrorResult|NotFoundResult|UnauthorizedResult
      */
     public function getProgressScoresForStudent(UserStub $student, GroupingConfig $config, CourseStub $course, float $aheadBehindPeriodPentalty, int $period, bool $skipCache = false, bool $doNotCache = false) : mixed{
-        $total = $this->outcomeResultProvider->getOutcomeResultsInCourse($course, [$student], $skipCache, $doNotCache);
+        $total = providersRaw()->outcomeResultRollupProvider->getOutcomeResultRollupsInCourse($course, $student->id);
         $total = $total->flatMapSuccess(function($total) use ($student, $course, $skipCache, $doNotCache) {
             return OutcomeUtility::addZeroResultForMissingRollups($total, $student, $course, $this->outcomeGroupProvider, $this->outcomeProvider, $skipCache, $doNotCache);
         });
@@ -56,7 +56,7 @@ class ProgressScoreProvider implements ProgressScoreProviderInterface
             return $total;
         }
         /**
-         * @var OutcomeResult[]
+         * @var OutcomeResultRollup[]
          */
         $total = $total->value;
 

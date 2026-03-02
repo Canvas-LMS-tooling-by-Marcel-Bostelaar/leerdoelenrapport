@@ -5,6 +5,7 @@ namespace App\Models\Progressscores;
 use App\Models\Config\OutcomePlanning;
 use CanvasApiLibrary\Core\Models\Outcome;
 use CanvasApiLibrary\Core\Models\OutcomeResult;
+use CanvasApiLibrary\Core\Models\OutcomeResultRollup;
 use DateTime;
 use Exception;
 
@@ -15,14 +16,14 @@ abstract class AbstractProgressScore {
     protected int $outcomeWeight;
     public readonly DateTime $lastGradedAt;
 
-    public function __construct(OutcomeResult $result, OutcomePlanning $planning) {
+    public function __construct(OutcomeResultRollup $result, OutcomePlanning $planning) {
         $this->validatePlanning($planning);
 
         $this->learning_outcome_id = $planning->outcome->id;
         $this->user_id = $result->user->id;
         $this->outcome_result_id = $result->id;
         $this->outcomeWeight = $planning->weight;
-        $this->lastGradedAt = $result->submitted_or_assessed_at;
+        $this->lastGradedAt = $result->submitted_at;
 
     }
 
